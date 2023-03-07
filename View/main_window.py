@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -37,6 +38,9 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         self.textEdit.setFont(font)
         self.textEdit.setObjectName("textEdit")
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(1050, 90, 93, 28))
+        self.pushButton.setObjectName("pushButton")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -45,3 +49,4 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.pushButton.setText(_translate("MainWindow", "Agregar"))
