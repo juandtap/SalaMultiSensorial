@@ -1,9 +1,14 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
+
 from View.main_window_view import Ui_MainWindow
 from View.add_student_view import Ui_Add_student
+from View.add_school_view import Ui_add_Unidad_Educativa
+from View.message_dialog_view import Ui_Message_dialog
+
 from Controller.student_control import add_student_control, get_student_list
+
 from PyQt5.QtCore import QStringListModel
 
 class MainWindow(QMainWindow):
@@ -11,13 +16,14 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui_main = Ui_MainWindow()
         self.ui_main.setupUi(self)
-        self.show_student_list()
+        # self.show_student_list()
         self.show_info_student(False)
         self.ui_main.pushButton_add_estudiante.clicked.connect(self.open_add_student)
         
     def open_add_student(self):
-        self.add_stu_win = AddStudent()
-        self.add_stu_win.show()
+        self.add_stu = AddStudent()
+        self.add_stu.show()
+    
     
     def show_student_list(self):
         student_list = get_student_list()
@@ -39,12 +45,34 @@ class AddStudent(QWidget):
         self.ui_addstu = Ui_Add_student()
         self.ui_addstu.setupUi(self)
         self.ui_addstu.pushButton_cancel.clicked.connect(self.close)
+        self.ui_addstu.pushButton_add_unidad_educativa.clicked.connect(self.open_add_school)
         
+    def open_add_school(self):
+        self.add_shool = AddSchool()
+        self.add_shool.show()
         
     def add_student(self):
         flag = add_student_control()
         if flag:
             print('estudiante agregado')
+            
+class AddSchool(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.ui_add_school = Ui_add_Unidad_Educativa()
+        self.ui_add_school.setupUi(self)
+        self.ui_add_school.pushButton_cancel.clicked.connect(self.close)
+
+class MessageDialog(QWidget):
+    def __init__(self, message):
+        super().__init__()
+        self.ui_message = Ui_Message_dialog()
+        self.ui_message.setupUi(self)
+        self.message = message
+        self.ui_message.label_message.setText(self.message)
+        self.ui_message.pushButton_accept_dialog.clicked.connect(self.close)
+        
+    
             
 if __name__ == '__main__':
     app = QApplication(sys.argv)
