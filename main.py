@@ -12,6 +12,7 @@ class MainWindow(QMainWindow):
         self.ui_main = Ui_MainWindow()
         self.ui_main.setupUi(self)
         self.show_student_list()
+        self.show_info_student(False)
         self.ui_main.pushButton_add_estudiante.clicked.connect(self.open_add_student)
         
     def open_add_student(self):
@@ -28,6 +29,10 @@ class MainWindow(QMainWindow):
         self.ui_main.listWidget_estudiantes.addItems(new_list)
         # self.ui_main.listWidget_estudiantes.setModel(list_model)
 
+    def show_info_student(self, value):
+        self.ui_main.scrollArea_info_estudiante.setHidden(value)
+        
+    
 class AddStudent(QWidget):
     def __init__(self):
         super().__init__()
