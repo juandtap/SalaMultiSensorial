@@ -71,9 +71,10 @@ class AddSchool(QWidget):
         flag = add_school_control(self.ui_add_school.lineEdit_name_unidad_educativa.text())
         
         if flag:
-            new_message = MessageDialog("Unidad Educativa Agregada!")
-            new_message.show()
-        
+            self.new_message = MessageDialog("Unidad Educativa Agregada!")
+            self.new_message.show()
+            self.ui_add_school.lineEdit_name_unidad_educativa.clear()
+
             
         
         

@@ -55,7 +55,7 @@ class Ui_Message_dialog(object):
 
     def retranslateUi(self, Message_dialog):
         _translate = QtCore.QCoreApplication.translate
-        Message_dialog.setWindowTitle(_translate("Message_dialog", "Dialog"))
+        Message_dialog.setWindowTitle(_translate("Message_dialog", "Mensaje"))
         self.label_1.setText(_translate("Message_dialog", "Mensaje: "))
         self.pushButton_accept_dialog.setText(_translate("Message_dialog", "Aceptar"))
         self.label_message.setText(_translate("Message_dialog", "Estudiante agregado !"))
