@@ -1,7 +1,7 @@
 import sys
 sys.path.append(".")
-from Model.model import Estudiante
-from Model.dbconection import session
+from Model.model import Estudiante,session
+
 # defino los metodo CRUD para estudiante
 
 # Create

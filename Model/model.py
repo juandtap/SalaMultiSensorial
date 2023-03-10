@@ -2,7 +2,15 @@ import sys
 sys.path.append(".")
 from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, LargeBinary, ForeignKey
 from sqlalchemy.orm import relationship
-from Model.dbconection import Base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base
+
+Base = declarative_base()
+
+engine = create_engine('sqlite:///DB/database.sqlite')
+
+
+
 # aqui se definene las tablas de la base de datos
 
 # tabla estudiante
@@ -30,3 +38,10 @@ class Unidad_Educativa(Base):
     nombre = Column(String(100))
     estudiantes = relationship('Estudiante', backref='unidad_educativa')
     
+# Crea la tabla en la base de datos
+Base.metadata.create_all(engine)
+print("debe imprimir esto")
+# Crea una sesion para interactuar con la base de datos
+Session = sessionmaker(bind=engine)
+print("debe imprimir esto")
+session = Session()

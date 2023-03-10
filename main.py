@@ -8,6 +8,7 @@ from View.add_school_view import Ui_add_Unidad_Educativa
 from View.message_dialog_view import Ui_Message_dialog
 
 from Controller.student_control import add_student_control, get_student_list
+from Controller.school_control import add_school_control
 
 from PyQt5.QtCore import QStringListModel
 
@@ -62,6 +63,21 @@ class AddSchool(QWidget):
         self.ui_add_school = Ui_add_Unidad_Educativa()
         self.ui_add_school.setupUi(self)
         self.ui_add_school.pushButton_cancel.clicked.connect(self.close)
+        self.ui_add_school.pushButton_save.clicked.connect(self.add_school)
+    
+    def add_school(self):
+        flag = False
+        
+        flag = add_school_control(self.ui_add_school.lineEdit_name_unidad_educativa.text())
+        
+        if flag:
+            new_message = MessageDialog("Unidad Educativa Agregada!")
+            new_message.show()
+        
+            
+        
+        
+            
 
 class MessageDialog(QWidget):
     def __init__(self, message):
@@ -71,6 +87,8 @@ class MessageDialog(QWidget):
         self.message = message
         self.ui_message.label_message.setText(self.message)
         self.ui_message.pushButton_accept_dialog.clicked.connect(self.close)
+    
+    
         
     
             
