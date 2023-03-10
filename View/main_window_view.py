@@ -34,9 +34,17 @@ class Ui_MainWindow(object):
         font.setFamily("Arial")
         font.setPointSize(10)
         self.pushButton_add_estudiante.setFont(font)
-        self.pushButton_add_estudiante.setStyleSheet("background-color: rgb(56, 71, 151);\n"
-"color: rgb(255, 255, 255);\n"
-"border-radius: 10px;\n"
+        self.pushButton_add_estudiante.setStyleSheet("QPushButton {\n"
+"   border-radius: 10px;\n"
+"    background-color: rgb(56, 71, 151);\n"
+"  color: rgb(255, 255, 255); \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    border: 3px solid;\n"
+"}\n"
+"\n"
+"\n"
 "")
         self.pushButton_add_estudiante.setObjectName("pushButton_add_estudiante")
         self.listWidget_estudiantes = QtWidgets.QListWidget(self.centralwidget)
@@ -248,10 +256,15 @@ class Ui_MainWindow(object):
         font.setFamily("Arial")
         font.setPointSize(10)
         self.pushButton_goto_modules.setFont(font)
-        self.pushButton_goto_modules.setStyleSheet("background-color: rgb(56, 71, 151);\n"
-"color: rgb(255, 255, 255);\n"
-"border-radius: 10px;\n"
-"")
+        self.pushButton_goto_modules.setStyleSheet("QPushButton {\n"
+"   border-radius: 10px;\n"
+"    background-color: rgb(56, 71, 151);\n"
+"  color: rgb(255, 255, 255); \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    border: 3px solid;\n"
+"}")
         self.pushButton_goto_modules.setObjectName("pushButton_goto_modules")
         self.pushButton_goto_reports = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.pushButton_goto_reports.setGeometry(QtCore.QRect(640, 50, 121, 31))
@@ -259,10 +272,15 @@ class Ui_MainWindow(object):
         font.setFamily("Arial")
         font.setPointSize(10)
         self.pushButton_goto_reports.setFont(font)
-        self.pushButton_goto_reports.setStyleSheet("background-color: rgb(56, 71, 151);\n"
-"color: rgb(255, 255, 255);\n"
-"border-radius: 10px;\n"
-"")
+        self.pushButton_goto_reports.setStyleSheet("QPushButton {\n"
+"   border-radius: 10px;\n"
+"    background-color: rgb(56, 71, 151);\n"
+"  color: rgb(255, 255, 255); \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    border: 3px solid;\n"
+"}")
         self.pushButton_goto_reports.setObjectName("pushButton_goto_reports")
         self.pushButton_edit_estudiante = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.pushButton_edit_estudiante.setGeometry(QtCore.QRect(640, 90, 121, 31))
@@ -270,10 +288,15 @@ class Ui_MainWindow(object):
         font.setFamily("Arial")
         font.setPointSize(10)
         self.pushButton_edit_estudiante.setFont(font)
-        self.pushButton_edit_estudiante.setStyleSheet("background-color: rgb(56, 71, 151);\n"
-"color: rgb(255, 255, 255);\n"
-"border-radius: 10px;\n"
-"")
+        self.pushButton_edit_estudiante.setStyleSheet("QPushButton {\n"
+"   border-radius: 10px;\n"
+"    background-color: rgb(56, 71, 151);\n"
+"  color: rgb(255, 255, 255); \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    border: 3px solid;\n"
+"}")
         self.pushButton_edit_estudiante.setObjectName("pushButton_edit_estudiante")
         self.scrollArea_info_estudiante.setWidget(self.scrollAreaWidgetContents)
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -290,10 +313,17 @@ class Ui_MainWindow(object):
         font.setFamily("Arial")
         font.setPointSize(10)
         self.pushButton_reportes.setFont(font)
-        self.pushButton_reportes.setStyleSheet("background-color: rgb(56, 71, 151);\n"
-"color: rgb(255, 255, 255);\n"
-"border-radius: 10px;\n"
-"")
+        self.pushButton_reportes.setStyleSheet("QPushButton {\n"
+"   border-radius: 10px;\n"
+"    background-color: rgb(56, 71, 151);\n"
+"  color: rgb(255, 255, 255); \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    border: 3px solid;\n"
+"}")
+        self.pushButton_reportes.setCheckable(False)
+        self.pushButton_reportes.setFlat(False)
         self.pushButton_reportes.setObjectName("pushButton_reportes")
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -331,8 +361,7 @@ class Ui_MainWindow(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Arial\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nombre de la discapacidad 1,</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nombre de la discapacidad 2</p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.label_telefonos.setText(_translate("MainWindow", "0984239035, 4085702,"))
         self.label_direccion.setText(_translate("MainWindow", "Parroquia comunidad "))
         self.label_cedula_representante.setText(_translate("MainWindow", "01059224447"))

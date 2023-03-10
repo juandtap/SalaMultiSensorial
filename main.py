@@ -22,10 +22,10 @@ class MainWindow(QMainWindow):
     def show_student_list(self):
         student_list = get_student_list()
         new_list = []
-        for st in student_list:
-            new_list.append(st.apellidos+' '+st.nombres+' '+st.cedula)
-        # list_model = QStringListModel()
-        # list_model.setStringList(new_list)
+        #for st in student_list:
+        #    new_list.append(st.apellidos+' '+st.nombres+' '+st.cedula)
+        #list_model = QStringListModel()
+        #list_model.setStringList(new_list)
         self.ui_main.listWidget_estudiantes.addItems(new_list)
         # self.ui_main.listWidget_estudiantes.setModel(list_model)
 

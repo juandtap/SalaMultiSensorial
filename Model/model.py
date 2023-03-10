@@ -1,12 +1,13 @@
 import sys
 sys.path.append(".")
-from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, LargeBinary
+from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, LargeBinary, ForeignKey
+from sqlalchemy.orm import relationship
 from Model.dbconection import Base
 # aqui se definene las tablas de la base de datos
 
 # tabla estudiante
-class Student(Base):
-    __tablename__ = 'Estudiante'
+class Estudiante(Base):
+    __tablename__ = 'estudiante'
     id = Column(Integer, primary_key=True)
     cedula = Column(String(10))
     apellidos = Column(String(50))
@@ -18,5 +19,14 @@ class Student(Base):
     telefonos = Column(String(100))
     discapacidad = Column(Boolean, default=False)
     fotografia = Column(LargeBinary)
+    unidad_educativa_id = Column(Integer, ForeignKey('unidad_educativa.id'))
+    unidad_educativa = relationship("Unidad_Educativa", back_populates="estudiantes")
     extend_existing=True
+    
+# tabla Unidad_educativa
+class Unidad_Educativa(Base):
+    __tablename__ = 'Unidad_educativa'
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(100))
+    estudiantes = relationship("Estudiante", back_populates="unidad_educativa")
     

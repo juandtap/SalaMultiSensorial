@@ -16,7 +16,6 @@ class Ui_Add_student(object):
         Add_student.setObjectName("Add_student")
         Add_student.resize(1280, 720)
         Add_student.setMinimumSize(QtCore.QSize(1280, 720))
-        Add_student.setMaximumSize(QtCore.QSize(1280, 720))
         Add_student.setBaseSize(QtCore.QSize(1280, 720))
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -37,11 +36,15 @@ class Ui_Add_student(object):
         font.setFamily("Arial")
         font.setPointSize(10)
         self.pushButton_save.setFont(font)
-        self.pushButton_save.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(56, 71, 151);\n"
-"border-radius:10px;\n"
+        self.pushButton_save.setStyleSheet("QPushButton {\n"
+"   border-radius: 10px;\n"
+"    background-color: rgb(56, 71, 151);\n"
+"  color: rgb(255, 255, 255); \n"
+"}\n"
 "\n"
-"")
+"QPushButton:pressed {\n"
+"    border: 3px solid;\n"
+"}")
         self.pushButton_save.setObjectName("pushButton_save")
         self.pushButton_cancel = QtWidgets.QPushButton(Add_student)
         self.pushButton_cancel.setGeometry(QtCore.QRect(660, 560, 111, 41))
@@ -49,9 +52,15 @@ class Ui_Add_student(object):
         font.setFamily("Arial")
         font.setPointSize(10)
         self.pushButton_cancel.setFont(font)
-        self.pushButton_cancel.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(56, 71, 151);\n"
-"border-radius: 10px;")
+        self.pushButton_cancel.setStyleSheet("QPushButton {\n"
+"   border-radius: 10px;\n"
+"    background-color: rgb(56, 71, 151);\n"
+"  color: rgb(255, 255, 255); \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    border: 3px solid;\n"
+"}")
         self.pushButton_cancel.setObjectName("pushButton_cancel")
         self.gridLayoutWidget = QtWidgets.QWidget(Add_student)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(20, 90, 591, 361))
@@ -220,9 +229,15 @@ class Ui_Add_student(object):
         font.setFamily("Arial")
         font.setPointSize(10)
         self.pushButton_load_picture.setFont(font)
-        self.pushButton_load_picture.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(56, 71, 151);\n"
-"border-radius: 10px;")
+        self.pushButton_load_picture.setStyleSheet("QPushButton {\n"
+"   border-radius: 10px;\n"
+"    background-color: rgb(56, 71, 151);\n"
+"  color: rgb(255, 255, 255); \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    border: 3px solid;\n"
+"}")
         self.pushButton_load_picture.setObjectName("pushButton_load_picture")
         self.gridLayout.addWidget(self.pushButton_load_picture, 10, 2, 1, 1)
         self.comboBox_unidad_educativa = QtWidgets.QComboBox(self.gridLayoutWidget)
@@ -231,8 +246,6 @@ class Ui_Add_student(object):
         font.setPointSize(10)
         self.comboBox_unidad_educativa.setFont(font)
         self.comboBox_unidad_educativa.setObjectName("comboBox_unidad_educativa")
-        self.comboBox_unidad_educativa.addItem("")
-        self.comboBox_unidad_educativa.addItem("")
         self.comboBox_unidad_educativa.addItem("")
         self.gridLayout.addWidget(self.comboBox_unidad_educativa, 7, 1, 1, 1)
         self.label_2 = QtWidgets.QLabel(self.gridLayoutWidget)
@@ -250,9 +263,15 @@ class Ui_Add_student(object):
         font.setFamily("Arial")
         font.setPointSize(10)
         self.pushButton_add_unidad_educativa.setFont(font)
-        self.pushButton_add_unidad_educativa.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(56, 71, 151);\n"
-"border-radius: 10px;")
+        self.pushButton_add_unidad_educativa.setStyleSheet("QPushButton {\n"
+"   border-radius: 10px;\n"
+"    background-color: rgb(56, 71, 151);\n"
+"  color: rgb(255, 255, 255); \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    border: 3px solid;\n"
+"}")
         self.pushButton_add_unidad_educativa.setObjectName("pushButton_add_unidad_educativa")
         self.gridLayout.addWidget(self.pushButton_add_unidad_educativa, 7, 2, 1, 1)
         self.gridLayoutWidget_2 = QtWidgets.QWidget(Add_student)
@@ -276,8 +295,6 @@ class Ui_Add_student(object):
         self.comboBox_discapacidades.setFont(font)
         self.comboBox_discapacidades.setObjectName("comboBox_discapacidades")
         self.comboBox_discapacidades.addItem("")
-        self.comboBox_discapacidades.addItem("")
-        self.comboBox_discapacidades.addItem("")
         self.gridLayout_2.addWidget(self.comboBox_discapacidades, 1, 1, 1, 1)
         self.pushButton_add_discapacidad = QtWidgets.QPushButton(self.gridLayoutWidget_2)
         self.pushButton_add_discapacidad.setMinimumSize(QtCore.QSize(50, 28))
@@ -286,9 +303,15 @@ class Ui_Add_student(object):
         font.setFamily("Arial")
         font.setPointSize(10)
         self.pushButton_add_discapacidad.setFont(font)
-        self.pushButton_add_discapacidad.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(56, 71, 151);\n"
-"border-radius: 10px;")
+        self.pushButton_add_discapacidad.setStyleSheet("QPushButton {\n"
+"   border-radius: 10px;\n"
+"    background-color: rgb(56, 71, 151);\n"
+"  color: rgb(255, 255, 255); \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    border: 3px solid;\n"
+"}")
         self.pushButton_add_discapacidad.setObjectName("pushButton_add_discapacidad")
         self.gridLayout_2.addWidget(self.pushButton_add_discapacidad, 1, 2, 1, 1)
         self.label_15 = QtWidgets.QLabel(self.gridLayoutWidget_2)
@@ -330,14 +353,10 @@ class Ui_Add_student(object):
         self.label_5.setText(_translate("Add_student", "Cedula representante*:"))
         self.pushButton_load_picture.setText(_translate("Add_student", "Cargar"))
         self.comboBox_unidad_educativa.setItemText(0, _translate("Add_student", "Sin especificar"))
-        self.comboBox_unidad_educativa.setItemText(1, _translate("Add_student", "Unidad Educativa 1 ejemplo"))
-        self.comboBox_unidad_educativa.setItemText(2, _translate("Add_student", "Unidad Edicativa 2 ejemplo"))
         self.label_2.setText(_translate("Add_student", "Cedula* :"))
         self.pushButton_add_unidad_educativa.setText(_translate("Add_student", "+"))
         self.checkBox_discapacidad.setText(_translate("Add_student", "Si"))
         self.comboBox_discapacidades.setItemText(0, _translate("Add_student", "Sin especificar"))
-        self.comboBox_discapacidades.setItemText(1, _translate("Add_student", "nombre de discapacidad 1"))
-        self.comboBox_discapacidades.setItemText(2, _translate("Add_student", "Nombre discapacidad 2"))
         self.pushButton_add_discapacidad.setText(_translate("Add_student", "+"))
         self.label_15.setText(_translate("Add_student", "Discapacidad"))
         self.label_13.setText(_translate("Add_student", "Asociado a una discapacidad:"))
