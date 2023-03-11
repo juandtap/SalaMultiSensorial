@@ -10,3 +10,12 @@ def add_school_control(school_name):
     session.commit()
     session.close()
     return True
+
+# Read
+
+# metodo para obetener todas las unidades educativas y cargarlas al comboBox correspondiente
+
+def get_all_schools():
+    # schools es una lista de objetos 'Unidad_educativa
+    school_list = session.query(Unidad_Educativa).all()
+    return school_list
