@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
         font.setFamily("Arial")
         font.setPointSize(10)
         self.textEdit_search_bar.setFont(font)
-        self.textEdit_search_bar.setStyleSheet("color: rgb(217, 217, 217);")
+        self.textEdit_search_bar.setStyleSheet("color: rgb(0, 0, 0);")
         self.textEdit_search_bar.setObjectName("textEdit_search_bar")
         self.pushButton_add_estudiante = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_add_estudiante.setGeometry(QtCore.QRect(480, 120, 211, 31))

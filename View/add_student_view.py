@@ -17,6 +17,7 @@ class Ui_Add_student(object):
         Add_student.resize(1280, 720)
         Add_student.setMinimumSize(QtCore.QSize(1280, 720))
         Add_student.setBaseSize(QtCore.QSize(1280, 720))
+        Add_student.setMaximumSize(QtCore.QSize(1280, 720))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)

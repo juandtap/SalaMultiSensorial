@@ -1,5 +1,6 @@
 
 import sys
+from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
 from PyQt5 import QtGui, QtCore
 
@@ -21,7 +22,9 @@ class MainWindow(QMainWindow):
         # self.show_student_list()
         self.show_info_student(False)
         self.ui_main.pushButton_add_estudiante.clicked.connect(self.open_add_student)
-        
+        # placeholder barra de busqueda
+        self.ui_main.textEdit_search_bar.setText("")
+        self.ui_main.textEdit_search_bar.setPlaceholderText("Buscar Estudiante (nombre o cedula)")
         
     def open_add_student(self):
         self.add_stu = AddStudent()
@@ -53,9 +56,14 @@ class AddStudent(QWidget):
         self.setFocus()
         # flags para recargar datos de los ComboBox
         self.reload_flag = False
-        
-        
         app.focusChanged.connect(self.on_focus_change)
+        
+        # placeholder Telefono
+        self.ui_addstu.lineEdit_telefono.setPlaceholderText("numero 1, numero 2, ...")
+        # calendar picker
+        self.ui_addstu.dateEdit_estudiante.setCalendarPopup(True)
+        
+        self.ui_addstu.dateEdit_estudiante.setStyleSheet("background-color : rgb(200, 200, 200);")
     
     def on_focus_change(self):
        
