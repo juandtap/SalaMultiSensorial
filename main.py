@@ -50,8 +50,22 @@ class AddStudent(QWidget):
         self.load_schools()
         self.ui_addstu.pushButton_cancel.clicked.connect(self.close)
         self.ui_addstu.pushButton_add_unidad_educativa.clicked.connect(self.open_add_school)
+        self.setFocus()
+        # flags para recargar datos de los ComboBox
+        self.reload_flag = False
+        
+        
+        app.focusChanged.connect(self.on_focus_change)
     
+    def on_focus_change(self):
+       
+        if not self.isActiveWindow():
+            self.reload_flag = True
     
+        if self.isActiveWindow() and self.reload_flag:
+            self.load_schools()
+            print("recargo combo")
+            self.reload_flag = False
     
     def open_add_school(self):
         self.add_shool = AddSchool()

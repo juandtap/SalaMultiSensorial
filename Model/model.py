@@ -40,8 +40,9 @@ class Unidad_Educativa(Base):
     
 # Crea la tabla en la base de datos
 Base.metadata.create_all(engine)
-print("debe imprimir esto")
+
 # Crea una sesion para interactuar con la base de datos
 Session = sessionmaker(bind=engine)
-print("debe imprimir esto")
+
 session = Session()
+print("debe imprimir esto")
