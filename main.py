@@ -1,8 +1,9 @@
 
 import sys
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
 from PyQt5 import QtGui, QtCore
+from PyQt5.QtCore import Qt
 
 from View.main_window_view import Ui_MainWindow
 from View.add_student_view import Ui_Add_student
@@ -62,9 +63,17 @@ class AddStudent(QWidget):
         self.ui_addstu.lineEdit_telefono.setPlaceholderText("numero 1, numero 2, ...")
         # calendar picker
         self.ui_addstu.dateEdit_estudiante.setCalendarPopup(True)
-        
         self.ui_addstu.dateEdit_estudiante.setStyleSheet("background-color : rgb(200, 200, 200);")
-    
+
+        # ComboBox Opcion Multiple
+        self.checkeable_combo = CheckableComboBox()
+        self.ui_addstu.gridLayout_2.addWidget(self.checkeable_combo, 1,1,1,1)
+        
+        # eventos ComboBox Discapacidades
+        self.checkeable_combo.activated.connect(self.get_selected_discapacidades)
+        
+        self.load_discapacidades()
+        
     def on_focus_change(self):
        
         if not self.isActiveWindow():
@@ -80,7 +89,7 @@ class AddStudent(QWidget):
         self.add_shool.show()
         
     def add_student(self):
-        # pendiente
+        # pendiente datos y validacion
         flag = add_student_control()
         if flag:
             print('estudiante agregado')
@@ -96,9 +105,68 @@ class AddStudent(QWidget):
             self.school_names.append(sc.nombre)
         self.ui_addstu.comboBox_unidad_educativa.addItems(self.school_names)
     
+    # Combo Box con checkitems
+    def load_discapacidades(self):
+        # cargar desde la base de datos 
+        self.checkeable_combo.clear()
+        
+        for i in range(4):
+            if i == 0:
+                self.checkeable_combo.addItem("Sin especificar")
+                self.checkeable_combo.setItemChecked(i, False)
+            else:
+                self.checkeable_combo.addItem("Discapacidad {0}".format(str(i)))
+                self.checkeable_combo.setItemChecked(i, False)
     
-  
+    def get_selected_discapacidades(self):
+        self.ui_addstu.listDiscapacidades.clear()
+        for i in range(self.checkeable_combo.count()):
+            print('Index: {0} is checked {1}'.format(i, self.checkeable_combo.itemChecked(i)))
+            if self.checkeable_combo.itemChecked(i):
+                self.ui_addstu.listDiscapacidades.addItem(self.checkeable_combo.itemText(i))
+
+    
+        
+         
+        
+    
+     
+class CheckableComboBox(QComboBox):
+	def __init__(self):
+		super().__init__()
+		self._changed = False
+
+		self.view().pressed.connect(self.handleItemPressed)
+
+	def setItemChecked(self, index, checked=False):
+		item = self.model().item(index, self.modelColumn()) # QStandardItem object
+
+		if checked:
+			item.setCheckState(Qt.Checked)
+		else:
+			item.setCheckState(Qt.Unchecked)
+
+	def handleItemPressed(self, index):
+		item = self.model().itemFromIndex(index)
+
+		if item.checkState() == Qt.Checked:
+			item.setCheckState(Qt.Unchecked)
+		else:
+			item.setCheckState(Qt.Checked)
+		self._changed = True
+
+
+	def hidePopup(self):
+		if not self._changed:
+			super().hidePopup()
+		self._changed = False
+
+	def itemChecked(self, index):
+		item = self.model().item(index, self.modelColumn())
+		return item.checkState() == Qt.Checked
+      
             
+        
 class AddSchool(QWidget):
     def __init__(self):
         super().__init__()
