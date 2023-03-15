@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtCore import Qt
 
+from datetime import date
+
 from View.main_window_view import Ui_MainWindow
 from View.add_student_view import Ui_Add_student
 from View.add_school_view import Ui_add_Unidad_Educativa
@@ -27,6 +29,11 @@ class MainWindow(QMainWindow):
         self.ui_main.textEdit_search_bar.setText("")
         self.ui_main.textEdit_search_bar.setPlaceholderText("Buscar Estudiante (nombre o cedula)")
         
+        # metodo temporal, se implementara barra de busqueda
+        self.show_student_list()
+        self.ui_main.listWidget_estudiantes.clicked.connect(self.show_info_student)
+        
+        
     def open_add_student(self):
         self.add_stu = AddStudent()
         self.add_stu.show()
@@ -35,15 +42,17 @@ class MainWindow(QMainWindow):
     def show_student_list(self):
         student_list = get_student_list()
         new_list = []
-        #for st in student_list:
-        #    new_list.append(st.apellidos+' '+st.nombres+' '+st.cedula)
+        if student_list is not None:
+            for st in student_list:
+                new_list.append(st.apellidos+' '+st.nombres+' '+st.cedula)
         #list_model = QStringListModel()
         #list_model.setStringList(new_list)
         self.ui_main.listWidget_estudiantes.addItems(new_list)
         # self.ui_main.listWidget_estudiantes.setModel(list_model)
 
     def show_info_student(self, value):
-        self.ui_main.scrollArea_info_estudiante.setHidden(value)
+        # self.ui_main.scrollArea_info_estudiante.setHidden(value)
+        print(self.ui_main.listWidget_estudiantes.currentIndex().row())
         
     
 class AddStudent(QWidget):
@@ -74,6 +83,9 @@ class AddStudent(QWidget):
         
         self.load_discapacidades()
         
+        # guardar estudiante
+        self.ui_addstu.pushButton_save.clicked.connect(self.add_student)
+        
     def on_focus_change(self):
        
         if not self.isActiveWindow():
@@ -88,12 +100,6 @@ class AddStudent(QWidget):
         self.add_shool = AddSchool()
         self.add_shool.show()
         
-    def add_student(self):
-        # pendiente datos y validacion
-        flag = add_student_control()
-        if flag:
-            print('estudiante agregado')
-            
     def load_schools(self):
         self.ui_addstu.comboBox_unidad_educativa.clear()
         self.ui_addstu.comboBox_unidad_educativa.addItem("Sin especificar")
@@ -126,6 +132,47 @@ class AddStudent(QWidget):
                 self.ui_addstu.listDiscapacidades.addItem(self.checkeable_combo.itemText(i))
 
     
+    def add_student(self):
+        # pendiente datos y validacion
+        
+        flag = add_student_control(
+            student_data=[
+                self.ui_addstu.lineEdit_cedula.text(),
+                self.ui_addstu.lineEdit_apellido.text(),
+                self.ui_addstu.lineEdit_nombre.text(),
+                self.ui_addstu.lineEdit_cedula_representante.text(),
+                self.ui_addstu.lineEdit_representante.text(),
+                date(
+                    self.ui_addstu.dateEdit_estudiante.date().year(), 
+                    self.ui_addstu.dateEdit_estudiante.date().month(),
+                    self.ui_addstu.dateEdit_estudiante.date().day()
+                ),
+                self.ui_addstu.lineEdit_direccion_est.text(),
+                self.ui_addstu.lineEdit_telefono.text(),
+                self.ui_addstu.checkBox_discapacidad.isChecked(),
+                None,
+                self.ui_addstu.comboBox_unidad_educativa.currentIndex()
+                
+            ]
+        )
+        if flag:
+            self.student_message = MessageDialog("Estudiante Agregado/a!")
+            self.student_message.show()
+            self.clear_student_fields()
+            print('estudiante agregado')
+    
+    def clear_student_fields(self):
+        self.ui_addstu.lineEdit_cedula.clear()
+        self.ui_addstu.lineEdit_apellido.clear()
+        self.ui_addstu.lineEdit_nombre.clear()
+        self.ui_addstu.lineEdit_cedula_representante.clear()
+        self.ui_addstu.lineEdit_representante.clear()
+        self.ui_addstu.lineEdit_direccion_est.clear()
+        self.ui_addstu.lineEdit_telefono.clear()
+        self.ui_addstu.checkBox_discapacidad.setChecked(False)
+        
+        
+        
         
          
         
