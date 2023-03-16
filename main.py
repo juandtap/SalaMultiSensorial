@@ -14,7 +14,7 @@ from View.components import CheckableComboBox, MessageDialog, AddSchool, AddDisc
 
 from Controller.student_control import add_student_control, get_student_list, get_student_by_id
 from Controller.school_control import add_school_control, get_all_schools, get_school_by_id
-
+from Controller.discapacidad_control import get_all_discapacidades, get_discapacidad_by_id
 
 
 class MainWindow(QMainWindow):
@@ -45,8 +45,7 @@ class MainWindow(QMainWindow):
         if student_list is not None:
             for st in student_list:
                 new_list.append(st.apellidos+' '+st.nombres+' '+st.cedula)
-        #list_model = QStringListModel()
-        #list_model.setStringList(new_list)
+        
         self.ui_main.listWidget_estudiantes.addItems(new_list)
         # self.ui_main.listWidget_estudiantes.setModel(list_model)
 
@@ -99,7 +98,8 @@ class AddStudent(QWidget):
         self.ui_addstu = Ui_Add_student()
         self.ui_addstu.setupUi(self)
         self.load_schools()
-        self.ui_addstu.pushButton_cancel.clicked.connect(self.close)
+        # cambiar por close
+        self.ui_addstu.pushButton_cancel.clicked.connect(self.get_student_discapacidades)
         self.ui_addstu.pushButton_add_unidad_educativa.clicked.connect(self.open_add_school)
         self.setFocus()
         # flags para recargar datos de los ComboBox
@@ -133,7 +133,8 @@ class AddStudent(QWidget):
     
         if self.isActiveWindow() and self.reload_flag:
             self.load_schools()
-            print("recargo combo")
+            self.load_discapacidades()
+            print("combos recargados")
             self.reload_flag = False
     
     def open_add_school(self):
@@ -155,15 +156,15 @@ class AddStudent(QWidget):
     def load_discapacidades(self):
         # cargar desde la base de datos 
         self.checkeable_combo.clear()
-        
-        for i in range(4):
-            if i == 0:
-                self.checkeable_combo.addItem("Sin especificar")
-                self.checkeable_combo.setItemChecked(i, False)
-            else:
-                self.checkeable_combo.addItem("Discapacidad {0}".format(str(i)))
-                self.checkeable_combo.setItemChecked(i, False)
+        discapacidades_list = get_all_discapacidades()
+        # primera opcion : Sin especificar
+        self.checkeable_combo.addItem("Sin especificar")
+        self.checkeable_combo.setItemChecked(0, False)
+        for i in range(len(discapacidades_list)):
+            self.checkeable_combo.addItem(discapacidades_list[i].nombre_discapacidad)
+            self.checkeable_combo.setItemChecked(i+1, False)
     
+    # agrega las discapacidades seleccionadas a un QlistWidget
     def get_selected_discapacidades(self):
         self.ui_addstu.listDiscapacidades.clear()
         for i in range(self.checkeable_combo.count()):
@@ -171,13 +172,23 @@ class AddStudent(QWidget):
             if self.checkeable_combo.itemChecked(i):
                 self.ui_addstu.listDiscapacidades.addItem(self.checkeable_combo.itemText(i))
 
+    # retorna una lista de discapacidaes del QlistWidget
+    def get_student_discapacidades(self):
+        
+        student_discapacidades = []
+        for i in range(self.ui_addstu.listDiscapacidades.count()):
+            student_discapacidades.append(self.ui_addstu.listDiscapacidades.item(i))
+        print("Discapacidade seleccionadas: ")
+        print(student_discapacidades)
+        return student_discapacidades
+    
     def open_add_discapacidad(self):
         self.add_discapacidad = AddDiscapacidad()
         self.add_discapacidad.show()
         
     
     def add_student(self):
-        # pendiente datos y validacion
+        # pendiente validacion
         
         flag = add_student_control(
             student_data=[
@@ -195,7 +206,9 @@ class AddStudent(QWidget):
                 self.ui_addstu.lineEdit_telefono.text(),
                 self.ui_addstu.checkBox_discapacidad.isChecked(),
                 None,
-                self.ui_addstu.comboBox_unidad_educativa.currentIndex()
+                self.ui_addstu.comboBox_unidad_educativa.currentIndex(),
+                # Se envia una lista de discapacidades seleccionadas
+                
                 
             ]
         )
