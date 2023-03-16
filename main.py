@@ -77,12 +77,18 @@ class MainWindow(QMainWindow):
         )
         self.ui_main.label_edad.setText(str(self.calculate_age(student.fecha_nacimiento)))
         
-        self.ui_main.label_unidad_educativa.setText(get_school_by_id(student.id_unidad_educativa).nombre)
-        
+        if student.id_unidad_educativa != 0:
+            self.ui_main.label_unidad_educativa.setText(get_school_by_id(student.id_unidad_educativa).nombre)
+        else:
+            self.ui_main.label_unidad_educativa.setText("Sin especificar")
+            
         self.ui_main.textEdit_discapacidad_est.clear()
-        for i in range(len(student.discapacidades)):
-            self.ui_main.textEdit_discapacidad_est.append(student.discapacidades[i].nombre_discapacidad)
-        
+        if len(student.discapacidades) != 0:
+            for i in range(len(student.discapacidades)):
+                self.ui_main.textEdit_discapacidad_est.append(student.discapacidades[i].nombre_discapacidad)
+        else:
+            self.ui_main.textEdit_discapacidad_est.append("Sin especificar")
+            
     def calculate_age(self, date):
         # Obtenemos la fecha actual
         current_date = date.today()
