@@ -3,8 +3,11 @@ sys.path.append(".")
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
 from PyQt5.QtCore import Qt
 from View.message_dialog_view import Ui_Message_dialog
+from View.add_discapacidad_view import Ui_Agregar_Discapacidades
 from View.add_school_view import Ui_add_Unidad_Educativa
 from Controller.school_control import add_school_control
+from Controller.discapacidad_control import add_discapacidad_control
+
 
 class AddSchool(QWidget):
     def __init__(self):
@@ -23,6 +26,24 @@ class AddSchool(QWidget):
             self.new_message = MessageDialog("Unidad Educativa Agregada!")
             self.new_message.show()
             self.ui_add_school.lineEdit_name_unidad_educativa.clear()
+
+class AddDiscapacidad(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.ui_add_dis = Ui_Agregar_Discapacidades()
+        self.ui_add_dis.setupUi(self)
+        self.ui_add_dis.pushButton_save.clicked.connect(self.add_discapacidad)
+        self.ui_add_dis.pushButton_close.clicked.connect(self.close)
+    
+    def add_discapacidad(self):
+        flag = False
+       
+        flag = add_discapacidad_control(self.ui_add_dis.line_discapacidad.text())
+        if flag:
+            self.new_message = MessageDialog("Discapacidad Agregada!")
+            self.new_message.show()
+            self.ui_add_dis.line_discapacidad.clear()
+    
 
 class MessageDialog(QWidget):
     def __init__(self, message):
@@ -66,3 +87,4 @@ class CheckableComboBox(QComboBox):
 	def itemChecked(self, index):
 		item = self.model().item(index, self.modelColumn())
 		return item.checkState() == Qt.Checked
+

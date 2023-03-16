@@ -1,6 +1,6 @@
 import sys
 sys.path.append(".")
-from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, LargeBinary, ForeignKey
+from sqlalchemy import create_engine, Table, Column, Integer, String, Date, Boolean, LargeBinary, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
@@ -28,6 +28,8 @@ class Estudiante(Base):
     discapacidad = Column(Boolean, default=False)
     fotografia = Column(LargeBinary)
     id_unidad_educativa = Column(Integer, ForeignKey('unidad_educativa.id'))
+    
+    discapacidades = relationship('Discapacidad',secondary='estudiante_discapacidad', back_populates='estudiantes')
     # unidad_educativa = relationship("Unidad_Educativa", back_populates="estudiantes")
     # extend_existing=True
     
@@ -37,12 +39,26 @@ class Unidad_Educativa(Base):
     id = Column(Integer, primary_key=True)
     nombre = Column(String(100))
     estudiantes = relationship('Estudiante', backref='unidad_educativa')
+
+class Discapacidad(Base):
+    __tablename__ = 'discapacidad'
+    id = Column(Integer, primary_key=True)
+    nombre_discapacidad = Column(String(100))
     
-# Crea la tabla en la base de datos
+    estudiantes = relationship('Estudiante',secondary='estudiante_discapacidad',back_populates='discapacidades')
+
+
+
+estudiante_discapacidad = Table('estudiante_discapacidad', Base.metadata,
+    Column('estudiante_id', Integer, ForeignKey('estudiante.id')),
+    Column('discapacidad_id', Integer, ForeignKey('discapacidad.id'))
+)
+
+# Crea las tablas en la base de datos
 Base.metadata.create_all(engine)
 
 # Crea una sesion para interactuar con la base de datos
 Session = sessionmaker(bind=engine)
 
 session = Session()
-print("debe imprimir esto")
+print("Modelo DB ejecutado/actualizado")

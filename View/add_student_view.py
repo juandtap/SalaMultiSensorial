@@ -99,7 +99,7 @@ class Ui_Add_student(object):
         font.setFamily("Arial")
         font.setPointSize(10)
         self.dateEdit_estudiante.setFont(font)
-        self.dateEdit_estudiante.setMinimumDate(QtCore.QDate(2004, 1, 1))
+        self.dateEdit_estudiante.setMinimumDate(QtCore.QDate(2010, 1, 1))
         self.dateEdit_estudiante.setObjectName("dateEdit_estudiante")
         self.gridLayout.addWidget(self.dateEdit_estudiante, 6, 1, 1, 2)
         self.lineEdit_cedula_representante = QtWidgets.QLineEdit(self.gridLayoutWidget)

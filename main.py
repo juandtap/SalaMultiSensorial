@@ -10,7 +10,7 @@ from datetime import date
 from View.main_window_view import Ui_MainWindow
 from View.add_student_view import Ui_Add_student
 
-from View.components import CheckableComboBox, MessageDialog, AddSchool
+from View.components import CheckableComboBox, MessageDialog, AddSchool, AddDiscapacidad
 
 from Controller.student_control import add_student_control, get_student_list, get_student_by_id
 from Controller.school_control import add_school_control, get_all_schools, get_school_by_id
@@ -121,6 +121,8 @@ class AddStudent(QWidget):
         
         self.load_discapacidades()
         
+        self.ui_addstu.pushButton_add_discapacidad.clicked.connect(self.open_add_discapacidad)
+        
         # guardar estudiante
         self.ui_addstu.pushButton_save.clicked.connect(self.add_student)
         
@@ -169,6 +171,10 @@ class AddStudent(QWidget):
             if self.checkeable_combo.itemChecked(i):
                 self.ui_addstu.listDiscapacidades.addItem(self.checkeable_combo.itemText(i))
 
+    def open_add_discapacidad(self):
+        self.add_discapacidad = AddDiscapacidad()
+        self.add_discapacidad.show()
+        
     
     def add_student(self):
         # pendiente datos y validacion
