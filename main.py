@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         self.ui_main = Ui_MainWindow()
         self.ui_main.setupUi(self)
         self.ui_main.scrollArea_info_estudiante.setHidden(True)
-        
+       
         self.ui_main.pushButton_add_estudiante.clicked.connect(self.open_add_student)
         # placeholder barra de busqueda
         self.ui_main.textEdit_search_bar.setText("")
@@ -177,7 +177,7 @@ class AddStudent(QWidget):
         
         student_discapacidades = []
         for i in range(self.ui_addstu.listDiscapacidades.count()):
-            student_discapacidades.append(self.ui_addstu.listDiscapacidades.item(i))
+            student_discapacidades.append(self.ui_addstu.listDiscapacidades.item(i).text())
         print("Discapacidade seleccionadas: ")
         print(student_discapacidades)
         return student_discapacidades
@@ -205,9 +205,9 @@ class AddStudent(QWidget):
                 self.ui_addstu.lineEdit_direccion_est.text(),
                 self.ui_addstu.lineEdit_telefono.text(),
                 self.ui_addstu.checkBox_discapacidad.isChecked(),
-                None,
+                None, # enviar imagen
                 self.ui_addstu.comboBox_unidad_educativa.currentIndex(),
-                # Se envia una lista de discapacidades seleccionadas
+                self.get_student_discapacidades()
                 
                 
             ]

@@ -217,6 +217,7 @@ class Ui_MainWindow(object):
         self.label_19.setObjectName("label_19")
         self.textEdit_discapacidad_est = QtWidgets.QTextEdit(self.scrollAreaWidgetContents)
         self.textEdit_discapacidad_est.setGeometry(QtCore.QRect(220, 350, 441, 101))
+        self.textEdit_discapacidad_est.setReadOnly(True)
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)

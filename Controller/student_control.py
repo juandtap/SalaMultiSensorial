@@ -1,7 +1,7 @@
 import sys
 sys.path.append(".")
 from Model.model import Estudiante,session
-
+from Controller.discapacidad_control import get_discapacidad_by_name
 # defino los metodo CRUD para estudiante
 
 # Create
@@ -21,6 +21,17 @@ def add_student_control(student_data):
         fotografia = student_data[9],
         id_unidad_educativa = student_data[10]
     )
+    
+    disc_list_objects = []
+    for i in range(len(student_data[11])):
+        disc_list_objects.append(get_discapacidad_by_name(student_data[11][i]))
+    
+    ## mostrar elementos prueba
+    print("lista de objetos recuperada con get_discapacidad_by_name:")
+    for i in range(len(disc_list_objects)):
+        print(disc_list_objects[i].nombre_discapacidad)
+        new_student.discapacidades.append(disc_list_objects[i])
+    
     session.add(new_student)
     session.commit()
     session.close()

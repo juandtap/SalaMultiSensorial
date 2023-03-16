@@ -21,3 +21,6 @@ def get_all_discapacidades():
 
 def get_discapacidad_by_id(dis_id):
     return session.query(Discapacidad).filter_by(id=dis_id).first()
+
+def get_discapacidad_by_name(dis_name):
+    return session.query(Discapacidad).filter_by(nombre_discapacidad=dis_name).first()
