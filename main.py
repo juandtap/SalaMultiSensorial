@@ -79,6 +79,10 @@ class MainWindow(QMainWindow):
         
         self.ui_main.label_unidad_educativa.setText(get_school_by_id(student.id_unidad_educativa).nombre)
         
+        self.ui_main.textEdit_discapacidad_est.clear()
+        for i in range(len(student.discapacidades)):
+            self.ui_main.textEdit_discapacidad_est.append(student.discapacidades[i].nombre_discapacidad)
+        
     def calculate_age(self, date):
         # Obtenemos la fecha actual
         current_date = date.today()
@@ -98,8 +102,8 @@ class AddStudent(QWidget):
         self.ui_addstu = Ui_Add_student()
         self.ui_addstu.setupUi(self)
         self.load_schools()
-        # cambiar por close
-        self.ui_addstu.pushButton_cancel.clicked.connect(self.get_student_discapacidades)
+       
+        self.ui_addstu.pushButton_cancel.clicked.connect(self.close)
         self.ui_addstu.pushButton_add_unidad_educativa.clicked.connect(self.open_add_school)
         self.setFocus()
         # flags para recargar datos de los ComboBox
