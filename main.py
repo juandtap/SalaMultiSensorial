@@ -9,13 +9,13 @@ from datetime import date
 
 from View.main_window_view import Ui_MainWindow
 from View.add_student_view import Ui_Add_student
-from View.add_school_view import Ui_add_Unidad_Educativa
-from View.message_dialog_view import Ui_Message_dialog
+
+from View.components import CheckableComboBox, MessageDialog, AddSchool
 
 from Controller.student_control import add_student_control, get_student_list, get_student_by_id
 from Controller.school_control import add_school_control, get_all_schools, get_school_by_id
 
-from PyQt5.QtCore import QStringListModel
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -208,83 +208,7 @@ class AddStudent(QWidget):
         self.ui_addstu.lineEdit_direccion_est.clear()
         self.ui_addstu.lineEdit_telefono.clear()
         self.ui_addstu.checkBox_discapacidad.setChecked(False)
-        
-        
-        
-        
-         
-        
-    
-     
-class CheckableComboBox(QComboBox):
-	def __init__(self):
-		super().__init__()
-		self._changed = False
-
-		self.view().pressed.connect(self.handleItemPressed)
-
-	def setItemChecked(self, index, checked=False):
-		item = self.model().item(index, self.modelColumn()) # QStandardItem object
-
-		if checked:
-			item.setCheckState(Qt.Checked)
-		else:
-			item.setCheckState(Qt.Unchecked)
-
-	def handleItemPressed(self, index):
-		item = self.model().itemFromIndex(index)
-
-		if item.checkState() == Qt.Checked:
-			item.setCheckState(Qt.Unchecked)
-		else:
-			item.setCheckState(Qt.Checked)
-		self._changed = True
-
-
-	def hidePopup(self):
-		if not self._changed:
-			super().hidePopup()
-		self._changed = False
-
-	def itemChecked(self, index):
-		item = self.model().item(index, self.modelColumn())
-		return item.checkState() == Qt.Checked
-      
-            
-        
-class AddSchool(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.ui_add_school = Ui_add_Unidad_Educativa()
-        self.ui_add_school.setupUi(self)
-        self.ui_add_school.pushButton_cancel.clicked.connect(self.close)
-        self.ui_add_school.pushButton_save.clicked.connect(self.add_school)
-    
-    def add_school(self):
-        flag = False
-        
-        flag = add_school_control(self.ui_add_school.lineEdit_name_unidad_educativa.text())
-        
-        if flag:
-            self.new_message = MessageDialog("Unidad Educativa Agregada!")
-            self.new_message.show()
-            self.ui_add_school.lineEdit_name_unidad_educativa.clear()
-
-   
-   
-class MessageDialog(QWidget):
-    def __init__(self, message):
-        super().__init__()
-        self.ui_message = Ui_Message_dialog()
-        self.ui_message.setupUi(self)
-        self.message = message
-        self.ui_message.label_message.setText(self.message)
-        self.ui_message.pushButton_accept_dialog.clicked.connect(self.close)
-    
-    
-        
-    
-            
+                  
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main_window = MainWindow()
