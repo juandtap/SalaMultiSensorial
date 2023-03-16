@@ -19,3 +19,7 @@ def get_all_schools():
     # schools es una lista de objetos 'Unidad_educativa
     school_list = session.query(Unidad_Educativa).all()
     return school_list
+
+def get_school_by_id(school_id):
+    return session.query(Unidad_Educativa).filter_by(id=school_id).first()
+    

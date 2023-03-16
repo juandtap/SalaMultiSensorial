@@ -29,3 +29,7 @@ def add_student_control(student_data):
 def get_student_list():
     student_list = session.query(Estudiante).all()
     return student_list
+
+def get_student_by_id(student_id):
+    student = session.query(Estudiante).filter_by(id=student_id).first()
+    return student

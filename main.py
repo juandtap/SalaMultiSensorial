@@ -12,8 +12,8 @@ from View.add_student_view import Ui_Add_student
 from View.add_school_view import Ui_add_Unidad_Educativa
 from View.message_dialog_view import Ui_Message_dialog
 
-from Controller.student_control import add_student_control, get_student_list
-from Controller.school_control import add_school_control, get_all_schools
+from Controller.student_control import add_student_control, get_student_list, get_student_by_id
+from Controller.school_control import add_school_control, get_all_schools, get_school_by_id
 
 from PyQt5.QtCore import QStringListModel
 
@@ -22,8 +22,8 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui_main = Ui_MainWindow()
         self.ui_main.setupUi(self)
-        # self.show_student_list()
-        self.show_info_student(False)
+        self.ui_main.scrollArea_info_estudiante.setHidden(True)
+        
         self.ui_main.pushButton_add_estudiante.clicked.connect(self.open_add_student)
         # placeholder barra de busqueda
         self.ui_main.textEdit_search_bar.setText("")
@@ -50,10 +50,48 @@ class MainWindow(QMainWindow):
         self.ui_main.listWidget_estudiantes.addItems(new_list)
         # self.ui_main.listWidget_estudiantes.setModel(list_model)
 
-    def show_info_student(self, value):
-        # self.ui_main.scrollArea_info_estudiante.setHidden(value)
-        print(self.ui_main.listWidget_estudiantes.currentIndex().row())
+    def show_info_student(self):
+        selected_student_id = self.ui_main.listWidget_estudiantes.currentIndex().row()+1
+        if selected_student_id > 0:
+            self.ui_main.scrollArea_info_estudiante.setHidden(False)
+            print("Lista: "+str(selected_student_id))
+            # Cargar Datos de estudiante desde la base de datos:
+            sel_student = get_student_by_id(selected_student_id)
+            print(sel_student.nombres + " "+ sel_student.apellidos)
+            self.load_info_student(sel_student)
+        else:
+            self.ui_main.scrollArea_info_estudiante.setHidden(True)
+    
+    def load_info_student(self, student):
+        self.ui_main.label_cedula.setText(student.cedula)
+        self.ui_main.label_apellido.setText(student.apellidos)
+        self.ui_main.label_nombre.setText(student.nombres)
+        self.ui_main.label_cedula_representante.setText(student.cedula_representante)
+        self.ui_main.label_representante.setText(student.nombre_representante)
+        self.ui_main.label_direccion.setText(student.direccion)
+        self.ui_main.label_telefonos.setText(student.telefonos)
+        self.ui_main.label_fecha_nac.setText(
+            str(student.fecha_nacimiento.day)+"/"+
+            str(student.fecha_nacimiento.month)+"/"+
+            str(student.fecha_nacimiento.year)   
+                
+        )
+        self.ui_main.label_edad.setText(str(self.calculate_age(student.fecha_nacimiento)))
         
+        self.ui_main.label_unidad_educativa.setText(get_school_by_id(student.id_unidad_educativa).nombre)
+        
+    def calculate_age(self, date):
+        # Obtenemos la fecha actual
+        current_date = date.today()
+    
+        # Calculamos la edad restando el año actual menos el año de nacimiento
+        age = current_date.year - date.year
+    
+        # Si el cumpleaños de la persona aún no ha llegado en el año actual, restamos 1 a la edad
+        if (current_date.month, current_date.day) < (date.month, date.day):
+            age -= 1
+        
+        return age
     
 class AddStudent(QWidget):
     def __init__(self):

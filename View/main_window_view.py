@@ -164,7 +164,7 @@ class Ui_MainWindow(object):
         self.label_13.setFont(font)
         self.label_13.setObjectName("label_13")
         self.label_unidad_educativa = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.label_unidad_educativa.setGeometry(QtCore.QRect(380, 170, 211, 21))
+        self.label_unidad_educativa.setGeometry(QtCore.QRect(380, 170, 290, 21))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
