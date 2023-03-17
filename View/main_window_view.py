@@ -20,7 +20,7 @@ class Ui_MainWindow(object):
         MainWindow.setBaseSize(QtCore.QSize(1280, 720))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.textEdit_search_bar = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit_search_bar = QtWidgets.QLineEdit(self.centralwidget)
         self.textEdit_search_bar.setGeometry(QtCore.QRect(20, 120, 441, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -48,12 +48,18 @@ class Ui_MainWindow(object):
 "")
         self.pushButton_add_estudiante.setObjectName("pushButton_add_estudiante")
         self.listWidget_estudiantes = QtWidgets.QListWidget(self.centralwidget)
-        self.listWidget_estudiantes.setGeometry(QtCore.QRect(20, 160, 441, 481))
+        self.listWidget_estudiantes.setGeometry(QtCore.QRect(20, 180, 441, 481))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
         self.listWidget_estudiantes.setFont(font)
         self.listWidget_estudiantes.setObjectName("listWidget_estudiantes")
+        
+        self.label_resultados = QtWidgets.QLabel()
+        self.label_resultados.setGeometry(QtCore.QRect(20,160,50,20))
+        self.label_resultados.setFont(font)
+        self.label_resultados.setObjectName("label_resultados")
+        
         self.scrollArea_info_estudiante = QtWidgets.QScrollArea(self.centralwidget)
         self.scrollArea_info_estudiante.setGeometry(QtCore.QRect(480, 160, 781, 481))
         font = QtGui.QFont()
@@ -334,11 +340,11 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Sala Multisensorial"))
-        self.textEdit_search_bar.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Arial\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Buscar Estudiante (nombre o cedula)</p></body></html>"))
+#         self.textEdit_search_bar.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+# "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+# "p, li { white-space: pre-wrap; }\n"
+# "</style></head><body style=\" font-family:\'Arial\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+# "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Buscar Estudiante (nombre o cedula)</p></body></html>"))
         self.pushButton_add_estudiante.setText(_translate("MainWindow", "Agregar Estudiante"))
         self.label_apellido.setText(_translate("MainWindow", "Tapia Vasquez"))
         self.label_imagen.setText(_translate("MainWindow", "Sin Imagen"))

@@ -37,10 +37,18 @@ def add_student_control(student_data):
     session.close()
     return True
 # Read
-def get_student_list():
+def get_all_students():
     student_list = session.query(Estudiante).all()
     return student_list
 
 def get_student_by_id(student_id):
     student = session.query(Estudiante).filter_by(id=student_id).first()
     return student
+
+def get_student_by_cedula(student_cedula):
+    return session.query(Estudiante).filter_by(cedula=student_cedula).first()
+
+# Busqueda de estudiantes por nombre o apellido
+
+def get_student_by_names(search):
+    pass

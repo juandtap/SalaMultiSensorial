@@ -1,7 +1,7 @@
 
 import sys
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QCompleter
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtCore import Qt
 
@@ -12,7 +12,7 @@ from View.add_student_view import Ui_Add_student
 
 from View.components import CheckableComboBox, MessageDialog, AddSchool, AddDiscapacidad
 
-from Controller.student_control import add_student_control, get_student_list, get_student_by_id
+from Controller.student_control import add_student_control, get_all_students, get_student_by_id, get_student_by_cedula
 from Controller.school_control import add_school_control, get_all_schools, get_school_by_id
 from Controller.discapacidad_control import get_all_discapacidades, get_discapacidad_by_id
 
@@ -27,35 +27,42 @@ class MainWindow(QMainWindow):
         self.ui_main.pushButton_add_estudiante.clicked.connect(self.open_add_student)
         # placeholder barra de busqueda
         self.ui_main.textEdit_search_bar.setText("")
-        self.ui_main.textEdit_search_bar.setPlaceholderText("Buscar Estudiante (nombre o cedula)")
+        self.ui_main.textEdit_search_bar.setPlaceholderText("Buscar Estudiante (Apellidos o Nombres)")
         
         # metodo temporal, se implementara barra de busqueda
-        self.show_student_list()
+        
         self.ui_main.listWidget_estudiantes.clicked.connect(self.show_info_student)
         
-        
+        # barra de busqueda sin el Qcompleter
+        self.ui_main.textEdit_search_bar.textChanged.connect(self.search_students)
+        self.ui_main.label_resultados.setText("Sin resultados")
+        self.ui_main.label_resultados.show()
     def open_add_student(self):
         self.add_stu = AddStudent()
         self.add_stu.show()
         
     
     def show_student_list(self):
-        student_list = get_student_list()
+        student_list = get_all_students()
         new_list = []
         if student_list is not None:
             for st in student_list:
-                new_list.append(st.apellidos+' '+st.nombres+' '+st.cedula)
+                new_list.append(st.apellidos+' '+st.nombres+' - '+st.cedula)
         
         self.ui_main.listWidget_estudiantes.addItems(new_list)
+        return new_list
         # self.ui_main.listWidget_estudiantes.setModel(list_model)
 
     def show_info_student(self):
-        selected_student_id = self.ui_main.listWidget_estudiantes.currentIndex().row()+1
-        if selected_student_id > 0:
+        selected_student = self.ui_main.listWidget_estudiantes.selectedItems()[0].text()
+        print('texto de lista selccionada')
+        print(selected_student)
+        print('cedula recortada')
+        print(self.get_selected_cedula(selected_student))
+        if selected_student is not None:
             self.ui_main.scrollArea_info_estudiante.setHidden(False)
-            print("Lista: "+str(selected_student_id))
             # Cargar Datos de estudiante desde la base de datos:
-            sel_student = get_student_by_id(selected_student_id)
+            sel_student = get_student_by_cedula(self.get_selected_cedula(selected_student))
             print(sel_student.nombres + " "+ sel_student.apellidos)
             self.load_info_student(sel_student)
         else:
@@ -102,13 +109,22 @@ class MainWindow(QMainWindow):
         
         return age
     
+    def search_students(self):
+        pass
+    
+    def get_selected_cedula(self, selected_student):
+        return selected_student.split('-')[-1].strip()
+        
+        
+        
+        
 class AddStudent(QWidget):
     def __init__(self):
         super().__init__()
         self.ui_addstu = Ui_Add_student()
         self.ui_addstu.setupUi(self)
         self.load_schools()
-       
+        
         self.ui_addstu.pushButton_cancel.clicked.connect(self.close)
         self.ui_addstu.pushButton_add_unidad_educativa.clicked.connect(self.open_add_school)
         self.setFocus()
