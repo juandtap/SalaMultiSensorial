@@ -12,7 +12,7 @@ from View.add_student_view import Ui_Add_student
 
 from View.components import CheckableComboBox, MessageDialog, AddSchool, AddDiscapacidad
 
-from Controller.student_control import add_student_control, get_all_students, get_student_by_id, get_student_by_cedula
+from Controller.student_control import add_student_control, get_all_students, get_student_by_id, get_student_by_cedula, get_student_by_names
 from Controller.school_control import add_school_control, get_all_schools, get_school_by_id
 from Controller.discapacidad_control import get_all_discapacidades, get_discapacidad_by_id
 
@@ -27,17 +27,17 @@ class MainWindow(QMainWindow):
         self.ui_main.pushButton_add_estudiante.clicked.connect(self.open_add_student)
         # placeholder barra de busqueda
        
-        self.ui_main.lineEdit.setPlaceholderText("Buscar Estudiante (Apellidos o Nombres)")
+        self.ui_main.lineEdit_search_bar.setPlaceholderText("Buscar Estudiante (Apellidos o Nombres)")
         
-        # metodo temporal, se implementara barra de busqueda
+        
         
         self.ui_main.listWidget_estudiantes.clicked.connect(self.show_info_student)
         
         # barra de busqueda sin el Qcompleter
-        self.ui_main.lineEdit.textChanged.connect(self.search_students)
+        self.ui_main.lineEdit_search_bar.textChanged.connect(self.search_students)
         # Mostrar mensaje cuando no hay resultados de la busqueda
         #self.ui_main.label_search_results.setText("Sin resultados")
-        self.show_student_list()
+        
         
     def open_add_student(self):
         self.add_stu = AddStudent()
@@ -112,7 +112,17 @@ class MainWindow(QMainWindow):
         return age
     
     def search_students(self):
-        pass
+        if len(self.ui_main.lineEdit_search_bar.text()) >= 3:
+            self.ui_main.listWidget_estudiantes.clear()
+            # busqueda 
+            list_search = get_student_by_names(self.ui_main.lineEdit_search_bar.text().strip())
+            if len(list_search) > 0:
+                for st in list_search:
+                    print(st.apellidos+" "+st.nombres+" "+st.cedula)
+                    self.ui_main.listWidget_estudiantes.addItem(st.apellidos+" "+st.nombres+" - "+st.cedula)
+            else:
+                self.ui_main.label_search_results.setText("Sin resultados")
+    
     
     def get_selected_cedula(self, selected_student):
         return selected_student.split('-')[-1].strip()

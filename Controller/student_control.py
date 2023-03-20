@@ -1,6 +1,7 @@
 import sys
 sys.path.append(".")
 from Model.model import Estudiante,session
+from sqlalchemy import or_
 from Controller.discapacidad_control import get_discapacidad_by_name
 # defino los metodo CRUD para estudiante
 
@@ -50,5 +51,5 @@ def get_student_by_cedula(student_cedula):
 
 # Busqueda de estudiantes por nombre o apellido
 
-def get_student_by_names(search):
-    pass
+def get_student_by_names(search_text):
+    return session.query(Estudiante).filter(Estudiante.nombres.like("%"+search_text+"%") |Estudiante.apellidos.like("%"+search_text+"%")).all()
