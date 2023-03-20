@@ -1,10 +1,10 @@
 
 import sys
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QCompleter
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QCompleter, QFileDialog
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtCore import Qt
-
+import cv2, imutils
 from datetime import date
 
 from View.main_window_view import Ui_MainWindow
@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
 
     def show_info_student(self):
         selected_student = self.ui_main.listWidget_estudiantes.selectedItems()[0].text()
-        print('texto de lista selccionada')
+        print('texto de lista seleccionada')
         print(selected_student)
         print('cedula recortada')
         print(self.get_selected_cedula(selected_student))
@@ -161,6 +161,9 @@ class AddStudent(QWidget):
         
         self.ui_addstu.pushButton_add_discapacidad.clicked.connect(self.open_add_discapacidad)
         
+        # cargar fotografia del estudiante
+        self.ui_addstu.pushButton_load_picture.clicked.connect(self.load_image)
+        
         # guardar estudiante
         self.ui_addstu.pushButton_save.clicked.connect(self.add_student)
         
@@ -224,6 +227,11 @@ class AddStudent(QWidget):
         self.add_discapacidad = AddDiscapacidad()
         self.add_discapacidad.show()
         
+    def load_image(self):
+        self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
+        print(self.filename)
+        self.ui_addstu.label_file_name.setText(self.filename)
+        
     
     def add_student(self):
         # pendiente validacion
@@ -255,6 +263,11 @@ class AddStudent(QWidget):
             self.student_message.show()
             self.clear_student_fields()
             print('estudiante agregado')
+        else:
+            self.student_message = MessageDialog("Estudiante ya existe!")
+            self.student_message.show()
+            self.clear_student_fields()
+            print("Estudiante ya existe!")
     
     def clear_student_fields(self):
         self.ui_addstu.lineEdit_cedula.clear()
