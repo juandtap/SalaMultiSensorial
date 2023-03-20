@@ -26,17 +26,19 @@ class MainWindow(QMainWindow):
        
         self.ui_main.pushButton_add_estudiante.clicked.connect(self.open_add_student)
         # placeholder barra de busqueda
-        self.ui_main.textEdit_search_bar.setText("")
-        self.ui_main.textEdit_search_bar.setPlaceholderText("Buscar Estudiante (Apellidos o Nombres)")
+       
+        self.ui_main.lineEdit.setPlaceholderText("Buscar Estudiante (Apellidos o Nombres)")
         
         # metodo temporal, se implementara barra de busqueda
         
         self.ui_main.listWidget_estudiantes.clicked.connect(self.show_info_student)
         
         # barra de busqueda sin el Qcompleter
-        self.ui_main.textEdit_search_bar.textChanged.connect(self.search_students)
-        self.ui_main.label_resultados.setText("Sin resultados")
-        self.ui_main.label_resultados.show()
+        self.ui_main.lineEdit.textChanged.connect(self.search_students)
+        # Mostrar mensaje cuando no hay resultados de la busqueda
+        #self.ui_main.label_search_results.setText("Sin resultados")
+        self.show_student_list()
+        
     def open_add_student(self):
         self.add_stu = AddStudent()
         self.add_stu.show()
