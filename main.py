@@ -10,7 +10,7 @@ from datetime import date
 from View.main_window_view import Ui_MainWindow
 from View.add_student_view import Ui_Add_student
 
-from View.components import CheckableComboBox, MessageDialog, AddSchool, AddDiscapacidad
+from View.components import CheckableComboBox, MessageDialog, AddSchool, AddDiscapacidad, EditStudent
 
 from Controller.student_control import add_student_control, get_all_students, get_student_by_id, get_student_by_cedula, get_student_by_names
 from Controller.school_control import add_school_control, get_all_schools, get_school_by_id
@@ -23,7 +23,10 @@ class MainWindow(QMainWindow):
         self.ui_main = Ui_MainWindow()
         self.ui_main.setupUi(self)
         self.ui_main.scrollArea_info_estudiante.setHidden(True)
-       
+        
+        # campo de discapacidades del estudiante no son editables
+        self.ui_main.textEdit_discapacidad_est.setReadOnly(True)
+        
         self.ui_main.pushButton_add_estudiante.clicked.connect(self.open_add_student)
         # placeholder barra de busqueda
        
@@ -33,17 +36,22 @@ class MainWindow(QMainWindow):
         
         self.ui_main.listWidget_estudiantes.clicked.connect(self.show_info_student)
         
-        # barra de busqueda sin el Qcompleter
+       
         self.ui_main.lineEdit_search_bar.textChanged.connect(self.search_students)
-        # Mostrar mensaje cuando no hay resultados de la busqueda
-        #self.ui_main.label_search_results.setText("Sin resultados")
         
+        # Editar estudiante
+        
+        self.ui_main.pushButton_edit_estudiante.clicked.connect(self.open_edit_student)
         
     def open_add_student(self):
         self.add_stu = AddStudent()
         self.add_stu.show()
         
-    
+    def open_edit_student(self):
+        self.edit_stu = EditStudent(get_student_by_cedula(self.ui_main.label_cedula.text()))
+        self.edit_stu.show()
+        
+    # no se esta llamando, considerar eliminar este metodo
     def show_student_list(self):
         student_list = get_all_students()
         new_list = []
@@ -107,7 +115,7 @@ class MainWindow(QMainWindow):
         # Calculamos la edad restando el año actual menos el año de nacimiento
         age = current_date.year - date.year
     
-        # Si el cumpleaños de la persona aún no ha llegado en el año actual, restamos 1 a la edad
+        # Si el cumpleaños de la persona aun no ha llegado en el anioo actual, se resta 1 a la edad
         if (current_date.month, current_date.day) < (date.month, date.day):
             age -= 1
         
@@ -116,6 +124,7 @@ class MainWindow(QMainWindow):
     def search_students(self):
         if len(self.ui_main.lineEdit_search_bar.text()) >= 3:
             self.ui_main.listWidget_estudiantes.clear()
+            self.ui_main.label_search_results.setText("")
             # busqueda 
             list_search = get_student_by_names(self.ui_main.lineEdit_search_bar.text().strip())
             if len(list_search) > 0:

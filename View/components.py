@@ -1,13 +1,13 @@
 import sys
 sys.path.append(".")
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QDate
 from View.message_dialog_view import Ui_Message_dialog
 from View.add_discapacidad_view import Ui_Agregar_Discapacidades
 from View.add_school_view import Ui_add_Unidad_Educativa
-from Controller.school_control import add_school_control
+from Controller.school_control import add_school_control, get_all_schools
 from Controller.discapacidad_control import add_discapacidad_control
-
+from View.edit_student_view import Ui_Add_student
 
 class AddSchool(QWidget):
     def __init__(self):
@@ -88,3 +88,45 @@ class CheckableComboBox(QComboBox):
 		item = self.model().item(index, self.modelColumn())
 		return item.checkState() == Qt.Checked
 
+class EditStudent(QWidget):
+    def __init__(self, student):
+        super().__init__()
+        self.ui_edit = Ui_Add_student()
+        self.ui_edit.setupUi(self)
+        self.student = student
+        self.ui_edit.lineEdit_cedula.setText(self.student.cedula)
+        self.ui_edit.lineEdit_cedula.setEnabled(False)
+        self.load_schools()
+        self.load_info_student()
+        
+        self.ui_edit.pushButton_cancel.clicked.connect(self.close)
+    
+    def load_schools(self):
+        self.ui_edit.comboBox_unidad_educativa.clear()
+        self.ui_edit.comboBox_unidad_educativa.addItem("Sin especificar")
+        # obtengo todos los objetos de tipo Unidad_educativa
+        school_list = get_all_schools()
+        # separo los nombres en otra lista
+        self.school_names = []
+        for sc in school_list:
+            self.school_names.append(sc.nombre)
+        self.ui_edit.comboBox_unidad_educativa.addItems(self.school_names)
+    
+    def load_info_student(self):
+        self.ui_edit.lineEdit_apellido.setText(self.student.apellidos)
+        self.ui_edit.lineEdit_nombre.setText(self.student.nombres)
+        self.ui_edit.lineEdit_cedula_representante.setText(self.student.cedula_representante)
+        self.ui_edit.lineEdit_representante.setText(self.student.nombre_representante)
+        self.ui_edit.dateEdit_estudiante.setDate(
+            QDate(
+                self.student.fecha_nacimiento.year,
+                self.student.fecha_nacimiento.month,
+                self.student.fecha_nacimiento.day
+            )
+        )
+        
+        self.ui_edit.lineEdit_telefono.setText(self.student.telefonos)
+        self.ui_edit.lineEdit_direccion_est.setText(self.student.direccion)
+        self.ui_edit.checkBox_discapacidad.setChecked(self.student.discapacidad)
+        self.ui_edit.comboBox_unidad_educativa.setCurrentIndex(self.student.id_unidad_educativa)
+        
