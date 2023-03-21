@@ -75,7 +75,9 @@ class MainWindow(QMainWindow):
         self.ui_main.label_apellido.setText(student.apellidos)
         self.ui_main.label_nombre.setText(student.nombres)
         self.ui_main.label_cedula_representante.setText(student.cedula_representante)
-        self.ui_main.label_representante.setText(student.nombre_representante)
+        if student.nombre_representante != "":
+            self.ui_main.label_representante.setText(student.nombre_representante)
+        else: self.ui_main.label_representante.setText("Sin especificar")
         self.ui_main.label_direccion.setText(student.direccion)
         self.ui_main.label_telefonos.setText(student.telefonos)
         self.ui_main.label_fecha_nac.setText(
@@ -161,6 +163,9 @@ class AddStudent(QWidget):
         
         self.ui_addstu.pushButton_add_discapacidad.clicked.connect(self.open_add_discapacidad)
         
+        # revisa que el campo cedula no exeda los 10 caracteres
+        self.ui_addstu.lineEdit_cedula.textChanged.connect(self.check_cedula_fields)
+        self.ui_addstu.lineEdit_cedula_representante.textChanged.connect(self.check_cedula_representate_fields)
         # cargar fotografia del estudiante
         self.ui_addstu.pushButton_load_picture.clicked.connect(self.load_image)
         
@@ -231,7 +236,18 @@ class AddStudent(QWidget):
         self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
         print(self.filename)
         self.ui_addstu.label_file_name.setText(self.filename)
-        
+    
+    # verifica que el campo cedula no exeda los 10 caracteres
+    def check_cedula_fields(self, text_cedula):
+        if len(text_cedula) > 10:
+            self.ui_addstu.lineEdit_cedula.setText(text_cedula[:10])
+            self.ui_addstu.lineEdit_cedula.setCursorPosition(10)
+    
+    def check_cedula_representate_fields(self, text_cedula):
+        if len(text_cedula) > 10:
+            self.ui_addstu.lineEdit_cedula_representante.setText(text_cedula[:10])
+            self.ui_addstu.lineEdit_cedula_representante.setCursorPosition(10)
+    
     
     def add_student(self):
         # pendiente validacion

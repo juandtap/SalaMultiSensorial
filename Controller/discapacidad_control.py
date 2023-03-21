@@ -6,7 +6,7 @@ from Model.model import Discapacidad, session
 
 def add_discapacidad_control(dis_name):
     
-    new_discapacidad = Discapacidad(nombre_discapacidad = dis_name)
+    new_discapacidad = Discapacidad(nombre_discapacidad = dis_name.upper())
     session.add(new_discapacidad)
     session.commit()
     session.close()

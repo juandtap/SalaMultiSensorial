@@ -9,16 +9,16 @@ from Controller.discapacidad_control import get_discapacidad_by_name
 # la funcion recibe una lista con los datos/atributos del estudiante
 def add_student_control(student_data):
     
-    if get_student_by_cedula(student_data[0]).cedula != student_data[0]:
+    if get_student_by_cedula(student_data[0]) is None:
     
         new_student = Estudiante(
             cedula = student_data[0],
-            apellidos = student_data[1],
-            nombres = student_data[2],
+            apellidos = student_data[1].upper(), #str
+            nombres = student_data[2].upper(), #str
             cedula_representante = student_data[3],
-            nombre_representante = student_data[4],
-            fecha_nacimiento = student_data[5],
-            direccion = student_data[6],
+            nombre_representante = student_data[4].upper(), #str
+            fecha_nacimiento = student_data[5], 
+            direccion = student_data[6].upper(),  #str
             telefonos = student_data[7],
             discapacidad = student_data[8],
             fotografia = student_data[9],
@@ -51,7 +51,9 @@ def get_student_by_id(student_id):
     return student
 
 def get_student_by_cedula(student_cedula):
-    return session.query(Estudiante).filter_by(cedula=student_cedula).first()
+    student = session.query(Estudiante).filter_by(cedula=student_cedula).first()
+    print(type(student))
+    return student
 
 # Busqueda de estudiantes por nombre o apellido
 
