@@ -8,6 +8,9 @@ from View.add_school_view import Ui_add_Unidad_Educativa
 from Controller.school_control import add_school_control, get_all_schools
 from Controller.discapacidad_control import add_discapacidad_control
 from View.edit_student_view import Ui_Add_student
+from Controller.student_control import update_student
+from Controller.discapacidad_control import get_all_discapacidades
+from datetime import date
 
 class AddSchool(QWidget):
     def __init__(self):
@@ -94,12 +97,29 @@ class EditStudent(QWidget):
         self.ui_edit = Ui_Add_student()
         self.ui_edit.setupUi(self)
         self.student = student
-        self.ui_edit.lineEdit_cedula.setText(self.student.cedula)
-        self.ui_edit.lineEdit_cedula.setEnabled(False)
+        self.ui_edit.pushButton_add_discapacidad.setEnabled(False)
+        self.ui_edit.pushButton_add_unidad_educativa.setEnabled(False)
+        #self.ui_edit.lineEdit_cedula.setEnabled(False)
         self.load_schools()
         self.load_info_student()
         
+         # calendar picker
+        self.ui_edit.dateEdit_estudiante.setCalendarPopup(True)
+        self.ui_edit.dateEdit_estudiante.setStyleSheet("background-color : rgb(200, 200, 200);")
+        
+        # ComboBox Opcion Multiple
+        self.checkeable_combo = CheckableComboBox()
+        self.ui_edit.gridLayout_2.addWidget(self.checkeable_combo, 1,1,1,1)
+        
+        self.load_discapacidades()
+         # eventos ComboBox Discapacidades
+        self.checkeable_combo.activated.connect(self.get_selected_discapacidades)
+         # revisa que el campo cedula no exeda los 10 caracteres
+        self.ui_edit.lineEdit_cedula.textChanged.connect(self.check_cedula_fields)
+        self.ui_edit.lineEdit_cedula_representante.textChanged.connect(self.check_cedula_representate_fields)
+        
         self.ui_edit.pushButton_cancel.clicked.connect(self.close)
+        self.ui_edit.pushButton_save.clicked.connect(self.edit_student)
     
     def load_schools(self):
         self.ui_edit.comboBox_unidad_educativa.clear()
@@ -113,6 +133,7 @@ class EditStudent(QWidget):
         self.ui_edit.comboBox_unidad_educativa.addItems(self.school_names)
     
     def load_info_student(self):
+        self.ui_edit.lineEdit_cedula.setText(self.student.cedula)
         self.ui_edit.lineEdit_apellido.setText(self.student.apellidos)
         self.ui_edit.lineEdit_nombre.setText(self.student.nombres)
         self.ui_edit.lineEdit_cedula_representante.setText(self.student.cedula_representante)
@@ -129,4 +150,85 @@ class EditStudent(QWidget):
         self.ui_edit.lineEdit_direccion_est.setText(self.student.direccion)
         self.ui_edit.checkBox_discapacidad.setChecked(self.student.discapacidad)
         self.ui_edit.comboBox_unidad_educativa.setCurrentIndex(self.student.id_unidad_educativa)
+        # cargar discapacidades
+        
+    
+    def load_discapacidades(self):
+        # cargar desde la base de datos 
+        self.checkeable_combo.clear()
+        discapacidades_list = get_all_discapacidades()
+        # primera opcion : Sin especificar
+        self.checkeable_combo.addItem("Sin especificar")
+        self.checkeable_combo.setItemChecked(0, False)
+        for i in range(len(discapacidades_list)):
+            self.checkeable_combo.addItem(discapacidades_list[i].nombre_discapacidad)
+            self.checkeable_combo.setItemChecked(i+1, False)
+    
+    
+    
+    
+    def get_selected_discapacidades(self):
+        self.ui_edit.listDiscapacidades.clear()
+        for i in range(self.checkeable_combo.count()):
+            print('Index: {0} is checked {1}'.format(i, self.checkeable_combo.itemChecked(i)))
+            if self.checkeable_combo.itemChecked(i):
+                self.ui_edit.listDiscapacidades.addItem(self.checkeable_combo.itemText(i))
+      
+    def get_student_discapacidades(self):
+        
+        student_discapacidades = []
+        for i in range(self.ui_edit.listDiscapacidades.count()):
+            student_discapacidades.append(self.ui_edit.listDiscapacidades.item(i).text())
+        print("Discapacidade seleccionadas: ")
+        print(student_discapacidades)
+        return student_discapacidades
+    
+    
+    
+    def check_cedula_fields(self, text_cedula):
+        if len(text_cedula) > 10:
+            self.ui_edit.lineEdit_cedula.setText(text_cedula[:10])
+            self.ui_edit.lineEdit_cedula.setCursorPosition(10)
+    
+    def check_cedula_representate_fields(self, text_cedula):
+        if len(text_cedula) > 10:
+            self.ui_edit.lineEdit_cedula_representante.setText(text_cedula[:10])
+            self.ui_edit.lineEdit_cedula_representante.setCursorPosition(10)
+    
+    def edit_student(self):
+        
+        flag = False
+        
+        new_student_data = [
+            self.ui_edit.lineEdit_cedula.text(),
+            self.ui_edit.lineEdit_apellido.text(),
+            self.ui_edit.lineEdit_nombre.text(),
+            self.ui_edit.lineEdit_cedula_representante.text(),
+            self.ui_edit.lineEdit_representante.text(),
+            date(
+                self.ui_edit.dateEdit_estudiante.date().year(),
+                self.ui_edit.dateEdit_estudiante.date().month(),
+                self.ui_edit.dateEdit_estudiante.date().day()
+            ),
+            self.ui_edit.lineEdit_direccion_est.text(),
+            self.ui_edit.lineEdit_telefono.text(),
+            self.ui_edit.checkBox_discapacidad.isChecked(),
+            None,
+            self.ui_edit.comboBox_unidad_educativa.currentIndex(),
+            self.get_student_discapacidades(),
+        ]
+        
+        flag = update_student(self.student.id,new_student_data)
+        
+        if flag:
+            self.edit_message = MessageDialog("Datos Estudiante Actualizados")
+            self.edit_message.show()
+            # cerrar ventana edicion estudiante
+            self.close()
+        else:
+            self.edit_message = MessageDialog("Error!")
+            self.edit_message.show()
+            # cerrar ventana edicion estudiante
+            self.close()
+            
         

@@ -5,7 +5,7 @@ from sqlalchemy import or_
 from Controller.discapacidad_control import get_discapacidad_by_name
 # defino los metodo CRUD para estudiante
 
-# Create
+# CREATE
 # la funcion recibe una lista con los datos/atributos del estudiante
 def add_student_control(student_data):
     
@@ -41,7 +41,7 @@ def add_student_control(student_data):
         return True
     else:
         return False
-# Read
+# READ
 def get_all_students():
     student_list = session.query(Estudiante).all()
     return student_list
@@ -59,3 +59,33 @@ def get_student_by_cedula(student_cedula):
 
 def get_student_by_names(search_text):
     return session.query(Estudiante).filter(Estudiante.nombres.like("%"+search_text+"%") |Estudiante.apellidos.like("%"+search_text+"%")).all()
+
+# UPDATE
+
+def update_student(student_id, new_student_data):
+    student_to_update = session.query(Estudiante).filter_by(id=student_id).first()
+    student_to_update.cedula = new_student_data[0]
+    student_to_update.apellidos = new_student_data[1].upper()  # str
+    student_to_update.nombres = new_student_data[2].upper()  # str
+    student_to_update.cedula_representante = new_student_data[3]
+    student_to_update.nombre_representante = new_student_data[4].upper() # str
+    student_to_update.fecha_nacimiento = new_student_data[5]
+    student_to_update.direccion = new_student_data[6].upper()  # str
+    student_to_update.telefonos = new_student_data[7]
+    student_to_update.discapacidad = new_student_data[8]
+    student_to_update.fotografia = new_student_data[9]
+    student_to_update.id_unidad_educativa = new_student_data[10]
+    disc_list_objects = []
+    for i in range(len(new_student_data[11])):
+        disc_list_objects.append(get_discapacidad_by_name(new_student_data[11][i]))
+        
+        ## mostrar elementos prueba
+    student_to_update.discapacidades.clear()
+    print("lista de objetos recuperada con get_discapacidad_by_name:")
+    for i in range(len(disc_list_objects)):
+        print(disc_list_objects[i].nombre_discapacidad)
+        student_to_update.discapacidades.append(disc_list_objects[i])
+    
+    session.commit()
+    session.close()
+    return True
