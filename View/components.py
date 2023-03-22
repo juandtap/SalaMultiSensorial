@@ -29,6 +29,10 @@ class AddSchool(QWidget):
             self.new_message = MessageDialog("Unidad Educativa Agregada!")
             self.new_message.show()
             self.ui_add_school.lineEdit_name_unidad_educativa.clear()
+        else:
+            self.new_message = MessageDialog("Unidad Educativa ya existe!")
+            self.new_message.show()
+            self.ui_add_school.lineEdit_name_unidad_educativa.clear()
 
 class AddDiscapacidad(QWidget):
     def __init__(self):
@@ -46,7 +50,11 @@ class AddDiscapacidad(QWidget):
             self.new_message = MessageDialog("Discapacidad Agregada!")
             self.new_message.show()
             self.ui_add_dis.line_discapacidad.clear()
-    
+        else:
+            self.new_message = MessageDialog("Discapacidad ya existe!")
+            self.new_message.show()
+            self.ui_add_dis.line_discapacidad.clear()
+            
 
 class MessageDialog(QWidget):
     def __init__(self, message):
