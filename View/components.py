@@ -101,7 +101,7 @@ class EditStudent(QWidget):
         self.ui_edit.pushButton_add_unidad_educativa.setEnabled(False)
         #self.ui_edit.lineEdit_cedula.setEnabled(False)
         self.load_schools()
-        self.load_info_student()
+        
         
          # calendar picker
         self.ui_edit.dateEdit_estudiante.setCalendarPopup(True)
@@ -120,6 +120,8 @@ class EditStudent(QWidget):
         
         self.ui_edit.pushButton_cancel.clicked.connect(self.close)
         self.ui_edit.pushButton_save.clicked.connect(self.edit_student)
+        
+        self.load_info_student()
     
     def load_schools(self):
         self.ui_edit.comboBox_unidad_educativa.clear()
@@ -151,7 +153,27 @@ class EditStudent(QWidget):
         self.ui_edit.checkBox_discapacidad.setChecked(self.student.discapacidad)
         self.ui_edit.comboBox_unidad_educativa.setCurrentIndex(self.student.id_unidad_educativa)
         # cargar discapacidades
+        self.load_discapacidades_from_student()
         
+    def load_discapacidades_from_student(self):
+        student_disc_list = []
+        for dis in self.student.discapacidades:
+            student_disc_list.append(dis)
+        print("Discapacidades del estudiante:")
+        student_disc_indexes = []
+        for i in range(len(student_disc_list)):
+            print(student_disc_list[i].nombre_discapacidad)
+            student_disc_indexes.append(student_disc_list[i].id)
+        # marcar items del checkComboBox
+        print("indices de las discapacidades del estudiante")
+        for indice in student_disc_indexes:
+            print(str(indice))
+            self.checkeable_combo.setItemChecked(indice, True)
+        
+        if len(student_disc_indexes) == 0:
+            self.checkeable_combo.setCurrentIndex(0)
+        else:
+            self.checkeable_combo.setCurrentIndex(student_disc_indexes[0])
     
     def load_discapacidades(self):
         # cargar desde la base de datos 
