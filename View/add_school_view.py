@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_add_Unidad_Educativa(object):
     def setupUi(self, add_Unidad_Educativa):
         add_Unidad_Educativa.setObjectName("add_Unidad_Educativa")
-        add_Unidad_Educativa.resize(600, 185)
-        add_Unidad_Educativa.setMinimumSize(QtCore.QSize(600, 185))
-        add_Unidad_Educativa.setMaximumSize(QtCore.QSize(600, 185))
+        add_Unidad_Educativa.resize(600, 160)
+        add_Unidad_Educativa.setMinimumSize(QtCore.QSize(600, 160))
+        add_Unidad_Educativa.setMaximumSize(QtCore.QSize(600, 160))
         add_Unidad_Educativa.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.pushButton_save = QtWidgets.QPushButton(add_Unidad_Educativa)
         self.pushButton_save.setGeometry(QtCore.QRect(170, 100, 93, 28))
@@ -81,5 +81,5 @@ class Ui_add_Unidad_Educativa(object):
         _translate = QtCore.QCoreApplication.translate
         add_Unidad_Educativa.setWindowTitle(_translate("add_Unidad_Educativa", "Agregar Unidad Educativa"))
         self.pushButton_save.setText(_translate("add_Unidad_Educativa", "Guardar"))
-        self.pushButton_cancel.setText(_translate("add_Unidad_Educativa", "Cancelar"))
+        self.pushButton_cancel.setText(_translate("add_Unidad_Educativa", "Cerrar"))
         self.label.setText(_translate("add_Unidad_Educativa", "Nombre Unidad Educativa"))

@@ -347,7 +347,7 @@ class Ui_Add_student(object):
         Add_student.setWindowTitle(_translate("Add_student", "Agregar Estudiante"))
         self.label.setText(_translate("Add_student", "Agregar Estudiante"))
         self.pushButton_save.setText(_translate("Add_student", "Guardar"))
-        self.pushButton_cancel.setText(_translate("Add_student", "Cancelar"))
+        self.pushButton_cancel.setText(_translate("Add_student", "Cerrar"))
         self.label_7.setText(_translate("Add_student", "Fecha Nacimiento*:"))
         self.label_8.setText(_translate("Add_student", "Unidad Educativa*:"))
         self.label_14.setText(_translate("Add_student", "Tamaño imagen 30x40cm (carnet)"))

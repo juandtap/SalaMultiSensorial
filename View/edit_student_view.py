@@ -47,6 +47,7 @@ class Ui_Add_student(object):
 "    border: 3px solid;\n"
 "}")
         self.pushButton_save.setObjectName("pushButton_save")
+        
         self.pushButton_cancel = QtWidgets.QPushButton(Add_student)
         self.pushButton_cancel.setGeometry(QtCore.QRect(660, 630, 111, 41))
         font = QtGui.QFont()
@@ -63,6 +64,26 @@ class Ui_Add_student(object):
 "    border: 3px solid;\n"
 "}")
         self.pushButton_cancel.setObjectName("pushButton_cancel")
+       
+        # boton eliminar inicio
+        
+        self.pushButton_delete = QtWidgets.QPushButton(Add_student)
+        self.pushButton_delete.setGeometry(QtCore.QRect(1100,630,111,41))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        self.pushButton_delete.setFont(font)
+        self.pushButton_delete.setStyleSheet("QPushButton {\n"
+"   border-radius: 10px;\n"
+"    background-color: rgb(255, 0, 0);\n"
+"  color: rgb(255, 255, 255); \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    border: 3px solid;\n"
+"}")
+        self.pushButton_delete.setObjectName("pushButton_delete")
+        # boton eliminar fin
         self.gridLayoutWidget = QtWidgets.QWidget(Add_student)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(20, 160, 591, 361))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
@@ -347,7 +368,7 @@ class Ui_Add_student(object):
         Add_student.setWindowTitle(_translate("Add_student", "Editar Estudiante"))
         self.label.setText(_translate("Add_student", "Editar Estudiante"))
         self.pushButton_save.setText(_translate("Add_student", "Guardar"))
-        self.pushButton_cancel.setText(_translate("Add_student", "Cancelar"))
+        self.pushButton_cancel.setText(_translate("Add_student", "Cerrar"))
         self.label_7.setText(_translate("Add_student", "Fecha Nacimiento*:"))
         self.label_8.setText(_translate("Add_student", "Unidad Educativa*:"))
         self.label_14.setText(_translate("Add_student", "Tamaño imagen 30x40cm (carnet)"))
@@ -368,3 +389,4 @@ class Ui_Add_student(object):
         self.pushButton_add_discapacidad.setText(_translate("Add_student", "+"))
         self.label_15.setText(_translate("Add_student", "Discapacidad:"))
         self.label_13.setText(_translate("Add_student", "Asociado a una discapacidad:"))
+        self.pushButton_delete.setText(_translate("Add_student", "Eliminar"))

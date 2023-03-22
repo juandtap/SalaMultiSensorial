@@ -81,5 +81,5 @@ class Ui_Agregar_Discapacidades(object):
         _translate = QtCore.QCoreApplication.translate
         Agregar_Discapacidades.setWindowTitle(_translate("Agregar_Discapacidades", "Agregar Discapacidad"))
         self.pushButton_save.setText(_translate("Agregar_Discapacidades", "Guardar"))
-        self.pushButton_close.setText(_translate("Agregar_Discapacidades", "Cancelar"))
+        self.pushButton_close.setText(_translate("Agregar_Discapacidades", "Cerrar"))
         self.label.setText(_translate("Agregar_Discapacidades", "Nombre Discapacidad"))
