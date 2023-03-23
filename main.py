@@ -3,6 +3,7 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QCompleter, QFileDialog
 from PyQt5 import QtGui, QtCore
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 import cv2, imutils
 from datetime import date
@@ -107,6 +108,20 @@ class MainWindow(QMainWindow):
                 self.ui_main.textEdit_discapacidad_est.append(student.discapacidades[i].nombre_discapacidad)
         else:
             self.ui_main.textEdit_discapacidad_est.append("Sin especificar")
+            
+        # mostrar imagen
+        if student.fotografia is None:
+            self.ui_main.label_imagen.setText("Sin imagen")
+        else:
+            pixmap = QPixmap()
+            pixmap.loadFromData(student.fotografia)
+            #self.ui_main.label_imagen.setPixmap(pixmap)
+            self.ui_main.label_imagen.setPixmap(pixmap.scaled(
+                self.ui_main.label_imagen.width(),
+                self.ui_main.label_imagen.height(),
+                aspectRatioMode=True
+            ))
+           
             
     def calculate_age(self, date):
         # Obtenemos la fecha actual
@@ -245,7 +260,7 @@ class AddStudent(QWidget):
         self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
         print(self.filename)
         self.ui_addstu.label_file_name.setText(self.filename)
-    
+        # self.image = cv2.imread(self.filename)
     # verifica que el campo cedula no exeda los 10 caracteres
     def check_cedula_fields(self, text_cedula):
         if len(text_cedula) > 10:
@@ -276,7 +291,7 @@ class AddStudent(QWidget):
                 self.ui_addstu.lineEdit_direccion_est.text(),
                 self.ui_addstu.lineEdit_telefono.text(),
                 self.ui_addstu.checkBox_discapacidad.isChecked(),
-                None, # enviar imagen
+                self.filename, # enviar  path imagen (str)
                 self.ui_addstu.comboBox_unidad_educativa.currentIndex(),
                 self.get_student_discapacidades()
                 
@@ -303,6 +318,8 @@ class AddStudent(QWidget):
         self.ui_addstu.lineEdit_direccion_est.clear()
         self.ui_addstu.lineEdit_telefono.clear()
         self.ui_addstu.checkBox_discapacidad.setChecked(False)
+        self.ui_addstu.label_file_name.clear()
+        
                   
 if __name__ == '__main__':
     app = QApplication(sys.argv)

@@ -10,7 +10,12 @@ from Controller.discapacidad_control import get_discapacidad_by_name
 def add_student_control(student_data):
     
     if get_student_by_cedula(student_data[0]) is None:
-    
+        
+        # convertir imagen a bytes
+        # el string con el path de la imagen esta en la posicion 9 student_data[9]
+        with open(student_data[9], "rb") as image_file:
+            image_bytes = image_file.read()
+        
         new_student = Estudiante(
             cedula = student_data[0],
             apellidos = student_data[1].upper(), #str
@@ -21,7 +26,7 @@ def add_student_control(student_data):
             direccion = student_data[6].upper(),  #str
             telefonos = student_data[7],
             discapacidad = student_data[8],
-            fotografia = student_data[9],
+            fotografia = image_bytes, # imagen bytes
             id_unidad_educativa = student_data[10]
         )
         
