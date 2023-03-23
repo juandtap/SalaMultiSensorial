@@ -12,7 +12,7 @@ from View.main_window_view import Ui_MainWindow
 from View.add_student_view import Ui_Add_student
 
 from View.components import CheckableComboBox, MessageDialog, AddSchool, AddDiscapacidad, EditStudent
-
+from View.module_components import ModuleSelection
 from Controller.student_control import add_student_control, get_all_students, get_student_by_id, get_student_by_cedula, get_student_by_names
 from Controller.school_control import add_school_control, get_all_schools, get_school_by_id
 from Controller.discapacidad_control import get_all_discapacidades, get_discapacidad_by_id
@@ -44,6 +44,10 @@ class MainWindow(QMainWindow):
         
         self.ui_main.pushButton_edit_estudiante.clicked.connect(self.open_edit_student)
         
+        # abrir ventana selccion de modulos
+        
+        self.ui_main.pushButton_goto_modules.clicked.connect(self.open_modules)
+        
     def open_add_student(self):
         self.add_stu = AddStudent()
         self.add_stu.show()
@@ -51,6 +55,8 @@ class MainWindow(QMainWindow):
     def open_edit_student(self):
         self.edit_stu = EditStudent(get_student_by_cedula(self.ui_main.label_cedula.text()))
         self.edit_stu.show()
+        
+    
         
     # no se esta llamando, considerar eliminar este metodo
     def show_student_list(self):
@@ -153,8 +159,10 @@ class MainWindow(QMainWindow):
     def get_selected_cedula(self, selected_student):
         return selected_student.split('-')[-1].strip()
         
-        
-        
+    
+    def open_modules(self):
+        self.modules = ModuleSelection(get_student_by_cedula(self.ui_main.label_cedula.text()))
+        self.modules.show()
         
 class AddStudent(QWidget):
     def __init__(self):
