@@ -1,6 +1,6 @@
 import sys
 sys.path.append(".")
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QFileDialog
 from PyQt5.QtCore import Qt, QDate
 from View.message_dialog_view import Ui_Message_dialog
 from View.add_discapacidad_view import Ui_Agregar_Discapacidades
@@ -109,7 +109,7 @@ class EditStudent(QWidget):
         self.ui_edit.pushButton_add_unidad_educativa.setEnabled(False)
         #self.ui_edit.lineEdit_cedula.setEnabled(False)
         self.load_schools()
-        
+        self.filename = None
         
          # calendar picker
         self.ui_edit.dateEdit_estudiante.setCalendarPopup(True)
@@ -128,6 +128,7 @@ class EditStudent(QWidget):
         
         self.ui_edit.pushButton_cancel.clicked.connect(self.close)
         self.ui_edit.pushButton_save.clicked.connect(self.edit_student)
+        self.ui_edit.pushButton_load_picture.clicked.connect(self.load_image)
         
         self.load_info_student()
     
@@ -163,6 +164,9 @@ class EditStudent(QWidget):
         # cargar discapacidades
         self.load_discapacidades_from_student()
         
+        self.ui_edit.label_file_name.setText("")
+        self.get_selected_discapacidades()
+        
     def load_discapacidades_from_student(self):
         student_disc_list = []
         for dis in self.student.discapacidades:
@@ -182,6 +186,8 @@ class EditStudent(QWidget):
             self.checkeable_combo.setCurrentIndex(0)
         else:
             self.checkeable_combo.setCurrentIndex(student_disc_indexes[0])
+        # cargarlas tambien a la lista
+        
     
     def load_discapacidades(self):
         # cargar desde la base de datos 
@@ -224,6 +230,11 @@ class EditStudent(QWidget):
         if len(text_cedula) > 10:
             self.ui_edit.lineEdit_cedula_representante.setText(text_cedula[:10])
             self.ui_edit.lineEdit_cedula_representante.setCursorPosition(10)
+            
+    def load_image(self):
+        self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
+        print(self.filename)
+        self.ui_edit.label_file_name.setText(self.filename)
     
     def edit_student(self):
         
@@ -243,7 +254,7 @@ class EditStudent(QWidget):
             self.ui_edit.lineEdit_direccion_est.text(),
             self.ui_edit.lineEdit_telefono.text(),
             self.ui_edit.checkBox_discapacidad.isChecked(),
-            None,
+            self.filename, # image path
             self.ui_edit.comboBox_unidad_educativa.currentIndex(),
             self.get_student_discapacidades(),
         ]

@@ -162,7 +162,7 @@ class AddStudent(QWidget):
         self.ui_addstu = Ui_Add_student()
         self.ui_addstu.setupUi(self)
         self.load_schools()
-        
+        self.filename = None
         self.ui_addstu.pushButton_cancel.clicked.connect(self.close)
         self.ui_addstu.pushButton_add_unidad_educativa.clicked.connect(self.open_add_school)
         self.setFocus()

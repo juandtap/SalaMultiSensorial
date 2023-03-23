@@ -380,7 +380,7 @@ class Ui_Add_student(object):
         self.label_file_name.setText(_translate("Add_student", "imagen cargada: nombrearchivo.png"))
         self.label_11.setText(_translate("Add_student", "Fotografia:"))
         self.label_5.setText(_translate("Add_student", "Cedula representante*:"))
-        self.pushButton_load_picture.setText(_translate("Add_student", "Cargar"))
+        self.pushButton_load_picture.setText(_translate("Add_student", "Cambiar"))
         self.comboBox_unidad_educativa.setItemText(0, _translate("Add_student", "Sin especificar"))
         self.label_2.setText(_translate("Add_student", "Cedula* :"))
         self.pushButton_add_unidad_educativa.setText(_translate("Add_student", "+"))

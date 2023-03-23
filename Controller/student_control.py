@@ -13,9 +13,10 @@ def add_student_control(student_data):
         
         # convertir imagen a bytes
         # el string con el path de la imagen esta en la posicion 9 student_data[9]
-        with open(student_data[9], "rb") as image_file:
-            image_bytes = image_file.read()
-        
+        if student_data[9] is not None:
+            with open(student_data[9], "rb") as image_file:
+                image_bytes = image_file.read()
+        else: image_bytes = None
         new_student = Estudiante(
             cedula = student_data[0],
             apellidos = student_data[1].upper(), #str
@@ -69,6 +70,11 @@ def get_student_by_names(search_text):
 
 def update_student(student_id, new_student_data):
     student_to_update = session.query(Estudiante).filter_by(id=student_id).first()
+    
+    if new_student_data[9] is not None:
+        with open(new_student_data[9], "rb") as image_file:
+            image_bytes = image_file.read()
+    else: image_bytes = None
     student_to_update.cedula = new_student_data[0]
     student_to_update.apellidos = new_student_data[1].upper()  # str
     student_to_update.nombres = new_student_data[2].upper()  # str
@@ -78,7 +84,8 @@ def update_student(student_id, new_student_data):
     student_to_update.direccion = new_student_data[6].upper()  # str
     student_to_update.telefonos = new_student_data[7]
     student_to_update.discapacidad = new_student_data[8]
-    student_to_update.fotografia = new_student_data[9]
+    if image_bytes is not None:
+        student_to_update.fotografia = image_bytes # image byte
     student_to_update.id_unidad_educativa = new_student_data[10]
     disc_list_objects = []
     for i in range(len(new_student_data[11])):
