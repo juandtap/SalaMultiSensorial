@@ -36,11 +36,16 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.setupUi(self)
         self.sesion = sesion
         
+        self.ui_mod_grafo.textEdit_instructions.setReadOnly(True)
+        
         self.set_module_images()
 
     def set_module_images(self):
         pixmap1 = QPixmap("Assets/modulo_1_grafomotricidad.jpg")
         self.ui_mod_grafo.label_module_image.setPixmap(
-            pixmap1.scaled(self.ui_mod_grafo.label_module_image.size(),
-            aspectRatioMode=True)
+            pixmap1.scaled(
+            self.ui_mod_grafo.label_module_image.width(),
+            self.ui_mod_grafo.label_module_image.height(),
+            aspectRatioMode=False
             )
+        )
