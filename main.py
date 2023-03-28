@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QComp
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
-import cv2, imutils
+
 from datetime import date
 
 from View.main_window_view import Ui_MainWindow
