@@ -63,7 +63,18 @@ class Sesion(Base):
     hora_inicio = Column(Time)
     hora_fin = Column(Time)
     id_estudiante = Column(Integer, ForeignKey('estudiante.id'))
+    modulos_grafomotricidad = relationship('ModuloGrafomotricidad', backref='sesion')
 
+class ModuloGrafomotricidad(Base):
+    __tablename__ = 'modulo_grafomotricidad'
+    id = Column(Integer, primary_key=True)
+    id_sesion = Column(Integer, ForeignKey('sesion.id'))
+    tiempo_limite = Column(Time)
+    tiempo_tomado = Column(Time)
+    aciertos = Column(Integer)
+    fallos = Column(Integer)
+    
+    
 # Crea las tablas en la base de datos
 Base.metadata.create_all(engine)
 
