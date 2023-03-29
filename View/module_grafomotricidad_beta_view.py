@@ -169,7 +169,11 @@ class Ui_Form_modulo_grafomotricidad(object):
 "\n"
 "QPushButton:pressed {\n"
 "    border: 3px solid;\n"
-"}")
+"}\n"
+"\n"
+"QPushButton:disabled {\n"
+"background-color:#A0A0A0;\n"
+"}\n")
         self.pushButton_stop.setObjectName("pushButton_stop")
         self.pushButton_save = QtWidgets.QPushButton(Form_modulo_grafomotricidad)
         self.pushButton_save.setGeometry(QtCore.QRect(970, 300, 101, 31))
@@ -206,7 +210,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.label_4.setText(_translate("Form_modulo_grafomotricidad", "MM:SS"))
         self.label_5.setText(_translate("Form_modulo_grafomotricidad", "Aciertos:"))
         self.label_6.setText(_translate("Form_modulo_grafomotricidad", "Fallos:"))
-        self.label_7.setText(_translate("Form_modulo_grafomotricidad", "Tiempo restante:"))
+        self.label_7.setText(_translate("Form_modulo_grafomotricidad", "Tiempo tomado:"))
         self.pushButton_start.setText(_translate("Form_modulo_grafomotricidad", "Iniciar"))
         self.pushButton_stop.setText(_translate("Form_modulo_grafomotricidad", "Detener"))
         self.pushButton_save.setText(_translate("Form_modulo_grafomotricidad", "Guardar"))
