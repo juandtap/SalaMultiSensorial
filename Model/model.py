@@ -1,6 +1,6 @@
 import sys
 sys.path.append(".")
-from sqlalchemy import create_engine, Table, Column, Integer, String, Date, Boolean, LargeBinary, ForeignKey
+from sqlalchemy import create_engine, Table, Column, Integer, String, Date, Boolean, LargeBinary, ForeignKey, Time
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
@@ -30,6 +30,8 @@ class Estudiante(Base):
     id_unidad_educativa = Column(Integer, ForeignKey('unidad_educativa.id'))
     
     discapacidades = relationship('Discapacidad',secondary='estudiante_discapacidad', back_populates='estudiantes')
+    
+    sesiones = relationship('Sesion', backref='estudiante')
     # unidad_educativa = relationship("Unidad_Educativa", back_populates="estudiantes")
     # extend_existing=True
     
@@ -53,6 +55,14 @@ estudiante_discapacidad = Table('estudiante_discapacidad', Base.metadata,
     Column('estudiante_id', Integer, ForeignKey('estudiante.id')),
     Column('discapacidad_id', Integer, ForeignKey('discapacidad.id'))
 )
+
+class Sesion(Base):
+    __tablename__ = 'sesion'
+    id = Column(Integer, primary_key=True)
+    fecha = Column(Date)
+    hora_inicio = Column(Time)
+    hora_fin = Column(Time)
+    id_estudiante = Column(Integer, ForeignKey('estudiante.id'))
 
 # Crea las tablas en la base de datos
 Base.metadata.create_all(engine)
