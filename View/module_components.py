@@ -1,4 +1,5 @@
 import sys
+import serial, time
 sys.path.append(".")
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
 from PyQt5.QtCore import Qt, QDate
@@ -49,3 +50,8 @@ class ModuleGrafomotricidad(QWidget):
             aspectRatioMode=False
             )
         )
+        
+    def start_listening_data(self):
+        # recibir datos por bluetooth-serial
+        serial_bluetooth = serial.Serial('COM6',9600)
+        pass
