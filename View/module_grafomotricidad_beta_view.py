@@ -79,10 +79,11 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.label_4.setGeometry(QtCore.QRect(890, 200, 55, 16))
         font = QtGui.QFont()
         font.setFamily("Arial")
+        font.setPointSize(8)
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
         self.formLayoutWidget = QtWidgets.QWidget(Form_modulo_grafomotricidad)
-        self.formLayoutWidget.setGeometry(QtCore.QRect(790, 390, 211, 101))
+        self.formLayoutWidget.setGeometry(QtCore.QRect(790, 390, 211, 128))
         self.formLayoutWidget.setObjectName("formLayoutWidget")
         self.formLayout = QtWidgets.QFormLayout(self.formLayoutWidget)
         self.formLayout.setContentsMargins(0, 0, 0, 0)
@@ -95,7 +96,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.label_5.setFont(font)
         self.label_5.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_5.setObjectName("label_5")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_5)
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_5)
         self.label_6 = QtWidgets.QLabel(self.formLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -103,7 +104,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.label_6.setFont(font)
         self.label_6.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_6.setObjectName("label_6")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_6)
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_6)
         self.label_7 = QtWidgets.QLabel(self.formLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -111,7 +112,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.label_7.setFont(font)
         self.label_7.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_7.setObjectName("label_7")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_7)
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.label_7)
         self.lineEdit_success = QtWidgets.QLineEdit(self.formLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -120,7 +121,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.lineEdit_success.setText("")
         self.lineEdit_success.setReadOnly(True)
         self.lineEdit_success.setObjectName("lineEdit_success")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.lineEdit_success)
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.lineEdit_success)
         self.lineEdit_fails = QtWidgets.QLineEdit(self.formLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -129,16 +130,27 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.lineEdit_fails.setText("")
         self.lineEdit_fails.setReadOnly(True)
         self.lineEdit_fails.setObjectName("lineEdit_fails")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.lineEdit_fails)
-        self.lineEdit_remaining_time = QtWidgets.QLineEdit(self.formLayoutWidget)
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.lineEdit_fails)
+        self.lineEdit_time_taken = QtWidgets.QLineEdit(self.formLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
-        self.lineEdit_remaining_time.setFont(font)
-        self.lineEdit_remaining_time.setText("")
-        self.lineEdit_remaining_time.setReadOnly(True)
-        self.lineEdit_remaining_time.setObjectName("lineEdit_remaining_time")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.lineEdit_remaining_time)
+        self.lineEdit_time_taken.setFont(font)
+        self.lineEdit_time_taken.setText("")
+        self.lineEdit_time_taken.setReadOnly(True)
+        self.lineEdit_time_taken.setObjectName("lineEdit_time_taken")
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.lineEdit_time_taken)
+        self.label_8 = QtWidgets.QLabel(self.formLayoutWidget)
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        self.label_8.setFont(font)
+        self.label_8.setStyleSheet("color: rgb(56, 71, 151);")
+        self.label_8.setObjectName("label_8")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_8)
+        self.lineEdit_limit_time = QtWidgets.QLineEdit(self.formLayoutWidget)
+        self.lineEdit_limit_time.setObjectName("lineEdit_limit_time")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.lineEdit_limit_time)
         self.pushButton_start = QtWidgets.QPushButton(Form_modulo_grafomotricidad)
         self.pushButton_start.setGeometry(QtCore.QRect(710, 300, 101, 31))
         font = QtGui.QFont()
@@ -153,6 +165,9 @@ class Ui_Form_modulo_grafomotricidad(object):
 "\n"
 "QPushButton:pressed {\n"
 "    border: 3px solid;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"background-color:#A0A0A0;\n"
 "}")
         self.pushButton_start.setObjectName("pushButton_start")
         self.pushButton_stop = QtWidgets.QPushButton(Form_modulo_grafomotricidad)
@@ -170,10 +185,9 @@ class Ui_Form_modulo_grafomotricidad(object):
 "QPushButton:pressed {\n"
 "    border: 3px solid;\n"
 "}\n"
-"\n"
 "QPushButton:disabled {\n"
 "background-color:#A0A0A0;\n"
-"}\n")
+"}")
         self.pushButton_stop.setObjectName("pushButton_stop")
         self.pushButton_save = QtWidgets.QPushButton(Form_modulo_grafomotricidad)
         self.pushButton_save.setGeometry(QtCore.QRect(970, 300, 101, 31))
@@ -189,6 +203,9 @@ class Ui_Form_modulo_grafomotricidad(object):
 "\n"
 "QPushButton:pressed {\n"
 "    border: 3px solid;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"background-color:#A0A0A0;\n"
 "}")
         self.pushButton_save.setObjectName("pushButton_save")
 
@@ -197,7 +214,7 @@ class Ui_Form_modulo_grafomotricidad(object):
 
     def retranslateUi(self, Form_modulo_grafomotricidad):
         _translate = QtCore.QCoreApplication.translate
-        Form_modulo_grafomotricidad.setWindowTitle(_translate("Form_modulo_grafomotricidad", "Form"))
+        Form_modulo_grafomotricidad.setWindowTitle(_translate("Form_modulo_grafomotricidad", "Modulo Grafomotricidad"))
         self.label.setText(_translate("Form_modulo_grafomotricidad", "MODULO: GRAFOMOTRICIDAD"))
         self.label_2.setText(_translate("Form_modulo_grafomotricidad", "Instrucciones"))
         self.textEdit_instructions.setHtml(_translate("Form_modulo_grafomotricidad", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -210,7 +227,8 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.label_4.setText(_translate("Form_modulo_grafomotricidad", "MM:SS"))
         self.label_5.setText(_translate("Form_modulo_grafomotricidad", "Aciertos:"))
         self.label_6.setText(_translate("Form_modulo_grafomotricidad", "Fallos:"))
-        self.label_7.setText(_translate("Form_modulo_grafomotricidad", "Tiempo tomado:"))
+        self.label_7.setText(_translate("Form_modulo_grafomotricidad", "Tiempo Tomado:"))
+        self.label_8.setText(_translate("Form_modulo_grafomotricidad", "Tiempo Limite"))
         self.pushButton_start.setText(_translate("Form_modulo_grafomotricidad", "Iniciar"))
         self.pushButton_stop.setText(_translate("Form_modulo_grafomotricidad", "Detener"))
         self.pushButton_save.setText(_translate("Form_modulo_grafomotricidad", "Guardar"))
