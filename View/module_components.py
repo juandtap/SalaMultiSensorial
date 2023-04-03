@@ -89,6 +89,8 @@ class ModuleGrafomotricidad(QWidget):
             print("tiempo total: ")
             print(self.limit_time.toString("mm:ss"))
             
+            self.ui_mod_grafo.lineEdit_limit_time.setText(self.limit_time.toString("mm:ss"))
+            
             serial_bluetooth = None
             try:
                 serial_bluetooth = serial.Serial('COM6',9600)
@@ -118,8 +120,8 @@ class ModuleGrafomotricidad(QWidget):
     def clear_fields(self):
         self.ui_mod_grafo.lineEdit_fails.setText("")
         self.ui_mod_grafo.lineEdit_success.setText("")
-        self.ui_mod_grafo.lineEdit_remaining_time.setText("")
-        
+        self.ui_mod_grafo.lineEdit_time_taken.setText("")
+        self.ui_mod_grafo.lineEdit_limit_time.setText("")
     
     
     def stop_listening_data(self):
@@ -127,7 +129,7 @@ class ModuleGrafomotricidad(QWidget):
         self.countdown_thread.stop()
         # considerar los minutos tambien
         time_taken = self.limit_time.addSecs(-(self.ui_mod_grafo.timeEdit_limit_time.time().second() + (self.ui_mod_grafo.timeEdit_limit_time.time().minute()*60)))
-        self.ui_mod_grafo.lineEdit_remaining_time.setText(
+        self.ui_mod_grafo.lineEdit_time_taken.setText(
             time_taken.toString("mm:ss")
         )
         print("contador detenido por el usuario")
@@ -144,7 +146,7 @@ class ModuleGrafomotricidad(QWidget):
         if time_left == QTime(0,0):
             self.countdown_thread.stop()
             print("se detuvo el contador")
-            self.ui_mod_grafo.lineEdit_remaining_time.setText(self.limit_time.toString('mm:ss'))
+            self.ui_mod_grafo.lineEdit_time_taken.setText(self.limit_time.toString('mm:ss'))
             self.ui_mod_grafo.pushButton_stop.setEnabled(False)
             
     def countdown_finished(self):
