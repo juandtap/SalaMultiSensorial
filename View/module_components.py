@@ -75,6 +75,7 @@ class ModuleGrafomotricidad(QWidget):
             # Inicio Thread cuenta regresiva
             self.countdown_thread = CountDownThread(self.ui_mod_grafo.timeEdit_limit_time)
             self.countdown_thread.update_signal.connect(self.update_timer)
+            self.countdown_thread.finished_signal.connect(self.countdown_finished)
             self.countdown_thread.start()
             
             
@@ -125,7 +126,7 @@ class ModuleGrafomotricidad(QWidget):
         #self.timer.stop()
         self.countdown_thread.stop()
         # considerar los minutos tambien
-        time_taken = self.limit_time.addSecs(-self.ui_mod_grafo.timeEdit_limit_time.time().second())
+        time_taken = self.limit_time.addSecs(-(self.ui_mod_grafo.timeEdit_limit_time.time().second() + (self.ui_mod_grafo.timeEdit_limit_time.time().minute()*60)))
         self.ui_mod_grafo.lineEdit_remaining_time.setText(
             time_taken.toString("mm:ss")
         )
@@ -135,28 +136,39 @@ class ModuleGrafomotricidad(QWidget):
         
     def update_timer(self, time_left):
         self.ui_mod_grafo.timeEdit_limit_time.setTime(time_left)
+        
         #remain_time = self.ui_mod_grafo.timeEdit_limit_time.time()
         #remain_time = remain_time.addSecs(-1)
         #self.ui_mod_grafo.timeEdit_limit_time.setTime(remain_time)
-        if self.ui_mod_grafo.timeEdit_limit_time.second() == 0 and self.ui_mod_grafo.timeEdit_limit_time.minute() == 0:
+        #if self.ui_mod_grafo.timeEdit_limit_time.time().second() == 0 and self.ui_mod_grafo.timeEdit_limit_time.time().minute() == 0:
+        if time_left == QTime(0,0):
             self.countdown_thread.stop()
             print("se detuvo el contador")
             self.ui_mod_grafo.lineEdit_remaining_time.setText(self.limit_time.toString('mm:ss'))
             self.ui_mod_grafo.pushButton_stop.setEnabled(False)
             
+    def countdown_finished(self):
+        self.ui_mod_grafo.timeEdit_limit_time.setTime(QTime(0,0))
+        self.ui_mod_grafo.pushButton_stop.setEnabled(False)
+    
     
 class CountDownThread(QThread):
         
     update_signal = pyqtSignal(QTime)
-        
+    finished_signal = pyqtSignal()
+
+    
     def __init__(self, time_edit):
             super().__init__()
             self.time_edit = time_edit
-
+            self.running = True
+            
     def run(self):
         time_left = self.time_edit.time()
-        while time_left > QTime(0, 0):
+        while time_left >= QTime(0, 0) and self.running:
             self.update_signal.emit(time_left)
             time_left = time_left.addSecs(-1)
             self.sleep(1)
-        
+            
+    def stop(self):
+        self.running = False
