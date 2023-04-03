@@ -2,7 +2,7 @@ import sys
 import serial, time
 sys.path.append(".")
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
-from PyQt5.QtCore import Qt, QDate, QTimer, QTime
+from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal
 from PyQt5.QtGui import QPixmap
 from View.module_selection_view import Ui_Form_seleccion_modulos
 from View.module_grafomotricidad_beta_view import Ui_Form_modulo_grafomotricidad
@@ -72,6 +72,13 @@ class ModuleGrafomotricidad(QWidget):
             port = self.com_port
             print("puerto com :"+port)
             
+            # Inicio Thread cuenta regresiva
+            self.countdown_thread = CountDownThread(self.ui_mod_grafo.timeEdit_limit_time)
+            self.countdown_thread.update_signal.connect(self.update_timer)
+            self.countdown_thread.start()
+            
+            
+            
             time_in_seconds = self.ui_mod_grafo.timeEdit_limit_time.time().second()
             time_in_minutes = self.ui_mod_grafo.timeEdit_limit_time.time().minute()
             self.limit_time_in_seconds = time_in_seconds + (time_in_minutes * 60)
@@ -92,7 +99,7 @@ class ModuleGrafomotricidad(QWidget):
             
             init_time = time.time()
             
-            self.timer.start(1000)
+            #self.timer.start(1000)
             
             if serial_bluetooth is not None:
             
@@ -115,7 +122,9 @@ class ModuleGrafomotricidad(QWidget):
     
     
     def stop_listening_data(self):
-        self.timer.stop()
+        #self.timer.stop()
+        self.countdown_thread.stop()
+        # considerar los minutos tambien
         time_taken = self.limit_time.addSecs(-self.ui_mod_grafo.timeEdit_limit_time.time().second())
         self.ui_mod_grafo.lineEdit_remaining_time.setText(
             time_taken.toString("mm:ss")
@@ -124,12 +133,30 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.pushButton_stop.setEnabled(False)
     
         
-    def update_timer(self):
-        remain_time = self.ui_mod_grafo.timeEdit_limit_time.time()
-        remain_time = remain_time.addSecs(-1)
-        self.ui_mod_grafo.timeEdit_limit_time.setTime(remain_time)
-        if remain_time.second() == 0 and remain_time.minute() == 0:
-            self.timer.stop()
+    def update_timer(self, time_left):
+        self.ui_mod_grafo.timeEdit_limit_time.setTime(time_left)
+        #remain_time = self.ui_mod_grafo.timeEdit_limit_time.time()
+        #remain_time = remain_time.addSecs(-1)
+        #self.ui_mod_grafo.timeEdit_limit_time.setTime(remain_time)
+        if self.ui_mod_grafo.timeEdit_limit_time.second() == 0 and self.ui_mod_grafo.timeEdit_limit_time.minute() == 0:
+            self.countdown_thread.stop()
             print("se detuvo el contador")
             self.ui_mod_grafo.lineEdit_remaining_time.setText(self.limit_time.toString('mm:ss'))
             self.ui_mod_grafo.pushButton_stop.setEnabled(False)
+            
+    
+class CountDownThread(QThread):
+        
+    update_signal = pyqtSignal(QTime)
+        
+    def __init__(self, time_edit):
+            super().__init__()
+            self.time_edit = time_edit
+
+    def run(self):
+        time_left = self.time_edit.time()
+        while time_left > QTime(0, 0):
+            self.update_signal.emit(time_left)
+            time_left = time_left.addSecs(-1)
+            self.sleep(1)
+        
