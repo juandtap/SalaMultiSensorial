@@ -75,13 +75,14 @@ class ModuleGrafomotricidad(QWidget):
             port = self.com_port
             print("puerto com :"+port)
             
+           
             # Inicio Thread cuenta regresiva
             self.countdown_thread = CountDownThread(self.ui_mod_grafo.timeEdit_limit_time)
             self.countdown_thread.update_signal.connect(self.update_timer)
             self.countdown_thread.finished_signal.connect(self.countdown_finished)
             self.countdown_thread.start()
             
-            
+             # Inicio Thread lectura de datos serial_bluetooth desde arduino
             
             time_in_seconds = self.ui_mod_grafo.timeEdit_limit_time.time().second()
             time_in_minutes = self.ui_mod_grafo.timeEdit_limit_time.time().minute()
@@ -94,32 +95,22 @@ class ModuleGrafomotricidad(QWidget):
             
             self.ui_mod_grafo.lineEdit_limit_time.setText(self.limit_time.toString("mm:ss"))
             
-            serial_bluetooth = None
-            try:
-                serial_bluetooth = serial.Serial('COM6',9600, timeout=1)
-                print("Conexion establecida")
-            except serial.SerialException as ex:
-                print("Sin conexion : "+str(ex))
             
+            self.serial_thread = ArduinoSerialThread(port=self.com_port, baudrate=9600, timeout=1, duration=self.limit_time_in_seconds)
+            self.serial_thread.data_received.connect(self.show_received_data)
+            self.serial_thread.start()
+            print("mando a iniciar hilo serial")
             
-            
-            init_time = time.time()
-            
-           
-            
-            if serial_bluetooth is not None:
-            
-                while (time.time() - init_time) < self.limit_time_in_seconds:
-                    data_in = serial_bluetooth.readline().decode().rstrip()
-                    if data_in:
-                        print("Dato recibido: " + data_in)
-                
-            print("Detenida la lectura de datos del arduino")
         else:
             print("Tiempo ingresado es cero")
             self.ui_mod_grafo.timeEdit_limit_time.setStyleSheet("color: red;")
         
-                   
+             
+    def show_received_data(self, data):
+        
+        print("Dato recibido : "+data)
+        self.ui_mod_grafo.lineEdit_success.setText(data)
+          
     def clear_fields(self):
         self.ui_mod_grafo.lineEdit_fails.setText("")
         self.ui_mod_grafo.lineEdit_success.setText("")
@@ -191,7 +182,7 @@ class ArduinoSerialThread(QThread):
         
     def run(self):
         
-       
+        print("se ejecuta el hilo serial")
         try:
             bluetooth_serial = serial.Serial(self.port, self.baudrate, timeout=self.timeout)
         except serial.SerialException as e:
