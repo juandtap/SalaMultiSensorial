@@ -44,7 +44,10 @@ class ModuleGrafomotricidad(QWidget):
         self.timer.timeout.connect(self.update_timer)
         self.set_module_images()
         
+        self.ui_mod_grafo.label_conn_status.setHidden(True)
+        self.ui_mod_grafo.label_9.setHidden(True)
         self.ui_mod_grafo.pushButton_stop.setEnabled(False)
+        
         
         self.ui_mod_grafo.pushButton_start.clicked.connect(self.start_listening_data)
         self.ui_mod_grafo.pushButton_stop.clicked.connect(self.stop_listening_data)
@@ -93,7 +96,7 @@ class ModuleGrafomotricidad(QWidget):
             
             serial_bluetooth = None
             try:
-                serial_bluetooth = serial.Serial('COM6',9600)
+                serial_bluetooth = serial.Serial('COM6',9600, timeout=1)
                 print("Conexion establecida")
             except serial.SerialException as ex:
                 print("Sin conexion : "+str(ex))
@@ -102,7 +105,7 @@ class ModuleGrafomotricidad(QWidget):
             
             init_time = time.time()
             
-            #self.timer.start(1000)
+           
             
             if serial_bluetooth is not None:
             
@@ -125,9 +128,9 @@ class ModuleGrafomotricidad(QWidget):
     
     
     def stop_listening_data(self):
-        #self.timer.stop()
+        
         self.countdown_thread.stop()
-        # considerar los minutos tambien
+        
         time_taken = self.limit_time.addSecs(-(self.ui_mod_grafo.timeEdit_limit_time.time().second() + (self.ui_mod_grafo.timeEdit_limit_time.time().minute()*60)))
         self.ui_mod_grafo.lineEdit_time_taken.setText(
             time_taken.toString("mm:ss")
@@ -137,12 +140,9 @@ class ModuleGrafomotricidad(QWidget):
     
         
     def update_timer(self, time_left):
+        print("entro al timer")
         self.ui_mod_grafo.timeEdit_limit_time.setTime(time_left)
         
-        #remain_time = self.ui_mod_grafo.timeEdit_limit_time.time()
-        #remain_time = remain_time.addSecs(-1)
-        #self.ui_mod_grafo.timeEdit_limit_time.setTime(remain_time)
-        #if self.ui_mod_grafo.timeEdit_limit_time.time().second() == 0 and self.ui_mod_grafo.timeEdit_limit_time.time().minute() == 0:
         if time_left == QTime(0,0):
             self.countdown_thread.stop()
             print("se detuvo el contador")
@@ -174,3 +174,46 @@ class CountDownThread(QThread):
             
     def stop(self):
         self.running = False
+        
+
+class ArduinoSerialThread(QThread):
+    
+    data_received = pyqtSignal(str)
+    stop_signal = pyqtSignal()
+    
+    def __init__(self, port, baudrate, timeout, duration, parent=None):
+        super().__init__(parent)
+        self.port = port
+        self.baudrate = baudrate
+        self.timeout = timeout
+        self.duration = duration
+        self.stopped = False
+        
+    def run(self):
+        
+       
+        try:
+            bluetooth_serial = serial.Serial(self.port, self.baudrate, timeout=self.timeout)
+        except serial.SerialException as e:
+            print("Error al intentar conectarse al puerto serial:", e)
+            self.finished.emit()
+            return
+        
+        # leer datos durante el tiempo especificado (self.duration)
+        
+        start_time = time.time()
+        while not self.stopped and time.time() - start_time < self.duration:
+            if bluetooth_serial.in_waiting:
+                data = bluetooth_serial.readline().decode().strip()
+                self.data_received.emit(data)
+                
+            if self.stop_signal.is_set():
+                self.stopped = True
+                self.stop_signal.clear()
+        
+        bluetooth_serial.close()
+        self.finished.emit()
+        self.quit()
+        
+    def stop(self):
+        self.stopped = True
