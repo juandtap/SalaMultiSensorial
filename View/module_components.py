@@ -1,5 +1,5 @@
 import sys
-import serial, time
+import serial, time, threading
 sys.path.append(".")
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal
@@ -170,7 +170,7 @@ class CountDownThread(QThread):
 class ArduinoSerialThread(QThread):
     
     data_received = pyqtSignal(str)
-    stop_signal = pyqtSignal()
+    
     
     def __init__(self, port, baudrate, timeout, duration, parent=None):
         super().__init__(parent)
@@ -179,6 +179,7 @@ class ArduinoSerialThread(QThread):
         self.timeout = timeout
         self.duration = duration
         self.stopped = False
+        self.stop_event = threading.Event()
         
     def run(self):
         
@@ -198,9 +199,9 @@ class ArduinoSerialThread(QThread):
                 data = bluetooth_serial.readline().decode().strip()
                 self.data_received.emit(data)
                 
-            if self.stop_signal.is_set():
+            if self.stop_event.is_set():
                 self.stopped = True
-                self.stop_signal.clear()
+                self.stop_event.clear()
         
         bluetooth_serial.close()
         self.finished.emit()
