@@ -1,6 +1,6 @@
 # este modulo es para obtener el puerto COM al que esta conectada
 # la PC por bluetooth
-
+# !!!!aun no se prueba !!!!
 import bluetooth
 
 target_name = "NombreDelDispositivoBluetooth"

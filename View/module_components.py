@@ -1,11 +1,14 @@
 import sys
-import serial, time, threading
+import serial, time, threading, datetime
 sys.path.append(".")
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal
 from PyQt5.QtGui import QPixmap
 from View.module_selection_view import Ui_Form_seleccion_modulos
 from View.module_grafomotricidad_beta_view import Ui_Form_modulo_grafomotricidad
+from Controller.session_control import add_sesion_module, get_sesion_by_id
+from Model.model import Sesion, ModuloGrafomotricidad
+from View.components import MessageDialog
 
 class ModuleSelection(QWidget):
     def __init__(self, student):
@@ -19,7 +22,13 @@ class ModuleSelection(QWidget):
         
     
     def open_module_grafomotricidad(self):
-        self.grafomotricidad = ModuleGrafomotricidad(None, self.ui_modules.lineEdit_com_port.text().strip())
+        sesion = Sesion(
+            fecha=datetime.now().date(), 
+            hora_inicio = datetime.now().time(), 
+            hora_fin = None, 
+            id_estudiante=self.student.id
+        )
+        self.grafomotricidad = ModuleGrafomotricidad(sesion, self.ui_modules.lineEdit_com_port.text().strip())
         self.grafomotricidad.show()
         
         
@@ -47,10 +56,11 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.label_conn_status.setHidden(True)
         self.ui_mod_grafo.label_9.setHidden(True)
         self.ui_mod_grafo.pushButton_stop.setEnabled(False)
-        
+        self.ui_mod_grafo.pushButton_save.setEnabled(False)
         
         self.ui_mod_grafo.pushButton_start.clicked.connect(self.start_listening_data)
         self.ui_mod_grafo.pushButton_stop.clicked.connect(self.stop_listening_data)
+        self.ui_mod_grafo.pushButton_save.clicked.connect(self.save_module_data)
 
     def set_module_images(self):
         pixmap1 = QPixmap("Assets/modulo_1_grafomotricidad.jpg")
@@ -69,6 +79,7 @@ class ModuleGrafomotricidad(QWidget):
         # puerto com, parametro junto con la sesion
             self.ui_mod_grafo.timeEdit_limit_time.setStyleSheet("color: black;")
             self.ui_mod_grafo.pushButton_stop.setEnabled(True)
+            self.ui_mod_grafo.pushButton_save.setEnabled(False)
             # limpia los campos
             self.clear_fields()
             
@@ -131,13 +142,33 @@ class ModuleGrafomotricidad(QWidget):
         
         self.countdown_thread.stop()
         
-        time_taken = self.limit_time.addSecs(-(self.ui_mod_grafo.timeEdit_limit_time.time().second() + (self.ui_mod_grafo.timeEdit_limit_time.time().minute()*60)))
+        self.time_taken = self.limit_time.addSecs(-(self.ui_mod_grafo.timeEdit_limit_time.time().second() + (self.ui_mod_grafo.timeEdit_limit_time.time().minute()*60)))
         self.ui_mod_grafo.lineEdit_time_taken.setText(
-            time_taken.toString("mm:ss")
+            self.time_taken.toString("mm:ss")
         )
         print("contador detenido por el usuario")
         self.ui_mod_grafo.pushButton_stop.setEnabled(False)
+        self.ui_mod_grafo.pushButton_save.setEnabled(True)
     
+    def save_module_data(self):
+        # Despues de que se haga detenido el contador se guarda la informaion 
+        new_module = ModuleGrafomotricidad (
+            tiempo_limite = self.limit_time,
+            tiempo_tomado = self.time_taken,
+            aciertos = self.success,
+            fallos = self.fails
+        )
+        
+        self.sesion.modulos_grafomotricidad.append(new_module)
+        
+        if add_sesion_module(self.sesion, new_module):
+            self.message_dialog = MessageDialog('Datos Guardados')
+            self.message_dialog.show()
+            self.clear_fields()
+        else:
+            self.message_dialog = MessageDialog('Error!')
+            self.message_dialog.show()
+        
         
     def update_timer(self, time_left):
         
@@ -152,7 +183,7 @@ class ModuleGrafomotricidad(QWidget):
     def countdown_finished(self):
         self.ui_mod_grafo.timeEdit_limit_time.setTime(QTime(0,0))
         self.ui_mod_grafo.pushButton_stop.setEnabled(False)
-    
+        self.ui_mod_grafo.pushButton_save.setEnabled(True)
     
 class CountDownThread(QThread):
         
