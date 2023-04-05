@@ -1,6 +1,9 @@
 import sys
-import serial, time, threading, datetime
+import serial, time, threading
+
 sys.path.append(".")
+from datetime import datetime
+from datetime import time as time2
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal
 from PyQt5.QtGui import QPixmap
@@ -23,7 +26,7 @@ class ModuleSelection(QWidget):
     
     def open_module_grafomotricidad(self):
         sesion = Sesion(
-            fecha=datetime.now().date(), 
+            fecha= datetime.now().date(), 
             hora_inicio = datetime.now().time(), 
             hora_fin = None, 
             id_estudiante=self.student.id
@@ -152,9 +155,9 @@ class ModuleGrafomotricidad(QWidget):
     
     def save_module_data(self):
         # Despues de que se haga detenido el contador se guarda la informaion 
-        new_module = ModuleGrafomotricidad (
-            tiempo_limite = self.limit_time,
-            tiempo_tomado = self.time_taken,
+        new_module = ModuloGrafomotricidad (
+            tiempo_limite = time2(0,self.limit_time.minute(),self.limit_time.second()),
+            tiempo_tomado = time2(0,self.time_taken.minute(),self.time_taken.second()),
             aciertos = self.success,
             fallos = self.fails
         )
@@ -178,10 +181,13 @@ class ModuleGrafomotricidad(QWidget):
             self.countdown_thread.stop()
             print("se detuvo el contador")
             self.ui_mod_grafo.lineEdit_time_taken.setText(self.limit_time.toString('mm:ss'))
+            self.time_taken = self.limit_time
             self.ui_mod_grafo.pushButton_stop.setEnabled(False)
+            self.ui_mod_grafo.pushButton_save.setEnabled(True)
             
     def countdown_finished(self):
         self.ui_mod_grafo.timeEdit_limit_time.setTime(QTime(0,0))
+        print("envia la signal de que el contador se detuvo solo")
         self.ui_mod_grafo.pushButton_stop.setEnabled(False)
         self.ui_mod_grafo.pushButton_save.setEnabled(True)
     
