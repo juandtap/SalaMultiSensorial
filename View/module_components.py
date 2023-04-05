@@ -9,6 +9,7 @@ from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal
 from PyQt5.QtGui import QPixmap
 from View.module_selection_view import Ui_Form_seleccion_modulos
 from View.module_grafomotricidad_beta_view import Ui_Form_modulo_grafomotricidad
+from View.module_components_2 import ModuleVumeter
 from Controller.session_control import add_sesion_module, get_sesion_by_id
 from Model.model import Sesion, ModuloGrafomotricidad
 from View.components import MessageDialog
@@ -22,7 +23,7 @@ class ModuleSelection(QWidget):
         self.load_info_student()
         
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
-        
+        self.ui_modules.pushButton_module_vumetro.clicked.connect(self.open_module_vumeter)
     
     def open_module_grafomotricidad(self):
         sesion = Sesion(
@@ -33,8 +34,17 @@ class ModuleSelection(QWidget):
         )
         self.grafomotricidad = ModuleGrafomotricidad(sesion, self.ui_modules.lineEdit_com_port.text().strip())
         self.grafomotricidad.show()
-        
-        
+    
+    def open_module_vumeter(self):
+        # sesion = Sesion(
+        #     fecha= datetime.now().date(), 
+        #     hora_inicio = datetime.now().time(), 
+        #     hora_fin = None, 
+        #     id_estudiante=self.student.id
+        # )
+        self.vumeter = ModuleVumeter(None, self.ui_modules.lineEdit_com_port.text().strip())
+        self.vumeter.show()
+
     def load_info_student(self):
         self.ui_modules.label_cedula.setText(self.student.cedula)
         self.ui_modules.label_apellidos.setText(self.student.apellidos)
