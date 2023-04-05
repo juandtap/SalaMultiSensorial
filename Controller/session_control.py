@@ -14,5 +14,7 @@ def add_sesion_module(new_sesion, new_module):
     flag = True
     return flag
     
+# Read
+
 def get_sesion_by_id(id_sesion):
     return session.query(Sesion).filter_by(id=id_sesion).first()

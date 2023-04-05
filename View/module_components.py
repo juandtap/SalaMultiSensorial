@@ -75,6 +75,7 @@ class ModuleGrafomotricidad(QWidget):
             )
         )
         
+           
     def start_listening_data(self):
         
         if ((self.ui_mod_grafo.timeEdit_limit_time.time().minute() != 0) or (self.ui_mod_grafo.timeEdit_limit_time.time().second())) != 0 :
