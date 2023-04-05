@@ -268,7 +268,7 @@ class AddStudent(QWidget):
         self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
         print(self.filename)
         self.ui_addstu.label_file_name.setText(self.filename)
-        # self.image = cv2.imread(self.filename)
+       
     # verifica que el campo cedula no exeda los 10 caracteres
     def check_cedula_fields(self, text_cedula):
         if len(text_cedula) > 10:

@@ -75,7 +75,10 @@ class ModuleGrafomotricidad(QWidget):
             port = self.com_port
             print("puerto com :"+port)
             
-           
+            # variables para guardar los aciertos y fallos
+            self.success = 0
+            self.fails = 0
+            
             # Inicio Thread cuenta regresiva
             self.countdown_thread = CountDownThread(self.ui_mod_grafo.timeEdit_limit_time)
             self.countdown_thread.update_signal.connect(self.update_timer)
@@ -109,7 +112,13 @@ class ModuleGrafomotricidad(QWidget):
     def show_received_data(self, data):
         
         print("Dato recibido : "+data)
-        self.ui_mod_grafo.lineEdit_success.setText(data)
+        
+        if data == '1':
+            self.success += 1
+        else:
+            self.fails += 1
+        self.ui_mod_grafo.lineEdit_success.setText(str(self.success))
+        self.ui_mod_grafo.lineEdit_fails.setText(str(self.fails))
           
     def clear_fields(self):
         self.ui_mod_grafo.lineEdit_fails.setText("")
@@ -131,7 +140,7 @@ class ModuleGrafomotricidad(QWidget):
     
         
     def update_timer(self, time_left):
-        print("entro al timer")
+        
         self.ui_mod_grafo.timeEdit_limit_time.setTime(time_left)
         
         if time_left == QTime(0,0):
