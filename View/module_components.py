@@ -167,10 +167,10 @@ class ModuleGrafomotricidad(QWidget):
     def save_module_data(self):
         # Despues de que se haga detenido el contador se guarda la informaion 
         new_module = ModuloGrafomotricidad (
-            tiempo_limite = time2(0,self.limit_time.minute(),self.limit_time.second()),
-            tiempo_tomado = time2(0,self.time_taken.minute(),self.time_taken.second()),
-            aciertos = self.success,
-            fallos = self.fails
+            #tiempo_limite = time2(0,self.limit_time.minute(),self.limit_time.second()),
+            #tiempo_tomado = time2(0,self.time_taken.minute(),self.time_taken.second()),
+            #aciertos = self.success,
+            #fallos = self.fails
         )
         
         self.sesion.modulos_grafomotricidad.append(new_module)

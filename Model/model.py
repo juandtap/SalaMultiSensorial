@@ -69,10 +69,10 @@ class ModuloGrafomotricidad(Base):
     __tablename__ = 'modulo_grafomotricidad'
     id = Column(Integer, primary_key=True)
     id_sesion = Column(Integer, ForeignKey('sesion.id'))
-    tiempo_limite = Column(Time)
+    figura = Column(String(50))
     tiempo_tomado = Column(Time)
-    aciertos = Column(Integer)
-    fallos = Column(Integer)
+    resultado = Column(String(20))
+    
     
     
 # Crea las tablas en la base de datos
