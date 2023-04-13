@@ -173,7 +173,7 @@ class ModuleGrafomotricidad(QWidget):
             #fallos = self.fails
         )
         
-        self.sesion.modulos_grafomotricidad.append(new_module)
+        # self.sesion.modulos_grafomotricidad.append(new_module)
         
         if add_sesion_module(self.sesion, new_module):
             self.message_dialog = MessageDialog('Datos Guardados')
