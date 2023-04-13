@@ -39,16 +39,16 @@
 #             print(f"Dispositivo Bluetooth encontrado en el puerto COM: {service['port']}")
 
 
-import serial.tools.list_ports
+# import serial.tools.list_ports
 
-ports = serial.tools.list_ports.comports()
+# ports = serial.tools.list_ports.comports()
 
-for port in ports:
-    print(port.pid)
+# for port in ports:
+#     print(port.pid)
     
 import bluetooth
 
-addr = '00:22:03:01:8A:12'  # Dirección MAC del HC-05
+addr = '00:22:03:01:8A:12'  # Dirección MAC del HC-05 4C:34:88:B5:29:25
 port = None
 
 # Busca los servicios disponibles en el dispositivo remoto
@@ -64,4 +64,7 @@ if port:
     print('El HC-05 está conectado al puerto COM', port)
 else:
     print('No se encontró el puerto COM del HC-05')
+
+
+
 
