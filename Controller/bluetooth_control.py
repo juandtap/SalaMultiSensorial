@@ -1,6 +1,5 @@
 # este modulo es para obtener el puerto COM al que esta conectada
-# la PC por bluetooth
-
+# la PC por bluetooth al modulo HC-05 con la direccion MAC 00:22:03:01:8A:12
 
 import serial.tools.list_ports
 import bluetooth
@@ -22,18 +21,13 @@ def find_port(mac_address):
     # Devuelve None si no se encuentra ningún puerto correspondiente a la dirección MAC
     return None
 
-mac_address = '00:22:03:01:8A:12' # reemplazar con la dirección MAC de tu modulo HC-05
+mac_address = '00:22:03:01:8A:12' # dirección MAC del modulo HC-05
 port = find_port(mac_address)
 if port is not None:
     print(f"El modulo HC-05 esta conectado al puerto {port}")
 else:
     print("No se encuentra el puerto para el modulo HC-05")
 
-devices = bluetooth.discover_devices()
-for device in devices:
-    print(device)
-
-
-
-
-
+# devices = bluetooth.discover_devices()
+# for device in devices:
+#     print(device)
