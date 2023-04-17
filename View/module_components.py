@@ -66,8 +66,8 @@ class ModuleGrafomotricidad(QWidget):
         self.sesion = sesion
         self.com_port = com_port
         self.ui_mod_grafo.textEdit_instructions.setReadOnly(True)
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.update_timer)
+        
+        
         self.set_module_images()
         
         self.ui_mod_grafo.label_conn_status.setHidden(True)
@@ -79,6 +79,9 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.pushButton_start.clicked.connect(self.start_listening_data)
         self.ui_mod_grafo.pushButton_stop.clicked.connect(self.stop_listening_data)
         self.ui_mod_grafo.pushButton_save.clicked.connect(self.save_module_data)
+        
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.update_timer)
 
     def set_module_images(self):
         pixmap1 = QPixmap("Assets/modulo_1_grafomotricidad.jpg")
@@ -103,51 +106,66 @@ class ModuleGrafomotricidad(QWidget):
            
     def start_listening_data(self):
         
-        if ((self.ui_mod_grafo.timeEdit_limit_time.time().minute() != 0) or (self.ui_mod_grafo.timeEdit_limit_time.time().second())) != 0 :
         # recibir datos por bluetooth-serial
         # puerto com, parametro junto con la sesion
-            self.ui_mod_grafo.timeEdit_limit_time.setStyleSheet("color: black;")
-            self.ui_mod_grafo.pushButton_stop.setEnabled(True)
-            self.ui_mod_grafo.pushButton_save.setEnabled(False)
-            # limpia los campos
-            self.clear_fields()
-            
-            port = self.com_port
-            print("puerto com :"+port)
-            
-            # variables para guardar los aciertos y fallos
-            self.success = 0
-            self.fails = 0
-            
-            # Inicio Thread cuenta regresiva
-            self.countdown_thread = CountDownThread(self.ui_mod_grafo.timeEdit_limit_time)
-            self.countdown_thread.update_signal.connect(self.update_timer)
-            self.countdown_thread.finished_signal.connect(self.countdown_finished)
-            self.countdown_thread.start()
-            
-             # Inicio Thread lectura de datos serial_bluetooth desde arduino
-            
-            time_in_seconds = self.ui_mod_grafo.timeEdit_limit_time.time().second()
-            time_in_minutes = self.ui_mod_grafo.timeEdit_limit_time.time().minute()
-            self.limit_time_in_seconds = time_in_seconds + (time_in_minutes * 60)
-            self.limit_time = self.ui_mod_grafo.timeEdit_limit_time.time()
-            print("tiempo total en segundos: ")
-            print(self.limit_time_in_seconds)
-            print("tiempo total: ")
-            print(self.limit_time.toString("mm:ss"))
-            
-            self.ui_mod_grafo.lineEdit_limit_time.setText(self.limit_time.toString("mm:ss"))
-            
-            
-            self.serial_thread = ArduinoSerialThread(port=self.com_port, baudrate=9600, timeout=1, duration=self.limit_time_in_seconds)
-            self.serial_thread.data_received.connect(self.show_received_data)
-            self.serial_thread.start()
-            print("mando a iniciar hilo serial")
-            
-        else:
-            print("Tiempo ingresado es cero")
-            self.ui_mod_grafo.timeEdit_limit_time.setStyleSheet("color: red;")
+        self.ui_mod_grafo.timeEdit_limit_time.setStyleSheet("color: black;")
+        self.ui_mod_grafo.pushButton_stop.setEnabled(True)
+        self.ui_mod_grafo.pushButton_save.setEnabled(False)
+        # limpia los campos
+        self.clear_fields()
+
+        port = self.com_port
+        print("puerto com :"+port)
+
+       
+        # Inicio Thread cuenta regresiva
+        #self.countdown_thread = CountDownThread(self.ui_mod_grafo.timeEdit_limit_time)
+       # self.countdown_thread.update_signal.connect(self.update_timer)
+        #self.countdown_thread.finished_signal.connect(self.countdown_finished)
+        # self.countdown_thread.start()
         
+        
+        # Inicio Thread timer 
+        
+        self.timer_thread = TimerThread()
+        self.timer_thread.timeChanged.connect(self.update_time)
+
+        # Inicio Thread lectura de datos serial_bluetooth desde arduino
+
+        # time_in_seconds = self.ui_mod_grafo.timeEdit_limit_time.time().second()
+        # time_in_minutes = self.ui_mod_grafo.timeEdit_limit_time.time().minute()
+        # self.limit_time_in_seconds = time_in_seconds + \
+        #     (time_in_minutes * 60)
+        # self.limit_time = self.ui_mod_grafo.timeEdit_limit_time.time()
+        # print("tiempo total en segundos: ")
+        # print(self.limit_time_in_seconds)
+        # print("tiempo total: ")
+        # print(self.limit_time.toString("mm:ss"))
+
+        # self.ui_mod_grafo.lineEdit_limit_time.setText(
+        #     self.limit_time.toString("mm:ss"))
+
+        # self.serial_thread = ArduinoSerialThread(
+        #     port=self.com_port, baudrate=9600, timeout=1, duration=self.limit_time_in_seconds)
+        # self.serial_thread.data_received.connect(self.show_received_data)
+        # self.serial_thread.start()
+        # print("mando a iniciar hilo serial")
+            
+    
+    def start_timer(self):
+        self.timer_thread.start()
+        self.start_button.setEnabled(False)
+        self.stop_button.setEnabled(True) 
+        
+        
+    def stop_timer(self):
+        self.timer_thread.stop()
+        self.start_button.setEnabled(True)
+        self.stop_button.setEnabled(False)
+
+    def update_time(self, time):
+        time_str = time.toString('mm:ss')
+        self.timer_label.setText(time_str)
              
     def show_received_data(self, data):
         
@@ -175,23 +193,24 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.pushButton_save.setEnabled(True)
     
     def save_module_data(self):
+        pass
         # Despues de que se haga detenido el contador se guarda la informaion 
-        new_module = ModuloGrafomotricidad (
+        #new_module = ModuloGrafomotricidad (
             #tiempo_limite = time2(0,self.limit_time.minute(),self.limit_time.second()),
             #tiempo_tomado = time2(0,self.time_taken.minute(),self.time_taken.second()),
             #aciertos = self.success,
             #fallos = self.fails
-        )
+        #)
         
         # self.sesion.modulos_grafomotricidad.append(new_module)
         
-        if add_sesion_module(self.sesion, new_module):
-            self.message_dialog = MessageDialog('Datos Guardados')
-            self.message_dialog.show()
-            self.clear_fields()
-        else:
-            self.message_dialog = MessageDialog('Error!')
-            self.message_dialog.show()
+        # if add_sesion_module(self.sesion, new_module):
+        #     self.message_dialog = MessageDialog('Datos Guardados')
+        #     self.message_dialog.show()
+        #     self.clear_fields()
+        # else:
+        #     self.message_dialog = MessageDialog('Error!')
+        #     self.message_dialog.show()
         
         
     def update_timer(self, time_left):
@@ -219,9 +238,9 @@ class CountDownThread(QThread):
 
     
     def __init__(self, time_edit):
-            super().__init__()
-            self.time_edit = time_edit
-            self.running = True
+        super().__init__()
+        self.time_edit = time_edit
+        self.running = True
             
     def run(self):
         time_left = self.time_edit.time()
@@ -233,6 +252,26 @@ class CountDownThread(QThread):
     def stop(self):
         self.running = False
         
+class TimerThread(QThread):
+    
+    timeChanged = pyqtSignal(QTime)
+    finished_signal = pyqtSignal()
+    
+    def __init__(self):
+        super().__init__()
+        self._is_running = False
+        self._elapsed_time = QTime(0, 0, 0)
+
+    def run(self):
+        self._is_running = True
+        while self._is_running:
+            self.sleep(1)
+            self._elapsed_time = self._elapsed_time.addSecs(1)
+            self.timeChanged.emit(self._elapsed_time)
+
+    def stop(self):
+        self._is_running = False
+
 
 class ArduinoSerialThread(QThread):
     
