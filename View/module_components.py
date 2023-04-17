@@ -85,6 +85,8 @@ class ModuleGrafomotricidad(QWidget):
             )
         )
         
+        ## cargar aqui las imagenes desde /Assets/grafomotricidad
+        
            
     def start_listening_data(self):
         
