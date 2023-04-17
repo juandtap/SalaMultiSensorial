@@ -8,11 +8,15 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal
 from PyQt5.QtGui import QPixmap
 from View.module_selection_view import Ui_Form_seleccion_modulos
-from View.module_grafomotricidad_beta_view import Ui_Form_modulo_grafomotricidad
+from View.module_grafomotricidad_view import Ui_Form_modulo_grafomotricidad
 from View.module_components_2 import ModuleVumeter
 from Controller.session_control import add_sesion_module, get_sesion_by_id
 from Model.model import Sesion, ModuloGrafomotricidad
 from View.components import MessageDialog
+
+from Controller.module_grafomotricidad_figures import path_figuras
+
+
 
 class ModuleSelection(QWidget):
     def __init__(self, student):
@@ -68,6 +72,7 @@ class ModuleGrafomotricidad(QWidget):
         
         self.ui_mod_grafo.label_conn_status.setHidden(True)
         self.ui_mod_grafo.label_9.setHidden(True)
+        self.ui_mod_grafo.label_3.setText("   Tiempo")
         self.ui_mod_grafo.pushButton_stop.setEnabled(False)
         self.ui_mod_grafo.pushButton_save.setEnabled(False)
         
@@ -85,8 +90,16 @@ class ModuleGrafomotricidad(QWidget):
             )
         )
         
-        ## cargar aqui las imagenes desde /Assets/grafomotricidad
-        
+        # carga las figuras en los labels, 
+        # el path de las figuras esta en 'path_figuras' del archivo module_grafomotricidad_figures
+        for i in range(len(path_figuras)):
+            pixmap = QPixmap(path_figuras[i])
+            if i+1 < 10:
+                label = getattr(self.ui_mod_grafo, "label_figure_0" + str(i+1))
+            else:
+                label = getattr(self.ui_mod_grafo, "label_figure_" + str(i+1))
+            label.setPixmap(pixmap.scaled(100, 100, aspectRatioMode=True))
+
            
     def start_listening_data(self):
         
@@ -140,18 +153,13 @@ class ModuleGrafomotricidad(QWidget):
         
         print("Dato recibido : "+data)
         
-        if data == '1':
-            self.success += 1
-        else:
-            self.fails += 1
-        self.ui_mod_grafo.lineEdit_success.setText(str(self.success))
-        self.ui_mod_grafo.lineEdit_fails.setText(str(self.fails))
+        
           
     def clear_fields(self):
-        self.ui_mod_grafo.lineEdit_fails.setText("")
-        self.ui_mod_grafo.lineEdit_success.setText("")
+        self.ui_mod_grafo.lineEdit_figure.setText("")
+        self.ui_mod_grafo.lineEdit_result.setText("")
         self.ui_mod_grafo.lineEdit_time_taken.setText("")
-        self.ui_mod_grafo.lineEdit_limit_time.setText("")
+        
     
     
     def stop_listening_data(self):

@@ -125,7 +125,7 @@ class MainWindow(QMainWindow):
             self.ui_main.label_imagen.setPixmap(pixmap.scaled(
                 self.ui_main.label_imagen.width(),
                 self.ui_main.label_imagen.height(),
-                aspectRatioMode=True
+                aspectRatioMode=False
             ))
            
             
