@@ -55,7 +55,7 @@ class ModuleSelection(QWidget):
         self.ui_modules.label_nombres.setText(self.student.nombres)
 
 
-# En el texrfield lineEdit_remainingtime se coloca el tiempo tomado hasta que se 
+# En el texrfield lineEdit_time_taken se coloca el tiempo tomado hasta que se 
 # se presiono el boton de detener
 
 class ModuleGrafomotricidad(QWidget):
@@ -73,6 +73,9 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.label_conn_status.setHidden(True)
         self.ui_mod_grafo.label_9.setHidden(True)
         self.ui_mod_grafo.label_3.setText("   Tiempo")
+        
+        self.ui_mod_grafo.timeEdit_limit_time.setReadOnly(True)
+        
         self.ui_mod_grafo.pushButton_stop.setEnabled(False)
         self.ui_mod_grafo.pushButton_save.setEnabled(False)
         
@@ -80,8 +83,7 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.pushButton_stop.clicked.connect(self.stop_listening_data)
         self.ui_mod_grafo.pushButton_save.clicked.connect(self.save_module_data)
         
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.update_timer)
+       
 
     def set_module_images(self):
         pixmap1 = QPixmap("Assets/modulo_1_grafomotricidad.jpg")
@@ -118,54 +120,48 @@ class ModuleGrafomotricidad(QWidget):
         print("puerto com :"+port)
 
        
-        # Inicio Thread cuenta regresiva
-        #self.countdown_thread = CountDownThread(self.ui_mod_grafo.timeEdit_limit_time)
-       # self.countdown_thread.update_signal.connect(self.update_timer)
-        #self.countdown_thread.finished_signal.connect(self.countdown_finished)
-        # self.countdown_thread.start()
-        
-        
         # Inicio Thread timer 
         
         self.timer_thread = TimerThread()
         self.timer_thread.timeChanged.connect(self.update_time)
+        self.timer_thread.finished_signal.connect(self.timer_stopped)
+        
+        self.timer_thread.start()
+        self.ui_mod_grafo.pushButton_stop.setEnabled(True)
+        
+        ## Inicio Thread lectura de datos serial_bluetooth desde arduino
 
-        # Inicio Thread lectura de datos serial_bluetooth desde arduino
+        time_in_seconds = self.ui_mod_grafo.timeEdit_limit_time.time().second()
+        time_in_minutes = self.ui_mod_grafo.timeEdit_limit_time.time().minute()
+        self.limit_time_in_seconds = time_in_seconds + \
+            (time_in_minutes * 60)
+        self.limit_time = self.ui_mod_grafo.timeEdit_limit_time.time()
+        print("tiempo total en segundos: ")
+        print(self.limit_time_in_seconds)
+        print("tiempo total: ")
+        print(self.limit_time.toString("mm:ss"))
 
-        # time_in_seconds = self.ui_mod_grafo.timeEdit_limit_time.time().second()
-        # time_in_minutes = self.ui_mod_grafo.timeEdit_limit_time.time().minute()
-        # self.limit_time_in_seconds = time_in_seconds + \
-        #     (time_in_minutes * 60)
-        # self.limit_time = self.ui_mod_grafo.timeEdit_limit_time.time()
-        # print("tiempo total en segundos: ")
-        # print(self.limit_time_in_seconds)
-        # print("tiempo total: ")
-        # print(self.limit_time.toString("mm:ss"))
+        self.ui_mod_grafo.lineEdit_limit_time.setText(
+            self.limit_time.toString("mm:ss"))
 
-        # self.ui_mod_grafo.lineEdit_limit_time.setText(
-        #     self.limit_time.toString("mm:ss"))
-
-        # self.serial_thread = ArduinoSerialThread(
-        #     port=self.com_port, baudrate=9600, timeout=1, duration=self.limit_time_in_seconds)
-        # self.serial_thread.data_received.connect(self.show_received_data)
-        # self.serial_thread.start()
-        # print("mando a iniciar hilo serial")
+        self.serial_thread = ArduinoSerialThread(
+            port=self.com_port, baudrate=9600, timeout=1, duration=self.limit_time_in_seconds)
+        self.serial_thread.data_received.connect(self.show_received_data)
+        self.serial_thread.start()
+        print("mando a iniciar hilo serial")
             
     
-    def start_timer(self):
-        self.timer_thread.start()
-        self.start_button.setEnabled(False)
-        self.stop_button.setEnabled(True) 
+        
         
         
     def stop_timer(self):
         self.timer_thread.stop()
-        self.start_button.setEnabled(True)
-        self.stop_button.setEnabled(False)
+        
 
-    def update_time(self, time):
-        time_str = time.toString('mm:ss')
-        self.timer_label.setText(time_str)
+    def update_time(self, module_time):
+        #time_str = module_time.toString('mm:ss')
+       
+        self.ui_mod_grafo.timeEdit_limit_time.setTime(module_time)
              
     def show_received_data(self, data):
         
@@ -182,13 +178,13 @@ class ModuleGrafomotricidad(QWidget):
     
     def stop_listening_data(self):
         
-        self.countdown_thread.stop()
+        self.timer_thread.stop()
         
-        self.time_taken = self.limit_time.addSecs(-(self.ui_mod_grafo.timeEdit_limit_time.time().second() + (self.ui_mod_grafo.timeEdit_limit_time.time().minute()*60)))
+        self.time_taken = self.ui_mod_grafo.timeEdit_limit_time.time()
+        print("contador detenido por el usuario")
         self.ui_mod_grafo.lineEdit_time_taken.setText(
             self.time_taken.toString("mm:ss")
         )
-        print("contador detenido por el usuario")
         self.ui_mod_grafo.pushButton_stop.setEnabled(False)
         self.ui_mod_grafo.pushButton_save.setEnabled(True)
     
@@ -213,23 +209,8 @@ class ModuleGrafomotricidad(QWidget):
         #     self.message_dialog.show()
         
         
-    def update_timer(self, time_left):
-        
-        self.ui_mod_grafo.timeEdit_limit_time.setTime(time_left)
-        
-        if time_left == QTime(0,0):
-            self.countdown_thread.stop()
-            print("se detuvo el contador")
-            self.ui_mod_grafo.lineEdit_time_taken.setText(self.limit_time.toString('mm:ss'))
-            self.time_taken = self.limit_time
-            self.ui_mod_grafo.pushButton_stop.setEnabled(False)
-            self.ui_mod_grafo.pushButton_save.setEnabled(True)
-            
-    def countdown_finished(self):
-        self.ui_mod_grafo.timeEdit_limit_time.setTime(QTime(0,0))
-        print("envia la signal de que el contador se detuvo solo")
-        self.ui_mod_grafo.pushButton_stop.setEnabled(False)
-        self.ui_mod_grafo.pushButton_save.setEnabled(True)
+    def timer_stopped(self):
+        print("se detuvo el contador ")
     
 class CountDownThread(QThread):
         
