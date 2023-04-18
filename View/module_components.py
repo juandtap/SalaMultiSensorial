@@ -83,6 +83,7 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.pushButton_stop.clicked.connect(self.stop_listening_data)
         self.ui_mod_grafo.pushButton_save.clicked.connect(self.save_module_data)
         
+        self.ui_mod_grafo.radioButton_1.clicked.connect(self.get_figure_name)
        
 
     def set_module_images(self):
@@ -105,6 +106,11 @@ class ModuleGrafomotricidad(QWidget):
                 label = getattr(self.ui_mod_grafo, "label_figure_" + str(i+1))
             label.setPixmap(pixmap.scaled(100, 100, aspectRatioMode=True))
 
+    
+    def get_figure_name(self):
+        if self.ui_mod_grafo.radioButton_1.isChecked:
+            self.ui_mod_grafo.lineEdit_figure.setText('cuadrado')
+        
            
     def start_listening_data(self):
         
@@ -131,21 +137,10 @@ class ModuleGrafomotricidad(QWidget):
         
         ## Inicio Thread lectura de datos serial_bluetooth desde arduino
 
-        time_in_seconds = self.ui_mod_grafo.timeEdit_limit_time.time().second()
-        time_in_minutes = self.ui_mod_grafo.timeEdit_limit_time.time().minute()
-        self.limit_time_in_seconds = time_in_seconds + \
-            (time_in_minutes * 60)
-        self.limit_time = self.ui_mod_grafo.timeEdit_limit_time.time()
-        print("tiempo total en segundos: ")
-        print(self.limit_time_in_seconds)
-        print("tiempo total: ")
-        print(self.limit_time.toString("mm:ss"))
-
-        self.ui_mod_grafo.lineEdit_limit_time.setText(
-            self.limit_time.toString("mm:ss"))
-
+        
+       
         self.serial_thread = ArduinoSerialThread(
-            port=self.com_port, baudrate=9600, timeout=1, duration=self.limit_time_in_seconds)
+            port=self.com_port, baudrate=9600, timeout=1)
         self.serial_thread.data_received.connect(self.show_received_data)
         self.serial_thread.start()
         print("mando a iniciar hilo serial")
@@ -154,8 +149,7 @@ class ModuleGrafomotricidad(QWidget):
         
         
         
-    def stop_timer(self):
-        self.timer_thread.stop()
+    
         
 
     def update_time(self, module_time):
@@ -166,11 +160,16 @@ class ModuleGrafomotricidad(QWidget):
     def show_received_data(self, data):
         
         print("Dato recibido : "+data)
+        if data == '1':
+            self.ui_mod_grafo.lineEdit_result.setText('Correcto')
+        else:
+            self.ui_mod_grafo.lineEdit_result.setText('Incorrecto')
         
         
+        self.stop_listening_data()
           
     def clear_fields(self):
-        self.ui_mod_grafo.lineEdit_figure.setText("")
+        #self.ui_mod_grafo.lineEdit_figure.setText("")
         self.ui_mod_grafo.lineEdit_result.setText("")
         self.ui_mod_grafo.lineEdit_time_taken.setText("")
         
@@ -179,7 +178,7 @@ class ModuleGrafomotricidad(QWidget):
     def stop_listening_data(self):
         
         self.timer_thread.stop()
-        
+        self.serial_thread.stop()
         self.time_taken = self.ui_mod_grafo.timeEdit_limit_time.time()
         print("contador detenido por el usuario")
         self.ui_mod_grafo.lineEdit_time_taken.setText(
@@ -212,26 +211,6 @@ class ModuleGrafomotricidad(QWidget):
     def timer_stopped(self):
         print("se detuvo el contador ")
     
-class CountDownThread(QThread):
-        
-    update_signal = pyqtSignal(QTime)
-    finished_signal = pyqtSignal()
-
-    
-    def __init__(self, time_edit):
-        super().__init__()
-        self.time_edit = time_edit
-        self.running = True
-            
-    def run(self):
-        time_left = self.time_edit.time()
-        while time_left >= QTime(0, 0) and self.running:
-            self.update_signal.emit(time_left)
-            time_left = time_left.addSecs(-1)
-            self.sleep(1)
-            
-    def stop(self):
-        self.running = False
         
 class TimerThread(QThread):
     
@@ -259,12 +238,12 @@ class ArduinoSerialThread(QThread):
     data_received = pyqtSignal(str)
     
     
-    def __init__(self, port, baudrate, timeout, duration, parent=None):
+    def __init__(self, port, baudrate, timeout, parent=None):
         super().__init__(parent)
         self.port = port
         self.baudrate = baudrate
         self.timeout = timeout
-        self.duration = duration
+        
         self.stopped = False
         self.stop_event = threading.Event()
         
@@ -278,21 +257,26 @@ class ArduinoSerialThread(QThread):
             self.finished.emit()
             return
         
-        # leer datos durante el tiempo especificado (self.duration)
-        
-        start_time = time.time()
-        while not self.stopped and time.time() - start_time < self.duration:
+       
+        while not self.stopped:
             if bluetooth_serial.in_waiting:
                 data = bluetooth_serial.readline().decode().strip()
                 self.data_received.emit(data)
-                
+                # se detiene al recivir un dato
+                if data is not None:
+                    self.stopped = True
+
+
             if self.stop_event.is_set():
                 self.stopped = True
                 self.stop_event.clear()
         
         bluetooth_serial.close()
         self.finished.emit()
+        print("Hilo Escucha serial terminado")
         self.quit()
         
     def stop(self):
         self.stopped = True
+        print("Hilo Escucha serial terminado por el usuario")
+        
