@@ -10,7 +10,7 @@ from PyQt5.QtGui import QPixmap
 from View.module_selection_view import Ui_Form_seleccion_modulos
 from View.module_grafomotricidad_view import Ui_Form_modulo_grafomotricidad
 from View.module_components_2 import ModuleVumeter
-from Controller.session_control import add_sesion_module, get_sesion_by_id
+from Controller.session_control import add_sesion_module, get_sesion_by_id, add_module_grafomotricidad, set_final_time
 from Model.model import Sesion, ModuloGrafomotricidad
 from View.components import MessageDialog
 
@@ -40,7 +40,9 @@ class ModuleSelection(QWidget):
             id_estudiante=self.student.id
         )
         
-        self.sesion = new_sesion
+        self.sesion = add_sesion_module(new_sesion)
+        
+        print('sesion #'+str(self.sesion)+' creada')
         
         
         
@@ -64,6 +66,10 @@ class ModuleSelection(QWidget):
         self.ui_modules.label_apellidos.setText(self.student.apellidos)
         self.ui_modules.label_nombres.setText(self.student.nombres)
 
+    def closeEvent(self, event):
+        set_final_time(self.sesion, datetime.now().time())
+        print("se agrego la hora fin a la sesion "+str(self.sesion))
+        event.accept()
 
 # En el texrfield lineEdit_time_taken se coloca el tiempo tomado hasta que se 
 # se presiono el boton de detener
@@ -73,7 +79,7 @@ class ModuleGrafomotricidad(QWidget):
         super().__init__()
         self.ui_mod_grafo = Ui_Form_modulo_grafomotricidad()
         self.ui_mod_grafo.setupUi(self)
-        self.sesion = sesion
+        self.sesion = sesion # id de la sesion (int)
         self.com_port = com_port
         self.ui_mod_grafo.textEdit_instructions.setReadOnly(True)
         
@@ -125,7 +131,7 @@ class ModuleGrafomotricidad(QWidget):
     
     def get_selected_figure_name(self):
         radio_button = self.sender()
-        rb = ''
+        rb = '0'
         if radio_button.isChecked():
             rb = radio_button.objectName()
         
@@ -212,14 +218,15 @@ class ModuleGrafomotricidad(QWidget):
     def save_module_data(self):
         # Se guarda la informacion al presionar el boton de 'Guardar'
         new_module = ModuloGrafomotricidad (
+            id_sesion = self.sesion,
             figura = codigo_figuras[self.figure_code],
             tiempo_tomado = time(0,self.time_taken.minute(),self.time_taken.second()),
             resultado = self.ui_mod_grafo.lineEdit_result.text()
         )
         
-        self.sesion.modulos_grafomotricidad.append(new_module)
         
-        if add_sesion_module(self.sesion, new_module):
+        
+        if add_module_grafomotricidad(new_module):
             self.message_dialog = MessageDialog('Datos Guardados')
             self.message_dialog.show()
             self.clear_fields()
