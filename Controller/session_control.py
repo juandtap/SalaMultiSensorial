@@ -3,7 +3,7 @@ sys.path.append(".")
 
 from Model.model import session, Sesion
 # Sesion es la clase
-
+# session es la sesion de la conexion con la base de datos
 # Create 
 
 def add_sesion_module(new_sesion, new_module):

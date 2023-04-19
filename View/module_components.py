@@ -1,9 +1,9 @@
 import sys
-import serial, time, threading
+import serial, threading
 
 sys.path.append(".")
 from datetime import datetime
-from datetime import time as time2
+from datetime import time 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QRadioButton
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal
 from PyQt5.QtGui import QPixmap
@@ -210,22 +210,22 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.pushButton_save.setEnabled(True)
     
     def save_module_data(self):
-        # Despues de que se haga detenido el contador se guarda la informaion 
+        # Se guarda la informacion al presionar el boton de 'Guardar'
         new_module = ModuloGrafomotricidad (
             figura = codigo_figuras[self.figure_code],
-            tiempo_tomado = None, # poner el self.time_talken 
+            tiempo_tomado = time(0,self.time_taken.minute(),self.time_taken.second()),
             resultado = self.ui_mod_grafo.lineEdit_result.text()
         )
         
-        # self.sesion.modulos_grafomotricidad.append(new_module)
+        self.sesion.modulos_grafomotricidad.append(new_module)
         
-        # if add_sesion_module(self.sesion, new_module):
-        #     self.message_dialog = MessageDialog('Datos Guardados')
-        #     self.message_dialog.show()
-        #     self.clear_fields()
-        # else:
-        #     self.message_dialog = MessageDialog('Error!')
-        #     self.message_dialog.show()
+        if add_sesion_module(self.sesion, new_module):
+            self.message_dialog = MessageDialog('Datos Guardados')
+            self.message_dialog.show()
+            self.clear_fields()
+        else:
+            self.message_dialog = MessageDialog('Error!')
+            self.message_dialog.show()
         
         
     def timer_stopped(self):
