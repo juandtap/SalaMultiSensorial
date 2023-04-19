@@ -4,7 +4,7 @@ import serial, time, threading
 sys.path.append(".")
 from datetime import datetime
 from datetime import time as time2
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QRadioButton
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal
 from PyQt5.QtGui import QPixmap
 from View.module_selection_view import Ui_Form_seleccion_modulos
@@ -14,7 +14,7 @@ from Controller.session_control import add_sesion_module, get_sesion_by_id
 from Model.model import Sesion, ModuloGrafomotricidad
 from View.components import MessageDialog
 
-from Controller.module_grafomotricidad_figures import path_figuras
+from Controller.module_grafomotricidad_figures import path_figuras, codigo_figuras
 
 
 
@@ -26,17 +26,27 @@ class ModuleSelection(QWidget):
         self.student = student
         self.load_info_student()
         
+        self.create_sesion()
+        
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
         self.ui_modules.pushButton_module_vumetro.clicked.connect(self.open_module_vumeter)
-    
-    def open_module_grafomotricidad(self):
-        sesion = Sesion(
+        
+    def create_sesion(self):
+        
+        new_sesion = Sesion(
             fecha= datetime.now().date(), 
             hora_inicio = datetime.now().time(), 
             hora_fin = None, 
             id_estudiante=self.student.id
         )
-        self.grafomotricidad = ModuleGrafomotricidad(sesion, self.ui_modules.lineEdit_com_port.text().strip())
+        
+        self.sesion = new_sesion
+        
+        
+        
+    def open_module_grafomotricidad(self):
+        
+        self.grafomotricidad = ModuleGrafomotricidad(self.sesion, self.ui_modules.lineEdit_com_port.text().strip())
         self.grafomotricidad.show()
     
     def open_module_vumeter(self):
@@ -83,7 +93,13 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.pushButton_stop.clicked.connect(self.stop_listening_data)
         self.ui_mod_grafo.pushButton_save.clicked.connect(self.save_module_data)
         
-        self.ui_mod_grafo.radioButton_1.clicked.connect(self.get_figure_name)
+        
+        # asignar evento a cada uno de los radiobuttons (18)
+        radio_buttons_list = [self.findChild(QRadioButton, f"radioButton_{i}") for i in range(1, 19)]
+        
+        for radio_button in radio_buttons_list:
+            radio_button.clicked.connect(self.get_selected_figure_name)
+
        
 
     def set_module_images(self):
@@ -107,10 +123,22 @@ class ModuleGrafomotricidad(QWidget):
             label.setPixmap(pixmap.scaled(100, 100, aspectRatioMode=True))
 
     
-    def get_figure_name(self):
-        if self.ui_mod_grafo.radioButton_1.isChecked:
-            self.ui_mod_grafo.lineEdit_figure.setText('cuadrado')
+    def get_selected_figure_name(self):
+        radio_button = self.sender()
+        rb = ''
+        if radio_button.isChecked():
+            rb = radio_button.objectName()
         
+        # obtengo el nombre del radiobutton (radioButton_2) por ejemplp
+        # y extraigo el numero con split('-')[-] con ese numero busco el nombre de la figura en el diccionario de figuras
+        # Otra forma de hacerlo seria directamente obtener el texto del radioButton pero igual se 
+        # se necesitaria su codigo para saber si se selecciono la figura correcta
+        
+        self.figure_code = int(rb.split('_')[-1])
+        print("codigo de la figura seleccionada: ")
+        print(self.figure_code)
+        
+        self.ui_mod_grafo.lineEdit_figure.setText(codigo_figuras[self.figure_code])
            
     def start_listening_data(self):
         
@@ -145,13 +173,7 @@ class ModuleGrafomotricidad(QWidget):
         self.serial_thread.start()
         print("mando a iniciar hilo serial")
             
-    
-        
-        
-        
-    
-        
-
+  
     def update_time(self, module_time):
         #time_str = module_time.toString('mm:ss')
        
@@ -160,7 +182,7 @@ class ModuleGrafomotricidad(QWidget):
     def show_received_data(self, data):
         
         print("Dato recibido : "+data)
-        if data == '1':
+        if data == str(self.figure_code):
             self.ui_mod_grafo.lineEdit_result.setText('Correcto')
         else:
             self.ui_mod_grafo.lineEdit_result.setText('Incorrecto')
@@ -188,14 +210,12 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.pushButton_save.setEnabled(True)
     
     def save_module_data(self):
-        pass
         # Despues de que se haga detenido el contador se guarda la informaion 
-        #new_module = ModuloGrafomotricidad (
-            #tiempo_limite = time2(0,self.limit_time.minute(),self.limit_time.second()),
-            #tiempo_tomado = time2(0,self.time_taken.minute(),self.time_taken.second()),
-            #aciertos = self.success,
-            #fallos = self.fails
-        #)
+        new_module = ModuloGrafomotricidad (
+            figura = codigo_figuras[self.figure_code],
+            tiempo_tomado = None, # poner el self.time_talken 
+            resultado = self.ui_mod_grafo.lineEdit_result.text()
+        )
         
         # self.sesion.modulos_grafomotricidad.append(new_module)
         
