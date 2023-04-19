@@ -26,7 +26,7 @@ class ModuleSelection(QWidget):
         self.student = student
         self.load_info_student()
         
-        self.create_sesion()
+        # self.create_sesion()
         
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
         self.ui_modules.pushButton_module_vumetro.clicked.connect(self.open_module_vumeter)
@@ -83,6 +83,9 @@ class ModuleGrafomotricidad(QWidget):
         self.com_port = com_port
         self.ui_mod_grafo.textEdit_instructions.setReadOnly(True)
         
+        # envia la senal de inicio 'i' al modulo arduino
+        self.turn_on_module()
+        
         
         self.set_module_images()
         
@@ -106,7 +109,36 @@ class ModuleGrafomotricidad(QWidget):
         for radio_button in radio_buttons_list:
             radio_button.clicked.connect(self.get_selected_figure_name)
 
-       
+    
+    def turn_on_module(self):
+        # este metodo se inicia al abrir la ventana del modulo
+        # enviar caracter 'i' al modulo rduino
+        try:
+            serial_port = serial.Serial(self.com_port, 9600)
+            serial_port.write(b'i')
+            serial_port.close()
+        except serial.SerialException as ex:
+            print("Error en la conexion serial: ", ex)
+        except Exception as ex:
+            print("Error al enviar el caracter 'i'", ex)
+        
+    def turn_off_module(self):
+        #este metodo se ejecuta al cerrar la ventana
+        #enviar caracter 'f' al modulo arduino
+        try:
+            serial_port = serial.Serial(self.com_port, 9600)
+            serial_port.write(b'f')
+            serial_port.close()
+        except serial.SerialException as ex:
+            print("Error en la conexion serial: ", ex)
+        except Exception as ex:
+            print("Error al enviar el caracter 'i'", ex)
+    
+    def closeEvent(self, event):
+        # envia la senial de finializacion 'f'
+        self.turn_off_module()
+        event.accept()
+        
 
     def set_module_images(self):
         pixmap1 = QPixmap("Assets/modulo_1_grafomotricidad.jpg")
