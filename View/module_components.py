@@ -212,6 +212,9 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.lineEdit_time_taken.setText(
             self.time_taken.toString("mm:ss")
         )
+        
+        self.ui_mod_grafo.timeEdit_limit_time.setTime(QTime(0,0,0))
+        
         self.ui_mod_grafo.pushButton_stop.setEnabled(False)
         self.ui_mod_grafo.pushButton_save.setEnabled(True)
     
