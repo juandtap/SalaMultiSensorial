@@ -21,14 +21,37 @@ def find_port(mac_address):
     # Devuelve None si no se encuentra ningún puerto correspondiente a la dirección MAC
     return None
 
-#mac_address = '00:22:03:01:8A:12' # dirección MAC del modulo HC-05 (1)
-mac_address = '00:22:03:01:7d:dc' # dirección MAC del modulo HC-05 (2)del modulo de grafomotricidad
-port = find_port(mac_address)
-if port is not None:
-    print(f"El modulo HC-05 esta conectado al puerto {port}")
-else:
-    print("No se encuentra el puerto para el modulo HC-05")
+# mac_address = '00:22:03:01:8A:12' # dirección MAC del modulo HC-05 (1)
+# #mac_address = '00:22:03:01:7D:DC' # dirección MAC del modulo HC-05 (2)del modulo de grafomotricidad
+# port = find_port(mac_address)
+# if port is not None:
+#     print(f"El modulo HC-05 esta conectado al puerto {port}")
+# else:
+#     print("No se encuentra el puerto para el modulo HC-05")
 
-# devices = bluetooth.discover_devices()
-# for device in devices:
-#     print(device)
+
+import bluetooth
+import serial.tools.list_ports
+
+# Busca todos los dispositivos Bluetooth
+nearby_devices = bluetooth.discover_devices()
+
+# Enumera todos los puertos serie disponibles
+ports = serial.tools.list_ports.comports()
+
+# Crea un diccionario que asocia la dirección Bluetooth con el puerto COM
+bluetooth_com_dict = {}
+for port in ports:
+    if "COM" in port.device:
+        for bdaddr in nearby_devices:
+            if port.description.startswith(bdaddr):
+                bluetooth_com_dict[bdaddr] = port.device
+                break
+
+# Imprime la lista de dispositivos encontrados y su puerto COM
+for bdaddr in nearby_devices:
+    print(f"Dispositivo Bluetooth: {bdaddr}")
+    if bdaddr in bluetooth_com_dict:
+        print(f"Puerto COM: {bluetooth_com_dict[bdaddr]}")
+    else:
+        print("No se encontró ningún puerto COM para este dispositivo.")
