@@ -21,7 +21,8 @@ def find_port(mac_address):
     # Devuelve None si no se encuentra ningún puerto correspondiente a la dirección MAC
     return None
 
-mac_address = '00:22:03:01:8A:12' # dirección MAC del modulo HC-05
+#mac_address = '00:22:03:01:8A:12' # dirección MAC del modulo HC-05 (1)
+mac_address = '00:22:03:01:7d:dc' # dirección MAC del modulo HC-05 (2)del modulo de grafomotricidad
 port = find_port(mac_address)
 if port is not None:
     print(f"El modulo HC-05 esta conectado al puerto {port}")

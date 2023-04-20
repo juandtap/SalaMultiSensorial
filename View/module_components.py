@@ -26,7 +26,7 @@ class ModuleSelection(QWidget):
         self.student = student
         self.load_info_student()
         
-        # self.create_sesion()
+        self.create_sesion()
         
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
         self.ui_modules.pushButton_module_vumetro.clicked.connect(self.open_module_vumeter)
@@ -48,7 +48,7 @@ class ModuleSelection(QWidget):
         
     def open_module_grafomotricidad(self):
         # cambiar None por self.sesion
-        self.grafomotricidad = ModuleGrafomotricidad(None, self.ui_modules.lineEdit_com_port.text().strip())
+        self.grafomotricidad = ModuleGrafomotricidad(self.sesion, self.ui_modules.lineEdit_com_port.text().strip())
         self.grafomotricidad.show()
     
     def open_module_vumeter(self):
@@ -67,8 +67,8 @@ class ModuleSelection(QWidget):
         self.ui_modules.label_nombres.setText(self.student.nombres)
 
     def closeEvent(self, event):
-        # set_final_time(self.sesion, datetime.now().time())
-        #print("se agrego la hora fin a la sesion "+str(self.sesion))
+        set_final_time(self.sesion, datetime.now().time())
+        print("se agrego la hora fin a la sesion "+str(self.sesion))
         event.accept()
 
 # En el texrfield lineEdit_time_taken se coloca el tiempo tomado hasta que se 
