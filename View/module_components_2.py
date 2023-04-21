@@ -1,5 +1,7 @@
 import sys
-import serial, time, threading
+import serial, time, threading, random
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 sys.path.append(".")
 from datetime import datetime
@@ -28,43 +30,10 @@ class ModuleVumeter(QWidget):
         self.ui_vum.label_conn_status.setHidden(True)
         
         #self.draw_vumeter_level()
+        #self.set_level()
         
-        # Crea un objeto GraphicsLayoutWidget y agrega un PlotWidget
-        self.graphics_layout = pg.GraphicsLayoutWidget()
-        self.graphics_layout.setAutoPanels(False)
-        self.plot_widget = self.graphics_layout.addPlot()
-        self.plot_widget.setBackground(None)
-        self.plot_data = [0]  # Inicialmente, solo hay un punto en el plot
-        self.plot_curve = self.plot_widget.plot(self.plot_data)
+        
 
-        # Crea un objeto QGraphicsProxyWidget y agrega el GraphicsLayoutWidget a él
-        proxy = QGraphicsProxyWidget()
-        proxy.setWidget(self.graphics_layout)
-        
-        self.scene = QGraphicsScene()
-        self.scene.addItem(proxy)
-        
-        self.ui_vum.graphicsView.setScene(self.scene)
-        
-        self.ui_vum.pushButton_start.clicked.connect(self.add_data)
-        
-        proxy_scene_pos = proxy.mapFromScene(0,0)
-        button_scene_pos = self.ui_vum.graphicsView.mapFromScene(proxy_scene_pos)
-        self.ui_vum.pushButton_start.move(button_scene_pos.x(), button_scene_pos.y() - 30)
-        #self.ui_vum.graphicsView.scene().addWidget(self.ui_vum.pushButton_start)
-        
-        # Configura un temporizador para actualizar el plot cada cierto tiempo
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.update_plot)
-        self.timer.start(50)  # Actualiza cada 50ms
-    
-    def add_data(self):
-        # Agrega un valor aleatorio al plot_data
-        self.plot_data.append(random.uniform(0, 10))
-        
-    def update_plot(self):
-        # Actualiza el plot_curve con los nuevos datos
-        self.plot_curve.setData(self.plot_data)
 
     def set_module_images(self):
         pixmap1 = QPixmap("Assets/modulo_2_vumetro.png")
