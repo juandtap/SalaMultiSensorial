@@ -26,7 +26,7 @@ class ModuleSelection(QWidget):
         self.student = student
         self.load_info_student()
         
-        self.create_sesion()
+        #1self.create_sesion()
         
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
         self.ui_modules.pushButton_module_vumetro.clicked.connect(self.open_module_vumeter)
@@ -47,8 +47,8 @@ class ModuleSelection(QWidget):
         
         
     def open_module_grafomotricidad(self):
-        # cambiar None por self.sesion
-        self.grafomotricidad = ModuleGrafomotricidad(self.sesion, self.ui_modules.lineEdit_com_port.text().strip())
+        # cambiar None por self.sesion 2
+        self.grafomotricidad = ModuleGrafomotricidad(None, self.ui_modules.lineEdit_com_port.text().strip())
         self.grafomotricidad.show()
     
     def open_module_vumeter(self):
@@ -67,8 +67,8 @@ class ModuleSelection(QWidget):
         self.ui_modules.label_nombres.setText(self.student.nombres)
 
     def closeEvent(self, event):
-        set_final_time(self.sesion, datetime.now().time())
-        print("se agrego la hora fin a la sesion "+str(self.sesion))
+        #3set_final_time(self.sesion, datetime.now().time())
+        #print("se agrego la hora fin a la sesion "+str(self.sesion))
         event.accept()
 
 # En el texrfield lineEdit_time_taken se coloca el tiempo tomado hasta que se 
@@ -118,12 +118,13 @@ class ModuleGrafomotricidad(QWidget):
             serial_port = serial.Serial(self.com_port, 9600)
             serial_port.write(b'i')
             serial_port.close()
+            print("caracter de inicio 'i' enviado por el puerto: "+self.com_port)
         except serial.SerialException as ex:
             print("Error en la conexion serial: ", ex)
         except Exception as ex:
             print("Error al enviar el caracter 'i'", ex)
         
-        print("caracter de inicio 'i' enviado por el puerto: "+self.com_port)
+        
         
         
     def turn_off_module(self):
@@ -133,12 +134,13 @@ class ModuleGrafomotricidad(QWidget):
             serial_port = serial.Serial(self.com_port, 9600)
             serial_port.write(b'f')
             serial_port.close()
+            print("caracter de finalizacion 'f' enviado por el puerto: "+self.com_port)
         except serial.SerialException as ex:
             print("Error en la conexion serial: ", ex)
         except Exception as ex:
             print("Error al enviar el caracter 'i'", ex)
             
-        print("caracter de finalizacion 'f' enviado por el puerto: "+self.com_port)
+        
        
     
     def closeEvent(self, event):
