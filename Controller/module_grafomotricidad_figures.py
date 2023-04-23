@@ -6,7 +6,7 @@ codigo_figuras = {
      3: 'triangulo',
      4: 'tortuga',
      5: 'oveja',
-     6: 'burro',
+     6: 'vaca',
      7: 'cuadrado mediano',
      8: 'circulo mediano',
      9: 'triangulo mediano',
