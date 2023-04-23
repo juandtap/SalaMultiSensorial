@@ -40,7 +40,7 @@ path_figuras = [
      'Assets/grafomotricidad/14_circulo_peq.png',
      'Assets/grafomotricidad/15_triangulo_peq.png',
      'Assets/grafomotricidad/16_gallina.png',
-     'Assets/grafomotricidad/17_burro.png',
+     'Assets/grafomotricidad/17_caballo.png',
      'Assets/grafomotricidad/18_conejo.png',
 ]
      
