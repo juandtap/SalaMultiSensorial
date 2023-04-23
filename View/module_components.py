@@ -84,8 +84,9 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.textEdit_instructions.setReadOnly(True)
         
         # envia la senal de inicio 'i' al modulo arduino
-        self.turn_on_module()
         
+        self.turn_on_off_thread = TurnOnOffModule(self.com_port, 'i')
+        self.turn_on_off_thread.start()
         
         self.set_module_images()
         
@@ -108,44 +109,13 @@ class ModuleGrafomotricidad(QWidget):
         
         for radio_button in radio_buttons_list:
             radio_button.clicked.connect(self.get_selected_figure_name)
-
-    
-    def turn_on_module(self):
-        # este metodo se inicia al abrir la ventana del modulo
-        # enviar caracter 'i' al modulo rduino
-        
-        try:
-            serial_port = serial.Serial(self.com_port, 9600)
-            serial_port.write(b'i')
-            serial_port.close()
-            print("caracter de inicio 'i' enviado por el puerto: "+self.com_port)
-        except serial.SerialException as ex:
-            print("Error en la conexion serial: ", ex)
-        except Exception as ex:
-            print("Error al enviar el caracter 'i'", ex)
-        
-        
-        
-        
-    def turn_off_module(self):
-        #este metodo se ejecuta al cerrar la ventana
-        #enviar caracter 'f' al modulo arduino
-        try:
-            serial_port = serial.Serial(self.com_port, 9600)
-            serial_port.write(b'f')
-            serial_port.close()
-            print("caracter de finalizacion 'f' enviado por el puerto: "+self.com_port)
-        except serial.SerialException as ex:
-            print("Error en la conexion serial: ", ex)
-        except Exception as ex:
-            print("Error al enviar el caracter 'i'", ex)
-            
-        
-       
+  
     
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
-        self.turn_off_module()
+        self.turn_on_off_thread = TurnOnOffModule(self.com_port, 'f')
+        self.turn_on_off_thread.start()
+       
         event.accept()
         
 
@@ -281,8 +251,33 @@ class ModuleGrafomotricidad(QWidget):
         
     def timer_stopped(self):
         print("se detuvo el contador ")
-    
+
+# Thread para enviar los caracteres de i (inicio) y f (finalizacion) 
+# para controlar el modulo
+# si se envia i prende el modulo, si se envia f lo apaga  
+class TurnOnOffModule(QThread):
+    def __init__(self, port, signal_code):
+        super().__init__()
+        self._is_runnig = False
+        self.code = signal_code
+        self.com_port = port
         
+        
+    def run(self):
+        self._is_runnig = True
+        try:
+            serial_port = serial.Serial(self.com_port, 9600)
+            serial_port.write(self.code.encode())
+            serial_port.close()
+            print("caracter  " + self.code+" enviado por el puerto: "+self.com_port)
+            self._is_runnig = False
+        except serial.SerialException as ex:
+            print("Error en la conexion serial: ", ex)
+        except Exception as ex:
+            print("Error al enviar el caracter "+self.code)
+            print(ex)
+        
+      
 class TimerThread(QThread):
     
     timeChanged = pyqtSignal(QTime)
