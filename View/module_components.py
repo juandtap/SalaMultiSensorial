@@ -109,7 +109,12 @@ class ModuleGrafomotricidad(QWidget):
         
         for radio_button in radio_buttons_list:
             radio_button.clicked.connect(self.get_selected_figure_name)
-  
+    
+        # establece la figura 1 como seleccionada, para evitar que pulsen el boton de inicio
+        # sin antes haber seleccionado una figura
+        
+        self.ui_mod_grafo.radioButton_1.setChecked(True)
+        self.ui_mod_grafo.lineEdit_figure.setText(codigo_figuras[1])
     
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
@@ -146,8 +151,8 @@ class ModuleGrafomotricidad(QWidget):
         if radio_button.isChecked():
             rb = radio_button.objectName()
         
-        # obtengo el nombre del radiobutton (radioButton_2) por ejemplp
-        # y extraigo el numero con split('-')[-] con ese numero busco el nombre de la figura en el diccionario de figuras
+        # obtengo el nombre del radiobutton 'radioButton_2' por ejemplo
+        # y extraigo el numero con split('-')[-1] con ese numero busco el nombre de la figura en el diccionario de figuras
         # Otra forma de hacerlo seria directamente obtener el texto del radioButton pero igual se 
         # se necesitaria su codigo para saber si se selecciono la figura correcta
         
@@ -193,8 +198,11 @@ class ModuleGrafomotricidad(QWidget):
   
     def update_time(self, module_time):
         #time_str = module_time.toString('mm:ss')
-       
-        self.ui_mod_grafo.timeEdit_limit_time.setTime(module_time)
+        # si el thread del contador se detuvo, se pone en 00:00
+        if self.timer_thread._is_running:
+            self.ui_mod_grafo.timeEdit_limit_time.setTime(module_time)
+        else:
+            self.ui_mod_grafo.timeEdit_limit_time.setTime(QTime(0,0,0))
              
     def show_received_data(self, data):
         
@@ -250,6 +258,7 @@ class ModuleGrafomotricidad(QWidget):
         
         
     def timer_stopped(self):
+        # acciones a ejecutar cuando el thread del contador de detiene
         print("se detuvo el contador ")
 
 # Thread para enviar los caracteres de i (inicio) y f (finalizacion) 
