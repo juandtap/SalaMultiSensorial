@@ -145,8 +145,8 @@ class PlotWidget(QWidget):
         # Agregar los nuevos datos y el nuevo tiempo a las listas de datos y tiempo
         #self.data.append(new_data)
         #self.time.append(new_time)
-        self.data = [3, 6, 7, 10, 20, 30, 59, 70, 40, 50]
-        self.time = [1,2,3,4,5,6,7,8,9,10]
+        self.data = [0,3, 6, 7, 10, 20, 30, 59, 70, 40, 50]
+        self.time = [0,1,2,3,4,5,6,7,8,9,10]
 
         # Limitar la cantidad de puntos mostrados en la gráfica a 100
         if len(self.data) > 100:
