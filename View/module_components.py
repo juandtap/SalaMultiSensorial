@@ -19,7 +19,7 @@ from Controller.session_control import add_sesion_module, get_sesion_by_id, add_
 from Model.model import Sesion, ModuloGrafomotricidad
 from View.components import MessageDialog
 
-from Controller.module_grafomotricidad_figures import path_figuras, codigo_figuras
+from Controller.module_codes import path_figuras, codigo_figuras
 
 
 

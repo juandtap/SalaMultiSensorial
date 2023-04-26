@@ -143,9 +143,9 @@ class Ui_Form_modulo_iluminacion(object):
         self.label_3.setFont(font)
         self.label_3.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_3.setObjectName("label_3")
-        self.pushButton = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton.setGeometry(QtCore.QRect(540, 210, 61, 61))
-        self.pushButton.setStyleSheet("QPushButton {\n"
+        self.pushButton_1 = QtWidgets.QPushButton(Form_modulo_iluminacion)
+        self.pushButton_1.setGeometry(QtCore.QRect(540, 210, 61, 61))
+        self.pushButton_1.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
 "    background-color: rgb(255, 0, 0);\n"
 "  color: rgb(255, 255, 255); \n"
@@ -157,7 +157,7 @@ class Ui_Form_modulo_iluminacion(object):
 "QPushButton:disabled {\n"
 "background-color:#A0A0A0;\n"
 "}")
-        self.pushButton.setObjectName("pushButton")
+        self.pushButton_1.setObjectName("pushButton_1")
         self.pushButton_2 = QtWidgets.QPushButton(Form_modulo_iluminacion)
         self.pushButton_2.setGeometry(QtCore.QRect(620, 210, 61, 61))
         self.pushButton_2.setStyleSheet("QPushButton {\n"
@@ -306,6 +306,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.lineEdit_R_code = QtWidgets.QLineEdit(self.horizontalLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
+        font.setPointSize(10)
         self.lineEdit_R_code.setFont(font)
         self.lineEdit_R_code.setText("")
         self.lineEdit_R_code.setPlaceholderText("")
@@ -322,6 +323,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.lineEdit_G_code = QtWidgets.QLineEdit(self.horizontalLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
+        font.setPointSize(10)
         self.lineEdit_G_code.setFont(font)
         self.lineEdit_G_code.setObjectName("lineEdit_G_code")
         self.horizontalLayout.addWidget(self.lineEdit_G_code)
@@ -336,6 +338,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.lineEdit_B_code = QtWidgets.QLineEdit(self.horizontalLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
+        font.setPointSize(10)
         self.lineEdit_B_code.setFont(font)
         self.lineEdit_B_code.setObjectName("lineEdit_B_code")
         self.horizontalLayout.addWidget(self.lineEdit_B_code)
@@ -355,14 +358,15 @@ class Ui_Form_modulo_iluminacion(object):
         self.label_8.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_8.setObjectName("label_8")
         self.horizontalLayout_2.addWidget(self.label_8)
-        self.lineEdit_R_code_2 = QtWidgets.QLineEdit(self.horizontalLayoutWidget_2)
+        self.lineEdit_selected_color = QtWidgets.QLineEdit(self.horizontalLayoutWidget_2)
         font = QtGui.QFont()
         font.setFamily("Arial")
-        self.lineEdit_R_code_2.setFont(font)
-        self.lineEdit_R_code_2.setText("")
-        self.lineEdit_R_code_2.setReadOnly(True)
-        self.lineEdit_R_code_2.setObjectName("lineEdit_R_code_2")
-        self.horizontalLayout_2.addWidget(self.lineEdit_R_code_2)
+        font.setPointSize(10)
+        self.lineEdit_selected_color.setFont(font)
+        self.lineEdit_selected_color.setText("")
+        self.lineEdit_selected_color.setReadOnly(True)
+        self.lineEdit_selected_color.setObjectName("lineEdit_selected_color")
+        self.horizontalLayout_2.addWidget(self.lineEdit_selected_color)
 
         self.retranslateUi(Form_modulo_iluminacion)
         QtCore.QMetaObject.connectSlotsByName(Form_modulo_iluminacion)
@@ -383,7 +387,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.pushButton_stop.setText(_translate("Form_modulo_iluminacion", "Detener"))
         self.pushButton_save.setText(_translate("Form_modulo_iluminacion", "Guardar"))
         self.label_3.setText(_translate("Form_modulo_iluminacion", "Seleccionar Color:"))
-        self.pushButton.setText(_translate("Form_modulo_iluminacion", "R"))
+        self.pushButton_1.setText(_translate("Form_modulo_iluminacion", "R"))
         self.pushButton_2.setText(_translate("Form_modulo_iluminacion", "G"))
         self.pushButton_3.setText(_translate("Form_modulo_iluminacion", "B"))
         self.pushButton_4.setText(_translate("Form_modulo_iluminacion", "Y"))

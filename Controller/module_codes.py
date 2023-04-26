@@ -22,7 +22,7 @@ codigo_figuras = {
      
 }
    
-# lista
+# lista con el path de las imagenes para el modulo de grafomotridad
 path_figuras = [
      'Assets/grafomotricidad/01_cuadrado.png',
      'Assets/grafomotricidad/02_circulo.png',
@@ -44,3 +44,18 @@ path_figuras = [
      'Assets/grafomotricidad/18_conejo.png',
 ]
      
+     
+# Diccionario con el codigo de colores  para el modulo de iluminacion
+
+ilumination_colors = {
+     1: 'rojo',
+     2: 'verde',
+     3: 'azul',
+     4: 'amarillo',
+     5: 'celeste', # cyan?
+     6: 'blanco',
+     7: 'naranja',
+     8: 'rosado', # magenta?
+     9: 'purpura'
+     
+}

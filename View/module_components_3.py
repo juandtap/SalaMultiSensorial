@@ -3,11 +3,11 @@
 import sys
 
 sys.path.append(".")
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QGraphicsScene, QGraphicsRectItem, QGraphicsProxyWidget, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QPushButton
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal, QRectF
-from PyQt5.QtGui import QPixmap, QPen, QBrush, QColor
+from PyQt5.QtGui import QPixmap, QPen, QBrush, QColor, QIntValidator
 from PyQt5.QtCore import QTimer
-
+from Controller.module_codes import ilumination_colors
 from View.module_iluminacion_view import Ui_Form_modulo_iluminacion
 
 class ModuleIlumination(QWidget):
@@ -21,6 +21,26 @@ class ModuleIlumination(QWidget):
         self.ui_ilu.label_text_status.setHidden(True)
         self.ui_ilu.label_conn_status.setHidden(True)
         
+        # asign evento clicked.connect a los botones de los colores
+        
+        color_button_list = [self.findChild(QPushButton, f"pushButton_{i}") for i in range(1, 10)]
+        for color_button in color_button_list:
+            color_button.clicked.connect(self.get_selected_color)
+        
+        # defino el color rojo por defecto para evitar valores nullos al momento de enviar datos
+        
+        self.ui_ilu.lineEdit_selected_color.setText(ilumination_colors[1])
+        
+        # valido que los datos para el codigo RGB solo ingresen numeros entre  0-255
+        self.ui_ilu.lineEdit_R_code.setValidator(QIntValidator(0,255))
+        self.ui_ilu.lineEdit_R_code.textChanged.connect(self.check_code)
+        
+        self.ui_ilu.lineEdit_G_code.setValidator(QIntValidator(0,255))
+        self.ui_ilu.lineEdit_G_code.textChanged.connect(self.check_code)
+        
+        self.ui_ilu.lineEdit_B_code.setValidator(QIntValidator(0,255))
+        self.ui_ilu.lineEdit_B_code.textChanged.connect(self.check_code)
+        
     def set_module_images(self):
         pixmap1 = QPixmap("Assets/modulo_3_iluminacion.jpg")
         self.ui_ilu.label_module_image.setPixmap(
@@ -30,3 +50,34 @@ class ModuleIlumination(QWidget):
             aspectRatioMode=False
             )
         )
+        
+    def get_selected_color(self):
+        color_button = self.sender()
+        color_code = color_button.objectName()
+        code = int(color_code.split('_')[-1])
+        self.ui_ilu.lineEdit_selected_color.setText(ilumination_colors[code])
+    
+    def check_code(self):
+        if len(self.ui_ilu.lineEdit_R_code.text()) > 3:
+            self.ui_ilu.lineEdit_R_code.text()[:3]
+        else: # si la longitud es menor o igual a 3
+            value = int(self.ui_ilu.lineEdit_R_code.text()) if self.ui_ilu.lineEdit_R_code.text() else 0 
+            # obtiene el valor como un entero
+            value = max(0, min(255, value)) # asegura que el valor esté dentro del rango de 0 a 255
+            self.ui_ilu.lineEdit_R_code.setText(str(value)) # actualiza el texto con el valor validado
+        
+        if len(self.ui_ilu.lineEdit_G_code.text()) > 3:
+            self.ui_ilu.lineEdit_G_code.text()[:3]
+        else: # si la longitud es menor o igual a 3
+            value = int(self.ui_ilu.lineEdit_G_code.text()) if self.ui_ilu.lineEdit_G_code.text() else 0 
+            # obtiene el valor como un entero
+            value = max(0, min(255, value)) # asegura que el valor esté dentro del rango de 0 a 255
+            self.ui_ilu.lineEdit_G_code.setText(str(value)) # actualiza el texto con el valor validado
+        
+        if len(self.ui_ilu.lineEdit_B_code.text()) > 3:
+            self.ui_ilu.lineEdit_B_code.text()[:3]
+        else: # si la longitud es menor o igual a 3
+            value = int(self.ui_ilu.lineEdit_B_code.text()) if self.ui_ilu.lineEdit_B_code.text() else 0 
+            # obtiene el valor como un entero
+            value = max(0, min(255, value)) # asegura que el valor esté dentro del rango de 0 a 255
+            self.ui_ilu.lineEdit_B_code.setText(str(value)) # actualiza el texto con el valor validado
