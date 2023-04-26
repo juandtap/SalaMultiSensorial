@@ -1,3 +1,6 @@
+# En este modulo esta la clase que controla ventana del modulo vumetro
+
+
 import sys
 import serial, time, threading, random
 import matplotlib.pyplot as plt

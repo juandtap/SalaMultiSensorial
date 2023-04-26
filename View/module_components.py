@@ -1,3 +1,7 @@
+# En este modulo esta la clase que controla ventana de seleccion de modulo
+# y la ventana del modulo de grafomotricidad
+# tambien estas las clases QThread para el envio y recepcion de datos arduino
+
 import sys
 import serial, threading
 
@@ -10,11 +14,13 @@ from PyQt5.QtGui import QPixmap
 from View.module_selection_view import Ui_Form_seleccion_modulos
 from View.module_grafomotricidad_view import Ui_Form_modulo_grafomotricidad
 from View.module_components_2 import ModuleVumeter
+from View.module_components_3 import ModuleIlumination
 from Controller.session_control import add_sesion_module, get_sesion_by_id, add_module_grafomotricidad, set_final_time
 from Model.model import Sesion, ModuloGrafomotricidad
 from View.components import MessageDialog
 
 from Controller.module_grafomotricidad_figures import path_figuras, codigo_figuras
+
 
 
 
@@ -30,6 +36,7 @@ class ModuleSelection(QWidget):
         
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
         self.ui_modules.pushButton_module_vumetro.clicked.connect(self.open_module_vumeter)
+        self.ui_modules.pushButton_module_iluminacion.clicked.connect(self.open_module_ilumination)
         
     def create_sesion(self):
         
@@ -60,6 +67,10 @@ class ModuleSelection(QWidget):
         # )
         self.vumeter = ModuleVumeter(None, self.ui_modules.lineEdit_com_port.text().strip())
         self.vumeter.show()
+        
+    def open_module_ilumination(self):
+        self.ilumination = ModuleIlumination(None, self.ui_modules.lineEdit_com_port.text().strip())
+        self.ilumination.show()
 
     def load_info_student(self):
         self.ui_modules.label_cedula.setText(self.student.cedula)
