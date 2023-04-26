@@ -21,7 +21,17 @@ class ModuleIlumination(QWidget):
         self.ui_ilu.label_text_status.setHidden(True)
         self.ui_ilu.label_conn_status.setHidden(True)
         
-        # asign evento clicked.connect a los botones de los colores
+        # radiobutton color definido seleccionado por default
+        self.ui_ilu.radioButton_defined_color.setChecked(True)
+        
+        self.ui_ilu.lineEdit_R_code.setDisabled(True)
+        self.ui_ilu.lineEdit_G_code.setDisabled(True)
+        self.ui_ilu.lineEdit_B_code.setDisabled(True)
+        
+        self.ui_ilu.radioButton_defined_color.clicked.connect(self.disable_RGB_text)
+        self.ui_ilu.radioButton_custom_color.clicked.connect(self.disable_RGB_text)
+        
+        # asigno evento clicked.connect a los botones de los colores
         
         color_button_list = [self.findChild(QPushButton, f"pushButton_{i}") for i in range(1, 10)]
         for color_button in color_button_list:
@@ -50,6 +60,22 @@ class ModuleIlumination(QWidget):
             aspectRatioMode=False
             )
         )
+    
+    # funcion para seleccionar como se envian los colores, definidos, o personalizados con codigo RGB  
+    def disable_RGB_text(self):
+        print('evento del radio button '+ str(self.ui_ilu.radioButton_defined_color.isChecked()))
+        if self.ui_ilu.radioButton_defined_color.isChecked():
+            value = True
+            self.ui_ilu.lineEdit_R_code.setDisabled(value)
+            self.ui_ilu.lineEdit_G_code.setDisabled(value)
+            self.ui_ilu.lineEdit_B_code.setDisabled(value)
+            
+        if self.ui_ilu.radioButton_custom_color.isChecked():
+            value = False
+            self.ui_ilu.lineEdit_R_code.setDisabled(value)
+            self.ui_ilu.lineEdit_G_code.setDisabled(value)
+            self.ui_ilu.lineEdit_B_code.setDisabled(value)
+            
         
     def get_selected_color(self):
         color_button = self.sender()

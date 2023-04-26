@@ -48,14 +48,14 @@ path_figuras = [
 # Diccionario con el codigo de colores  para el modulo de iluminacion
 
 ilumination_colors = {
-     1: 'rojo',
-     2: 'verde',
-     3: 'azul',
-     4: 'amarillo',
-     5: 'celeste', # cyan?
-     6: 'blanco',
-     7: 'naranja',
-     8: 'rosado', # magenta?
-     9: 'purpura'
+     1: 'Rojo',
+     2: 'Verde',
+     3: 'Azul',
+     4: 'Amarillo',
+     5: 'Celeste', # cyan?
+     6: 'Blanco',
+     7: 'Naranja',
+     8: 'Rosado', # magenta?
+     9: 'Purpura'
      
 }
