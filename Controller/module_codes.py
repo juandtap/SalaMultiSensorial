@@ -45,7 +45,7 @@ path_figuras = [
 ]
      
      
-# Diccionario con el codigo de colores  para el modulo de iluminacion
+# Diccionarios con el codigo de colores  para el modulo de iluminacion
 
 ilumination_colors = {
      1: 'Rojo',
@@ -56,6 +56,17 @@ ilumination_colors = {
      6: 'Blanco',
      7: 'Naranja',
      8: 'Rosado', # magenta?
-     9: 'Purpura'
-     
+     9: 'Purpura'   
+}
+
+rgb_colors = {
+     'Rojo':'255,0,0',
+     'Verde':'0,255,0',
+     'Azul':'0,0,255',
+     'Amarillo':'255,255,0',
+     'Celeste':'0,255,255',
+     'Blanco':'255,255,255',
+     'Naranja':'255,69,0',
+     'Rosado':'255,0,255',
+     'Purpura':'128,0,128'
 }
