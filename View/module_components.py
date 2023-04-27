@@ -15,6 +15,7 @@ from View.module_selection_view import Ui_Form_seleccion_modulos
 from View.module_grafomotricidad_view import Ui_Form_modulo_grafomotricidad
 from View.module_components_2 import ModuleVumeter
 from View.module_components_3 import ModuleIlumination
+from View.module_components_4 import ModulePictogram
 from Controller.session_control import add_sesion_module, get_sesion_by_id, add_module_grafomotricidad, set_final_time
 from Model.model import Sesion, ModuloGrafomotricidad
 from View.components import MessageDialog
@@ -37,6 +38,7 @@ class ModuleSelection(QWidget):
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
         self.ui_modules.pushButton_module_vumetro.clicked.connect(self.open_module_vumeter)
         self.ui_modules.pushButton_module_iluminacion.clicked.connect(self.open_module_ilumination)
+        self.ui_modules.pushButton_module_pictograma.clicked.connect(self.open_module_pictogram)
         
     def create_sesion(self):
         
@@ -71,6 +73,10 @@ class ModuleSelection(QWidget):
     def open_module_ilumination(self):
         self.ilumination = ModuleIlumination(None, self.ui_modules.lineEdit_com_port.text().strip())
         self.ilumination.show()
+        
+    def open_module_pictogram(self):
+        self.pictogram = ModulePictogram(None, self.ui_modules.lineEdit_com_port.text().strip())
+        self.pictogram.show()
 
     def load_info_student(self):
         self.ui_modules.label_cedula.setText(self.student.cedula)
