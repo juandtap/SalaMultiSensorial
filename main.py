@@ -3,7 +3,7 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QCompleter, QFileDialog
 from PyQt5 import QtGui, QtCore
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QIntValidator
 from PyQt5.QtCore import Qt
 
 from datetime import date
@@ -195,7 +195,11 @@ class AddStudent(QWidget):
         
         self.ui_addstu.pushButton_add_discapacidad.clicked.connect(self.open_add_discapacidad)
         
-        # revisa que el campo cedula no exeda los 10 caracteres
+        # revisa que el campo cedula no exeda los 10 caracteres y solo se ingrese numeros
+        validator = QIntValidator(self)
+        validator.setRange(0,999999999)
+        self.ui_addstu.lineEdit_cedula.setValidator(validator)
+        self.ui_addstu.lineEdit_cedula_representante.setValidator(validator)
         self.ui_addstu.lineEdit_cedula.textChanged.connect(self.check_cedula_fields)
         self.ui_addstu.lineEdit_cedula_representante.textChanged.connect(self.check_cedula_representate_fields)
         # cargar fotografia del estudiante

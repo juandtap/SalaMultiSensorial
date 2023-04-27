@@ -2,6 +2,7 @@ import sys
 sys.path.append(".")
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QFileDialog
 from PyQt5.QtCore import Qt, QDate
+from PyQt5.QtGui import QIntValidator
 from View.message_dialog_view import Ui_Message_dialog
 from View.add_discapacidad_view import Ui_Agregar_Discapacidades
 from View.add_school_view import Ui_add_Unidad_Educativa
@@ -122,7 +123,11 @@ class EditStudent(QWidget):
         self.load_discapacidades()
          # eventos ComboBox Discapacidades
         self.checkeable_combo.activated.connect(self.get_selected_discapacidades)
-         # revisa que el campo cedula no exeda los 10 caracteres
+         # revisa que el campo cedula no exeda los 10 caracteres y solo se ingresen numeros
+        validator = QIntValidator(self)
+        validator.setRange(0,999999999)
+        self.ui_edit.lineEdit_cedula.setValidator(validator)
+        self.ui_edit.lineEdit_cedula_representante.setValidator(validator)
         self.ui_edit.lineEdit_cedula.textChanged.connect(self.check_cedula_fields)
         self.ui_edit.lineEdit_cedula_representante.textChanged.connect(self.check_cedula_representate_fields)
         
