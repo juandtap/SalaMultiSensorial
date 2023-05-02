@@ -43,6 +43,17 @@ def add_module_grafomotricidad(new_module):
 def get_sesion_by_id(id_sesion):
     return session.query(Sesion).filter_by(id=id_sesion).first()
 
+def get_session_by_student_id(id_stu):
+    
+    try:
+        result = session.query(Sesion).filter_by(id_estudiante=id_stu).all()
+        return result
+   
+    except Exception as ex:
+        
+        print("Error al recuperar de la base de datos:", ex )
+        return None
+
 # Update
  # este metodo se ejecuta al cerrar la ventana seleccion de modulos
  # agrega la hora_fin a la sesion
