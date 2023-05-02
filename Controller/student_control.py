@@ -50,21 +50,26 @@ def add_student_control(student_data):
 # READ
 def get_all_students():
     student_list = session.query(Estudiante).all()
+    
     return student_list
 
 def get_student_by_id(student_id):
     student = session.query(Estudiante).filter_by(id=student_id).first()
+   
     return student
 
 def get_student_by_cedula(student_cedula):
     student = session.query(Estudiante).filter_by(cedula=student_cedula).first()
     print(type(student))
+    # no cerrar la sesion, error con dicapacidad
     return student
 
 # Busqueda de estudiantes por nombre o apellido
 
 def get_student_by_names(search_text):
-    return session.query(Estudiante).filter(Estudiante.nombres.like("%"+search_text+"%") |Estudiante.apellidos.like("%"+search_text+"%")).all()
+    result_search = session.query(Estudiante).filter(Estudiante.nombres.like("%"+search_text+"%") |Estudiante.apellidos.like("%"+search_text+"%")).all()
+    session.close()
+    return result_search
 
 # UPDATE
 
