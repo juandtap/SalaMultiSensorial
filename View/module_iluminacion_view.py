@@ -369,7 +369,7 @@ class Ui_Form_modulo_iluminacion(object):
 
     def retranslateUi(self, Form_modulo_iluminacion):
         _translate = QtCore.QCoreApplication.translate
-        Form_modulo_iluminacion.setWindowTitle(_translate("Form_modulo_iluminacion", "Modulo Vumetro"))
+        Form_modulo_iluminacion.setWindowTitle(_translate("Form_modulo_iluminacion", "Modulo Iluminacion"))
         self.label_conn_status.setText(_translate("Form_modulo_iluminacion", "Conectado"))
         self.label.setText(_translate("Form_modulo_iluminacion", "MODULO: ILUMINACION"))
         self.textEdit_instructions.setHtml(_translate("Form_modulo_iluminacion", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"

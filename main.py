@@ -13,6 +13,7 @@ from View.add_student_view import Ui_Add_student
 
 from View.components import CheckableComboBox, MessageDialog, AddSchool, AddDiscapacidad, EditStudent
 from View.module_components import ModuleSelection
+from View.components_2 import StudentReport
 from Controller.student_control import add_student_control, get_all_students, get_student_by_id, get_student_by_cedula, get_student_by_names
 from Controller.school_control import add_school_control, get_all_schools, get_school_by_id
 from Controller.discapacidad_control import get_all_discapacidades, get_discapacidad_by_id
@@ -48,6 +49,10 @@ class MainWindow(QMainWindow):
         
         self.ui_main.pushButton_goto_modules.clicked.connect(self.open_modules)
         
+        # ventana reportes del estudiante
+        
+        self.ui_main.pushButton_goto_reports.clicked.connect(self.open_student_reports)
+        
     def open_add_student(self):
         self.add_stu = AddStudent()
         self.add_stu.show()
@@ -56,7 +61,9 @@ class MainWindow(QMainWindow):
         self.edit_stu = EditStudent(get_student_by_cedula(self.ui_main.label_cedula.text()))
         self.edit_stu.show()
         
-    
+    def open_student_reports(self):
+        self.stu_report = StudentReport(get_student_by_cedula(self.ui_main.label_cedula.text()))
+        self.stu_report.show()
         
     # no se esta llamando, considerar eliminar este metodo
     def show_student_list(self):
