@@ -1,3 +1,5 @@
+# este modulo es para la ventana de reportes del estudiante
+
 import sys
 sys.path.append(".")
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QFileDialog, QAbstractItemView, QTableWidgetItem, QHeaderView
@@ -18,7 +20,7 @@ class StudentReport(QWidget):
         self.load_info_student()
        
         # variable temporal borrar despues
-        self.download = 'enlace descarga'
+        self.download = 'ver modulos'
         
         self.set_table()
         
@@ -26,7 +28,7 @@ class StudentReport(QWidget):
         
        
     def set_table(self):
-         
+        self.ui_rep.tableWidget.verticalHeader().setVisible(False)
         # defino las columnas de la tabla
         self.ui_rep.tableWidget.setColumnCount(5)
         self.ui_rep.tableWidget.setHorizontalHeaderLabels(
@@ -35,7 +37,7 @@ class StudentReport(QWidget):
                 'Fecha',
                 'Hora Inicio',
                 'Hora Fin',
-                'Ver/Descargar'
+                'Ver Modulos '
             ]
         )
         
