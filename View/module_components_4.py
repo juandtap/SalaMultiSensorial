@@ -5,6 +5,8 @@ sys.path.append(".")
 import serial, threading
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QPushButton
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal, QRectF
+# Este modulo controla la ventana del modulo pictogramas
+
 from PyQt5.QtGui import QPixmap, QPen, QBrush, QColor, QIntValidator
 from PyQt5.QtCore import QTimer
 
