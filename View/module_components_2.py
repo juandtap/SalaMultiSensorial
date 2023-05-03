@@ -50,13 +50,13 @@ class ModuleVumeter(QWidget):
         #self.time = [0,1,2,3,4,5,6,7,8,9,10]
         
         self.data = [0,]  
-        self.time = [0,]  
+        self.timedata = [0,]  
         
-        #self.timer = QTimer(self)
-        #self.timer.timeout.connect(self.update_data)
-        #self.timer.start(500)
+        self.timer = QTimer(self)
+        # self.timer.timeout.connect(self.update_data)
+        self.timer.start(500)
         
-        plt.plot(self.time, self.data)
+        plt.plot(self.timedata , self.data)
         
         plt.xlabel('Tiempo ms')
         plt.ylabel('Nivel')
@@ -77,18 +77,18 @@ class ModuleVumeter(QWidget):
         self.serial_thread.start()
         
     
-    def updata_data_2(self, data, time):
+    def updata_data_2(self, level):
         plt.clf()
-        self.data.extend(data)
-        self.time.extend(time)
-        plt.plot(self.time, self.data)
+        self.data.append(level)
+        self.timedata.append(len(self.timedata)*100) 
+        plt.plot(self.timedata , self.data)
         
-        print("listas nivel actual: ")
-        for level in self.data:
-            print(str(level))
-        print('lista de timpo: ')
-        for tm in self.time:
-            print(str(tm))
+        #print("listas nivel actual: ")
+        # for level in self.data:
+        #     print(str(level))
+        # print('lista de timpo: ')
+        # for tm in self.timedata :
+        #     print(str(tm))
         
         plt.xlabel('Tiempo ms')
         plt.ylabel('Nivel')
@@ -119,14 +119,15 @@ class ModuleVumeter(QWidget):
         value = random.randint(0,9)
         self.data.append(value)
         # cada 100ms
-        self.time.append(len(self.time)*100) 
+        self.timedata.append(len(self.timedata)*100) 
+        
         
         # actualiza la grafica
         
         #limpia la grafica (clear)
         plt.clf()
         
-        plt.plot(self.time, self.data)
+        plt.plot(self.timedata, self.data)
         
         plt.xlabel('Tiempo ms')
         plt.ylabel('Nivel')
@@ -140,7 +141,7 @@ class ModuleVumeter(QWidget):
 # Thread para escuchar datos del vumetro
 class VumeterDataThread(QThread):
     
-    data_received = pyqtSignal(list, list)
+    data_received = pyqtSignal(int)
 
     def __init__(self, port, baudrate, parent=None):
         super().__init__(parent)
@@ -155,17 +156,17 @@ class VumeterDataThread(QThread):
         except serial.SerialException as e:
             print("Error al conectarse al modulo por el puerto com "+self.port+" : "+str(e))
             return
-        data = []
-        timedata = []
+        
+        
         while self.running:
             if ser.in_waiting:
                 line = ser.readline().decode('utf-8').strip()
                 try:
-                    val = float(line)
+                    val = int(line)
                     print("dato recibido: "+line)
-                    data.append(val)
-                    timedata.append(time.monotonic()/ 1000)
-                    self.data_received.emit(data, timedata)
+                    
+                    
+                    self.data_received.emit(val)
                 except ValueError:
                     print("Error en datos recibidos: ",line)
                 self.msleep(10)
