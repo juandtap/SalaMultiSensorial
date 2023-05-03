@@ -8,7 +8,7 @@ from PyQt5.QtGui import  QStandardItemModel , QColor, QBrush, QFont
 from datetime import time, date
 
 from View.student_report_view import Ui_Form_student_report
-from Controller.session_control import get_session_by_student_id
+from Controller.session_control import get_session_by_student_id, get_sesion_by_id
 
 class StudentReport(QWidget):
     def __init__(self, student):
@@ -102,8 +102,66 @@ class StudentReport(QWidget):
         item = self.table_reports.item(row, 4)
         id_ses = item.text().split('-')[-1]
         print("id sesion : "+id_ses)
-        
+        self.ui_rep.scrollArea.takeWidget().deleteLater()
+        module_tables = ModuleReport(id_ses)
+        self.ui_rep.scrollArea.setWidget(module_tables)
         # recupera la sesion y muestra la info de los modulos
         # crear QWidget para mostrar la info de los modulos
         # probar conectarse, enviar y recibir datos por bluetooth usando MAC y no el puerto
         
+# esta clase carga las tablas de la sesion
+# el onjeto sesion tiene las listas de cada modulo
+# en cada lista se guarda objetos de tipo ModuloGrafo, ModuloVumeter, ....
+
+class ModuleReport(QWidget):
+    def __init__(self, id_sesion):
+        super().__init__()
+        
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        
+        # se recupera los datos de los modulos de la sesion
+        # una lista por cada modulo
+        
+        #Modulo de grafomotricidad
+        grafomotricidad_list = get_sesion_by_id(id_sesion).modulos_grafomotricidad
+        
+        self.table_grafomotricidad = QTableWidget()
+        layout.addWidget(self.table_grafomotricidad)
+        
+        self.table_grafomotricidad.verticalHeader().setVisible(False)
+        # defino las columnas de la tabla
+        self.table_grafomotricidad.setColumnCount(4)
+        self.table_grafomotricidad.setHorizontalHeaderLabels(
+            [
+                'id',
+                'Figura',
+                'Tiempo Tomado',
+                'Resultado',
+                
+            ]
+        )
+        
+        self.table_grafomotricidad.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.table_grafomotricidad.setSelectionBehavior(QAbstractItemView.SelectRows)
+        
+        # hace que la ultima columna ocupe el espacio restante de la tabla
+        self.table_grafomotricidad.horizontalHeader().setStretchLastSection(True)
+        
+        # este codigo hace que las columnas  no sean redimensionables
+        header = self.table_grafomotricidad.horizontalHeader()
+        for i in range(header.count()):
+            header.setSectionResizeMode(i,QHeaderView.Fixed)
+            
+        for i, module in enumerate(grafomotricidad_list):
+            self.table_grafomotricidad.insertRow(i)
+            self.table_grafomotricidad.setItem(i, 0, QTableWidgetItem(str(module.id)))
+            self.table_grafomotricidad.setItem(i, 1, QTableWidgetItem(str(module.figura)))
+            self.table_grafomotricidad.setItem(i, 2, QTableWidgetItem(str(module.tiempo_tomado)))
+            self.table_grafomotricidad.setItem(i, 3, QTableWidgetItem(str(module.resultado)))
+            
+            
+        
+        
+        
+    

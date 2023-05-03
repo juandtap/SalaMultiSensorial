@@ -44,12 +44,11 @@ def get_sesion_by_id(id_sesion):
     try:
     
         sesion = session.query(Sesion).filter_by(id=id_sesion).first()
+        
         return sesion
     except Exception as ex:
         print("Error al recuperar de la base de datos:", ex )
-    finally:
-    # Cerrar la sesión
-        session.close()
+    
 
    
 
