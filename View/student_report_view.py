@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\form_reportes_estudiante.ui'
+# Form implementation generated from reading ui file '.\form_reportes_estudiante_2.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -28,7 +28,7 @@ class Ui_Form_student_report(object):
         self.label_logo2.setText("")
         self.label_logo2.setObjectName("label_logo2")
         self.label = QtWidgets.QLabel(Form_student_report)
-        self.label.setGeometry(QtCore.QRect(470, 10, 350, 61))
+        self.label.setGeometry(QtCore.QRect(470, 10, 350, 41))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(14)
@@ -41,7 +41,7 @@ class Ui_Form_student_report(object):
         self.label_logo1.setText("")
         self.label_logo1.setObjectName("label_logo1")
         self.label_8 = QtWidgets.QLabel(Form_student_report)
-        self.label_8.setGeometry(QtCore.QRect(540, 90, 221, 20))
+        self.label_8.setGeometry(QtCore.QRect(540, 60, 221, 20))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
@@ -49,7 +49,7 @@ class Ui_Form_student_report(object):
         self.label_8.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_8.setObjectName("label_8")
         self.formLayoutWidget = QtWidgets.QWidget(Form_student_report)
-        self.formLayoutWidget.setGeometry(QtCore.QRect(400, 130, 491, 111))
+        self.formLayoutWidget.setGeometry(QtCore.QRect(400, 90, 491, 111))
         self.formLayoutWidget.setObjectName("formLayoutWidget")
         self.formLayout = QtWidgets.QFormLayout(self.formLayoutWidget)
         self.formLayout.setContentsMargins(0, 0, 0, 0)
@@ -112,18 +112,35 @@ class Ui_Form_student_report(object):
 "color: rgb(56, 71, 151);")
         self.label_cedula.setObjectName("label_cedula")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.label_cedula)
-        self.tableWidget = QtWidgets.QTableWidget(Form_student_report)
-        self.tableWidget.setGeometry(QtCore.QRect(60, 260, 1161, 441))
-        self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(0)
-        self.tableWidget.setRowCount(0)
+        self.scrollArea = QtWidgets.QScrollArea(Form_student_report)
+        self.scrollArea.setGeometry(QtCore.QRect(30, 226, 1221, 481))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        self.scrollArea.setFont(font)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1219, 479))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.label_back = QtWidgets.QLabel(Form_student_report)
+        self.label_back.setGeometry(QtCore.QRect(1170, 200, 71, 20))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        font.setItalic(True)
+        font.setUnderline(True)
+        self.label_back.setFont(font)
+        self.label_back.setStyleSheet("color: rgb(56, 71, 151);")
+        self.label_back.setObjectName("label_back")
 
         self.retranslateUi(Form_student_report)
         QtCore.QMetaObject.connectSlotsByName(Form_student_report)
 
     def retranslateUi(self, Form_student_report):
         _translate = QtCore.QCoreApplication.translate
-        Form_student_report.setWindowTitle(_translate("Form_student_report", "Reportes Estudiante"))
+        Form_student_report.setWindowTitle(_translate("Form_student_report", "Modulo Vumetro"))
         self.label.setText(_translate("Form_student_report", "REPORTES"))
         self.label_8.setText(_translate("Form_student_report", "INFORMACION ESTUDIANTE"))
         self.label_3.setText(_translate("Form_student_report", "CEDULA:"))
@@ -132,3 +149,4 @@ class Ui_Form_student_report(object):
         self.label_6.setText(_translate("Form_student_report", "NOMBRES:"))
         self.label_nombres.setText(_translate("Form_student_report", "TextLabel"))
         self.label_cedula.setText(_translate("Form_student_report", "TextLabel"))
+        self.label_back.setText(_translate("Form_student_report", "Regresar"))

@@ -2,7 +2,7 @@
 
 import sys
 sys.path.append(".")
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QFileDialog, QAbstractItemView, QTableWidgetItem, QHeaderView
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QComboBox, QFileDialog,QTableWidget, QAbstractItemView, QTableWidgetItem, QHeaderView
 from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtGui import  QStandardItemModel , QColor, QBrush, QFont
 from datetime import time, date
@@ -20,24 +20,36 @@ class StudentReport(QWidget):
         self.load_info_student()
        
        
+        # esconder label de regresar
+        self.ui_rep.label_back.setHidden(True)
+       
         self.font_table = QFont('Arial',10)
         self.font_table.setUnderline(True)
         
         # variable temporal borrar despues
         self.download = 'ver modulos'
         
+        self.table_reports = QTableWidget()
+        self.area_table = QWidget()
+        area_table_layout = QVBoxLayout()
+        self.area_table.setLayout(area_table_layout)
+        
+        area_table_layout.addWidget(self.table_reports)
+        
+        self.ui_rep.scrollArea.setWidget(self.area_table)
+        
         self.set_table()
         
         self.load_table()   
         
-        self.ui_rep.tableWidget.cellClicked.connect(self.show_reports)
+        self.table_reports.cellClicked.connect(self.show_reports)
         
        
     def set_table(self):
-        self.ui_rep.tableWidget.verticalHeader().setVisible(False)
+        self.table_reports.verticalHeader().setVisible(False)
         # defino las columnas de la tabla
-        self.ui_rep.tableWidget.setColumnCount(5)
-        self.ui_rep.tableWidget.setHorizontalHeaderLabels(
+        self.table_reports.setColumnCount(5)
+        self.table_reports.setHorizontalHeaderLabels(
             [
                 'Sesion',
                 'Fecha',
@@ -47,14 +59,14 @@ class StudentReport(QWidget):
             ]
         )
         
-        self.ui_rep.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.ui_rep.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table_reports.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.table_reports.setSelectionBehavior(QAbstractItemView.SelectRows)
         
         # hace que la ultima columna ocupe el espacio restante de la tabla
-        self.ui_rep.tableWidget.horizontalHeader().setStretchLastSection(True)
+        self.table_reports.horizontalHeader().setStretchLastSection(True)
         
         # este codigo hace que las columnas  no sean redimensionables
-        header = self.ui_rep.tableWidget.horizontalHeader()
+        header = self.table_reports.horizontalHeader()
         
         for i in range(header.count()):
             header.setSectionResizeMode(i,QHeaderView.Fixed)
@@ -68,13 +80,13 @@ class StudentReport(QWidget):
             # la lista contiene elementos
             # Agregar las filas a la tabla
             for i, sesion in enumerate(self.student_sessions_list):
-                self.ui_rep.tableWidget.insertRow(i)
-                self.ui_rep.tableWidget.setItem(i, 0, QTableWidgetItem(str(sesion.id)))
-                self.ui_rep.tableWidget.setItem(i, 1, QTableWidgetItem(str(sesion.fecha)))
-                self.ui_rep.tableWidget.setItem(i, 2, QTableWidgetItem(str(sesion.hora_inicio)))
-                self.ui_rep.tableWidget.setItem(i, 3, QTableWidgetItem(str(sesion.hora_fin)))
-                self.ui_rep.tableWidget.setItem(i, 4, QTableWidgetItem(self.download+"-"+(str(sesion.id))))
-                self.ui_rep.tableWidget.item(i,4).setFont(self.font_table)
+                self.table_reports.insertRow(i)
+                self.table_reports.setItem(i, 0, QTableWidgetItem(str(sesion.id)))
+                self.table_reports.setItem(i, 1, QTableWidgetItem(str(sesion.fecha)))
+                self.table_reports.setItem(i, 2, QTableWidgetItem(str(sesion.hora_inicio)))
+                self.table_reports.setItem(i, 3, QTableWidgetItem(str(sesion.hora_fin)))
+                self.table_reports.setItem(i, 4, QTableWidgetItem(self.download+"-"+(str(sesion.id))))
+                self.table_reports.item(i,4).setFont(self.font_table)
                 
                 
     
@@ -87,9 +99,11 @@ class StudentReport(QWidget):
     def show_reports(self, row, column):
         # la ultima columna para abrir la ventana donde se muestran el resto de tablas
         show_modules_pos = 4
-        item = self.ui_rep.tableWidget.item(row, 4)
+        item = self.table_reports.item(row, 4)
         id_ses = item.text().split('-')[-1]
         print("id sesion : "+id_ses)
         
         # recupera la sesion y muestra la info de los modulos
+        # crear QWidget para mostrar la info de los modulos
+        # probar conectarse, enviar y recibir datos por bluetooth usando MAC y no el puerto
         
