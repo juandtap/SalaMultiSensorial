@@ -11,8 +11,8 @@ mac_hc05_grafomotricidad = '00:22:03:01:7D:DC'
 addr = mac_hc05_testing
 
 # Conectar al dispositivo
-sock = bluetooth.BluetoothSocket(bluetooth.L2CAP)
-sock.connect((addr, 1))
+sock = bluetooth.BluetoothSocket()
+sock.connect((addr, 3))
 
 # Enviar datos al dispositivo
 sock.send('Hola, HC05!')
@@ -25,3 +25,10 @@ while True:
 # Cerrar la conexión
 sock.close()
 
+
+# codigo para ver las direciones MAC de los dispositivos bluetooth
+# nearby_devices = bluetooth.discover_devices(lookup_names=True)
+# print("Found {} devices.".format(len(nearby_devices)))
+
+# for addr, name in nearby_devices:
+#     print("  {} - {}".format(addr, name))
