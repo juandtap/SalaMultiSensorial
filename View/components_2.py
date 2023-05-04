@@ -121,8 +121,8 @@ class StudentReport(QWidget):
                 self.table_reports.insertRow(i)
                 self.table_reports.setItem(i, 0, QTableWidgetItem(str(sesion.id)))
                 self.table_reports.setItem(i, 1, QTableWidgetItem(str(sesion.fecha)))
-                self.table_reports.setItem(i, 2, QTableWidgetItem(str(sesion.hora_inicio)))
-                self.table_reports.setItem(i, 3, QTableWidgetItem(str(sesion.hora_fin)))
+                self.table_reports.setItem(i, 2, QTableWidgetItem(str(sesion.hora_inicio).split('.')[0]))
+                self.table_reports.setItem(i, 3, QTableWidgetItem(str(sesion.hora_fin).split('.')[0]))
                 self.table_reports.setItem(i, 4, QTableWidgetItem(self.download+"-"+(str(sesion.id))))
                 self.table_reports.item(i,4).setFont(self.font_table)
                 
@@ -217,7 +217,7 @@ class StudentReport(QWidget):
             self.table_grafomotricidad.insertRow(i)
             self.table_grafomotricidad.setItem(i, 0, QTableWidgetItem(str(module.id)))
             self.table_grafomotricidad.setItem(i, 1, QTableWidgetItem(str(module.figura)))
-            self.table_grafomotricidad.setItem(i, 2, QTableWidgetItem(str(module.tiempo_tomado)))
+            self.table_grafomotricidad.setItem(i, 2, QTableWidgetItem(str(module.tiempo_tomado).split('.')[0]))
             self.table_grafomotricidad.setItem(i, 3, QTableWidgetItem(str(module.resultado)))
         
         # Modulo Vumetro
@@ -259,7 +259,7 @@ class StudentReport(QWidget):
             self.table_vumetro.insertRow(i)
             self.table_vumetro.setItem(i, 0, QTableWidgetItem(str(module.id)))
             self.table_vumetro.setItem(i, 1, QTableWidgetItem(str(module.figura)))
-            self.table_vumetro.setItem(i, 2, QTableWidgetItem(str(module.tiempo_tomado)))
+            self.table_vumetro.setItem(i, 2, QTableWidgetItem(str(module.tiempo_tomado).split('.')[0]))
             self.table_vumetro.setItem(i, 3, QTableWidgetItem(str(module.resultado)))
             
         # Modulo Iluminacion
@@ -299,7 +299,7 @@ class StudentReport(QWidget):
             self.table_iluminacion.insertRow(i)
             self.table_iluminacion.setItem(i, 0, QTableWidgetItem(str(module.id)))
             self.table_iluminacion.setItem(i, 1, QTableWidgetItem(str(module.figura)))
-            self.table_iluminacion.setItem(i, 2, QTableWidgetItem(str(module.tiempo_tomado)))
+            self.table_iluminacion.setItem(i, 2, QTableWidgetItem(str(module.tiempo_tomado).split('.')[0]))
             self.table_iluminacion.setItem(i, 3, QTableWidgetItem(str(module.resultado)))
         
         
