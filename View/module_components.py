@@ -132,7 +132,7 @@ class ModuleGrafomotricidad(QWidget):
         
         self.ui_mod_grafo.radioButton_1.setChecked(True)
         self.ui_mod_grafo.lineEdit_figure.setText(codigo_figuras[1])
-    
+        #self.get_selected_figure_name()
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
         self.turn_on_off_thread = TurnOnOffModule(self.com_port, 'f')
@@ -349,3 +349,8 @@ class ArduinoSerialThread(QThread):
         self.stopped = True
         print("Hilo Escucha serial terminado por el usuario")
         
+# revisar Qtimer, hacer que se reinicie al presionar el boton de inicio
+# revisar figure code linea 227 en la funcion show_data_received
+# nivel de instensida 1  2 3 , bajo, medio , alto
+# cada 50ms los datos del vumetro 
+# se guarda nivel maximo alcanzado, considerar nivel intermedio y bajo, sabiendo que el nivel 1 va a ser siempre el bajo y el tiempo 
