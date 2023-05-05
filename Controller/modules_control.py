@@ -13,6 +13,11 @@ from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal
 from Controller.module_codes import module_mac_address
 
 class TurnOnOffModule(QThread):
+    # envia una signal a la ventana del modulo una vez este thread 
+    # libera el socket pata que los modulos puedan 
+    # enviar o recibir datos por el socket sin conflictos
+    my_signal = pyqtSignal(str)
+    
     def __init__(self,signal_code):
         super().__init__()
         self._is_runnig = False
@@ -29,6 +34,9 @@ class TurnOnOffModule(QThread):
             socket_bluetooth.close()
             
             print("caracter  " + self.code+" enviado al modulo HC05 ")
+            # envio de signal
+            self.my_signal.emit('free')
+            print("El socket bluetooth a sido liberado")
             self._is_runnig = False
         except Exception as ex:
             print("Error al enviar el caracter "+self.code)

@@ -106,17 +106,20 @@ class ModuleGrafomotricidad(QWidget):
         self.sesion = sesion # id de la sesion (int)
         
         self.ui_mod_grafo.textEdit_instructions.setReadOnly(True)
+        self.ui_mod_grafo.label_conn_status.setHidden(True)
+        self.ui_mod_grafo.label_9.setText('Conectando, Espere...')
+        self.ui_mod_grafo.label_3.setText("   Tiempo")
         
         # envia la senal de inicio 'i' al modulo arduino
         
         self.turn_on_off_thread = TurnOnOffModule('i')
+        self.turn_on_off_thread.my_signal.connect(self.socket_free)
         self.turn_on_off_thread.start()
         
         self.set_module_images()
         
-        self.ui_mod_grafo.label_conn_status.setHidden(True)
-        self.ui_mod_grafo.label_9.setHidden(True)
-        self.ui_mod_grafo.label_3.setText("   Tiempo")
+        
+        
         
         self.ui_mod_grafo.timeEdit_limit_time.setReadOnly(True)
         
@@ -139,7 +142,10 @@ class ModuleGrafomotricidad(QWidget):
         
         self.ui_mod_grafo.radioButton_1.setChecked(True)
         self.ui_mod_grafo.lineEdit_figure.setText(codigo_figuras[1])
-        #self.get_selected_figure_name()
+        self.figure_code = 1
+        print("codigo de la figura seleccionada: ")
+        print(self.figure_code)
+        
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
         self.turn_on_off_thread = TurnOnOffModule('f')
@@ -147,6 +153,10 @@ class ModuleGrafomotricidad(QWidget):
        
         event.accept()
         
+    def socket_free(self):
+        
+        self.ui_mod_grafo.label_9.setHidden(True)
+        self.ui_mod_grafo.label_conn_status.setHidden(False)
 
     def set_module_images(self):
         pixmap1 = QPixmap("Assets/modulo_1_grafomotricidad.jpg")

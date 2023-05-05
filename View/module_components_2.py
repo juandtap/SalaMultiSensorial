@@ -36,12 +36,13 @@ class ModuleVumeter(QWidget):
         self.sesion = sesion
        
         self.set_module_images()
-        self.ui_vum.label_text_status.setHidden(True)
+        self.ui_vum.label_text_status.setText('Conectado, Espere...')
         self.ui_vum.label_conn_status.setHidden(True)
         
         # envia la senal de inicio 'i' al modulo arduino
         
         self.turn_on_off_thread = TurnOnOffModule('i')
+        self.turn_on_off_thread.my_signal.connect(self.socket_free)
         self.turn_on_off_thread.start()
         
         
@@ -87,7 +88,11 @@ class ModuleVumeter(QWidget):
         self.turn_on_off_thread.start()
        
         event.accept()
+    
+    def socket_free(self):
         
+        self.ui_vum.label_text_status.setHidden(True)
+        self.ui_vum.label_conn_status.setHidden(False) 
     
     
     def start_listening_data(self):
