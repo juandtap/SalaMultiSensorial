@@ -1,3 +1,12 @@
+# diccionario con las direcciones MAC de los modulos HC05
+
+module_mac_address = {
+     0:'00:22:03:01:8A:12',  # HC05 de prueba
+     1:'00:22:03:01:7D:DC',  # HC05 del modulo grafomotricidad
+}
+
+
+
 # diccionario figuras del modulo
 codigo_figuras = {
      
