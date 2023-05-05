@@ -12,19 +12,25 @@ addr = mac_hc05_testing
 
 # Conectar al dispositivo
 sock = bluetooth.BluetoothSocket()
-sock.connect((addr, 3))
+sock.connect((addr, 1))
 
 # Enviar datos al dispositivo
-sock.send('Hola, HC05!')
+sock.send(b'Hola, HC05!')
 
 while True:
 # Recibir datos del dispositivo
     data = sock.recv(1024)
-    print(data)
+    if data:
+        data_formated = data.decode().strip()
+        print(data_formated)
+        if data_formated == '2':
+            print('orden de parada')
+            break
+    
 
 # Cerrar la conexión
 sock.close()
-
+print('conexion cerrada con el socket bluetooth')
 
 # codigo para ver las direciones MAC de los dispositivos bluetooth
 # nearby_devices = bluetooth.discover_devices(lookup_names=True)
