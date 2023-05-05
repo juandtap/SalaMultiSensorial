@@ -3,29 +3,29 @@
 import sys
 
 sys.path.append(".")
-import serial, threading
+import serial, threading, bluetooth
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QPushButton
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal, QRectF
 from PyQt5.QtGui import QPixmap, QPen, QBrush, QColor, QIntValidator
 from PyQt5.QtCore import QTimer
-from Controller.module_codes import ilumination_colors, rgb_colors
+from Controller.module_codes import ilumination_colors, rgb_colors, module_mac_address
 from Controller.modules_control import TurnOnOffModule
 
 from View.module_iluminacion_view import Ui_Form_modulo_iluminacion
 
 class ModuleIlumination(QWidget):
-    def __init__(self, sesion, com_port):
+    def __init__(self, sesion):
         super().__init__()
         self.ui_ilu = Ui_Form_modulo_iluminacion()
         self.ui_ilu.setupUi(self)
         self.sesion = sesion
-        self.port = com_port
+       
         self.set_module_images()
         self.ui_ilu.label_text_status.setHidden(True)
         self.ui_ilu.label_conn_status.setHidden(True)
         
         # envio de senal de inicio 'i'
-        self.turn_on_off_thread = TurnOnOffModule(self.port, 'i')
+        self.turn_on_off_thread = TurnOnOffModule('i')
         self.turn_on_off_thread.start()
         
         self.ui_ilu.pushButton_start.clicked.connect(self.send_color_data)
@@ -62,7 +62,7 @@ class ModuleIlumination(QWidget):
         
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
-        self.turn_on_off_thread = TurnOnOffModule(self.port, 'f')
+        self.turn_on_off_thread = TurnOnOffModule('f')
         self.turn_on_off_thread.start()
        
         event.accept()
@@ -133,7 +133,7 @@ class ModuleIlumination(QWidget):
             selected_color_code = rgb_colors[self.ui_ilu.lineEdit_selected_color.text()]
             print("color seleccionado: "+self.ui_ilu.lineEdit_selected_color.text()+" > "+selected_color_code)
             
-            self.send_data_thread = SendDataThread(self.port,selected_color_code)
+            self.send_data_thread = SendDataThread(selected_color_code)
             
             self.send_data_thread.start()
             
@@ -161,21 +161,21 @@ class ModuleIlumination(QWidget):
             
             
 class SendDataThread(QThread):
-    def __init__(self, port,color_data):
+    def __init__(self,color_data):
         super().__init__()
-        self.port = port
+        
         self.color_data = color_data
         self._is_runnig = False
     def run(self):
         self._is_runnig = True
         try:
-            serial_port = serial.Serial(self.port, 9600)
-            serial_port.write(self.color_data.encode())
-            serial_port.close()
-            print('codigo de color '+self.color_data+ " enviado por el puerto "+self.port)
+            socket_bluetooth = bluetooth.BluetoothSocket()
+            socket_bluetooth.connect((module_mac_address[0],1))
+            socket_bluetooth.send(self.color_data.encode('utf-8'))
+            socket_bluetooth.close()
+            print('codigo de color '+self.color_data+ " enviado por el puerto el socket bluetooth")
             self._is_runnig = False
-        except serial.SerialException as ex:
-            print('Error en la conexion serial: ', ex)
+        
         except Exception as ex:
             print("Error al enviar el codigo "+self.color_data)
             print(ex)

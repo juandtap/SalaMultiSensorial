@@ -33,6 +33,13 @@ class ModuleSelection(QWidget):
         self.student = student
         self.load_info_student()
         
+        # eliminar label, line edit del puerto COM
+        self.ui_modules.label_bluetooth_status.setHidden(True)
+        self.ui_modules.lineEdit_com_port.setHidden(True)
+        self.ui_modules.label_3.setHidden(True)
+        self.ui_modules.label_5.setHidden(True)
+        # ya no se usa el puerto COM
+        
         #1self.create_sesion()
         
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
@@ -57,7 +64,7 @@ class ModuleSelection(QWidget):
         
     def open_module_grafomotricidad(self):
         # cambiar None por self.sesion 2
-        self.grafomotricidad = ModuleGrafomotricidad(None, self.ui_modules.lineEdit_com_port.text().strip())
+        self.grafomotricidad = ModuleGrafomotricidad(None)
         self.grafomotricidad.show()
     
     def open_module_vumeter(self):
@@ -67,15 +74,15 @@ class ModuleSelection(QWidget):
         #     hora_fin = None, 
         #     id_estudiante=self.student.id
         # )
-        self.vumeter = ModuleVumeter(None, self.ui_modules.lineEdit_com_port.text().strip())
+        self.vumeter = ModuleVumeter(None)
         self.vumeter.show()
         
     def open_module_ilumination(self):
-        self.ilumination = ModuleIlumination(None, self.ui_modules.lineEdit_com_port.text().strip())
+        self.ilumination = ModuleIlumination(None)
         self.ilumination.show()
         
     def open_module_pictogram(self):
-        self.pictogram = ModulePictogram(None, self.ui_modules.lineEdit_com_port.text().strip())
+        self.pictogram = ModulePictogram(None)
         self.pictogram.show()
 
     def load_info_student(self):
@@ -92,12 +99,12 @@ class ModuleSelection(QWidget):
 # se presiono el boton de detener
 
 class ModuleGrafomotricidad(QWidget):
-    def __init__(self, sesion, com_port):
+    def __init__(self, sesion):
         super().__init__()
         self.ui_mod_grafo = Ui_Form_modulo_grafomotricidad()
         self.ui_mod_grafo.setupUi(self)
         self.sesion = sesion # id de la sesion (int)
-        self.com_port = com_port
+        
         self.ui_mod_grafo.textEdit_instructions.setReadOnly(True)
         
         # envia la senal de inicio 'i' al modulo arduino

@@ -29,12 +29,12 @@ from View.components import MessageDialog
 from Controller.modules_control import TurnOnOffModule
 
 class ModuleVumeter(QWidget):
-    def __init__(self, sesion, com_port):
+    def __init__(self, sesion):
         super().__init__()
         self.ui_vum = Ui_Form_modulo_vumetro()
         self.ui_vum.setupUi(self)
         self.sesion = sesion
-        self.port = com_port
+       
         self.set_module_images()
         self.ui_vum.label_text_status.setHidden(True)
         self.ui_vum.label_conn_status.setHidden(True)
