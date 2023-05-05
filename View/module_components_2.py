@@ -1,8 +1,12 @@
 # En este modulo esta la clase que controla ventana del modulo vumetro
-
+# para que el Thread de escucha se detenga tiene que estar reciviendo datos, de lo contrario 
+# se queda en un estado de espera bloqueando el socket bluetooth
 
 import sys
-import serial, time, threading, random
+from PyQt5 import QtGui
+import serial, time, threading, random, bluetooth
+
+
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
@@ -19,8 +23,10 @@ import numpy as np
 
 from View.module_vumeter_view import Ui_Form_modulo_vumetro
 from Controller.session_control import add_sesion_module, get_sesion_by_id
+from Controller.module_codes import module_mac_address
 from Model.model import Sesion, ModuloGrafomotricidad
 from View.components import MessageDialog
+from Controller.modules_control import TurnOnOffModule
 
 class ModuleVumeter(QWidget):
     def __init__(self, sesion, com_port):
@@ -33,7 +39,12 @@ class ModuleVumeter(QWidget):
         self.ui_vum.label_text_status.setHidden(True)
         self.ui_vum.label_conn_status.setHidden(True)
         
-       
+        # envia la senal de inicio 'i' al modulo arduino
+        
+        self.turn_on_off_thread = TurnOnOffModule('i')
+        self.turn_on_off_thread.start()
+        
+        
         self.canvas = FigureCanvas(plt.gcf())
         
         
@@ -70,10 +81,20 @@ class ModuleVumeter(QWidget):
         self.ui_vum.pushButton_start.clicked.connect(self.start_listening_data)
         self.ui_vum.pushButton_stop.clicked.connect(self.stop_listening_data)
         
+    def closeEvent(self, event):
+        # envia la senial de finializacion 'f'
+        self.turn_on_off_thread = TurnOnOffModule('f')
+        self.turn_on_off_thread.start()
+       
+        event.accept()
+        
+    
     
     def start_listening_data(self):
-        self.serial_thread = VumeterDataThread(self.port, 9600)
+        self.serial_thread = VumeterDataThread()
         self.serial_thread.data_received.connect(self.updata_data_2)
+        # self.serial_thread.finished.connect(self.serial_thread.quit)
+        # self.serial_thread.finished.connect(self.serial_thread.deleteLater)
         self.serial_thread.start()
         
     
@@ -143,37 +164,49 @@ class VumeterDataThread(QThread):
     
     data_received = pyqtSignal(int)
 
-    def __init__(self, port, baudrate, parent=None):
+    def __init__(self,parent=None):
         super().__init__(parent)
-        self.port = port
-        self.baudrate = baudrate
+        # self.port = port
+        # self.baudrate = baudrate
         self.running = False
 
     def run(self):
-        try: 
-            ser = serial.Serial(self.port, self.baudrate)
+        
+        try:
+            blue_socket = bluetooth.BluetoothSocket()
+            blue_socket.connect((module_mac_address[0],1)) 
+            
             self.running = True
-        except serial.SerialException as e:
-            print("Error al conectarse al modulo por el puerto com "+self.port+" : "+str(e))
-            return
-        
-        
-        while self.running:
-            if ser.in_waiting:
-                line = ser.readline().decode('utf-8').strip()
+            
+            print("inicia thread de escucha")
+            
+            while self.running:
+                self.msleep(100)
+                print("leyendo datos...")
+                data = blue_socket.recv(1024)
+                
+                line = data.decode('utf-8').strip()
                 try:
                     val = int(line)
                     print("dato recibido: "+line)
-                    
-                    
+                        
+                        
                     self.data_received.emit(val)
                 except ValueError:
                     print("Error en datos recibidos: ",line)
-                self.msleep(10)
-        ser.close()
-        print('Conexion con el modulo cerrada')
-
+                
+                if not self.running:
+                    break
+            
+            
+        except Exception as e:
+            print("Error al conectarse al modulo  ",e)
         
+        finally:
+            blue_socket.close()
+            print('Conexion con el modulo cerrada')
+ 
     def stop(self):
         self.running = False
+        print("pongo en false el flag")
         self.wait(100) 

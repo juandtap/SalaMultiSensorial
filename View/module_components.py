@@ -3,7 +3,7 @@
 # tambien estas las clases QThread para el envio y recepcion de datos arduino
 
 import sys
-import serial, threading
+import serial, threading, bluetooth
 
 sys.path.append(".")
 from datetime import datetime
@@ -20,7 +20,7 @@ from Controller.session_control import add_sesion_module, get_sesion_by_id, add_
 from Model.model import Sesion, ModuloGrafomotricidad
 from View.components import MessageDialog
 
-from Controller.module_codes import path_figuras, codigo_figuras
+from Controller.module_codes import path_figuras, codigo_figuras, module_mac_address
 from Controller.modules_control import TurnOnOffModule
 
 
@@ -102,7 +102,7 @@ class ModuleGrafomotricidad(QWidget):
         
         # envia la senal de inicio 'i' al modulo arduino
         
-        self.turn_on_off_thread = TurnOnOffModule(self.com_port, 'i')
+        self.turn_on_off_thread = TurnOnOffModule('i')
         self.turn_on_off_thread.start()
         
         self.set_module_images()
@@ -135,7 +135,7 @@ class ModuleGrafomotricidad(QWidget):
         #self.get_selected_figure_name()
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
-        self.turn_on_off_thread = TurnOnOffModule(self.com_port, 'f')
+        self.turn_on_off_thread = TurnOnOffModule('f')
         self.turn_on_off_thread.start()
        
         event.accept()
@@ -189,8 +189,8 @@ class ModuleGrafomotricidad(QWidget):
         # limpia los campos
         self.clear_fields()
 
-        port = self.com_port
-        print("puerto com :"+port)
+        # port = self.com_port
+        # print("puerto com :"+port)
 
        
         # Inicio Thread timer 
@@ -206,8 +206,7 @@ class ModuleGrafomotricidad(QWidget):
 
         
        
-        self.serial_thread = ArduinoSerialThread(
-            port=self.com_port, baudrate=9600, timeout=1)
+        self.serial_thread = ArduinoSerialThread()
         self.serial_thread.data_received.connect(self.show_received_data)
         self.serial_thread.start()
         print("mando a iniciar hilo serial")
@@ -307,47 +306,48 @@ class ArduinoSerialThread(QThread):
     data_received = pyqtSignal(str)
     
     
-    def __init__(self, port, baudrate, timeout, parent=None):
+    def __init__(self,parent=None):
         super().__init__(parent)
-        self.port = port
-        self.baudrate = baudrate
-        self.timeout = timeout
+        
         
         self.stopped = False
         self.stop_event = threading.Event()
         
     def run(self):
         
-        print("se ejecuta el hilo serial")
+        print("se ejecuta el hilo de escucha socket bluetooth")
         try:
-            bluetooth_serial = serial.Serial(self.port, self.baudrate, timeout=self.timeout)
-        except serial.SerialException as e:
-            print("Error al intentar conectarse al puerto serial:", e)
+            #bluetooth_serial = serial.Serial(self.port, self.baudrate, timeout=self.timeout)
+            blue_socket = bluetooth.BluetoothSocket()
+            blue_socket.connect((module_mac_address[0],1))
+        except Exception as e:
+            print("Error al intentar la conexion con HC05:", e)
             self.finished.emit()
             return
         
        
         while not self.stopped:
-            if bluetooth_serial.in_waiting:
-                data = bluetooth_serial.readline().decode().strip()
-                self.data_received.emit(data)
-                # se detiene al recivir un dato
-                if data is not None:
-                    self.stopped = True
+            data = blue_socket.recv(1024)
+            
+            data_formated = data.decode('utf-8').strip()
+            self.data_received.emit(data_formated)
+            # se detiene al recivir un dato
+            if data is not None:
+                self.stopped = True
 
 
             if self.stop_event.is_set():
                 self.stopped = True
                 self.stop_event.clear()
         
-        bluetooth_serial.close()
+        blue_socket.close()
         self.finished.emit()
-        print("Hilo Escucha serial terminado")
+        print("Hilo Escucha socket bluetooth terminado")
         self.quit()
         
     def stop(self):
         self.stopped = True
-        print("Hilo Escucha serial terminado por el usuario")
+        print("Hilo Escucha socket bluetooth terminado por el usuario")
         
 # revisar Qtimer, hacer que se reinicie al presionar el boton de inicio
 # revisar figure code linea 227 en la funcion show_data_received

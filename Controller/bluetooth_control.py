@@ -15,7 +15,7 @@ sock = bluetooth.BluetoothSocket()
 sock.connect((addr, 1))
 
 # Enviar datos al dispositivo
-sock.send(b'Hola, HC05!')
+sock.send(b'Hola')
 
 while True:
 # Recibir datos del dispositivo
