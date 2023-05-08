@@ -93,7 +93,7 @@ class StudentReport(QWidget):
                 'Fecha',
                 'Hora Inicio',
                 'Hora Fin',
-                'Ver Modulos '
+                'Ver Modulos '               
             ]
         )
         
