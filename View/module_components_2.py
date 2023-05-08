@@ -89,10 +89,12 @@ class ModuleVumeter(QWidget):
        
         event.accept()
     
-    def socket_free(self):
-        
-        self.ui_vum.label_text_status.setHidden(True)
-        self.ui_vum.label_conn_status.setHidden(False) 
+    def socket_free(self, flag):
+        if flag == 'free':
+            self.ui_vum.label_text_status.setHidden(True)
+            self.ui_vum.label_conn_status.setHidden(False)
+        else:
+            self.ui_vum.label_text_status.setText('!Sin Conexion') 
     
     
     def start_listening_data(self):

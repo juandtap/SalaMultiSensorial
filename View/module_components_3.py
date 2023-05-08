@@ -21,11 +21,12 @@ class ModuleIlumination(QWidget):
         self.sesion = sesion
        
         self.set_module_images()
-        self.ui_ilu.label_text_status.setHidden(True)
+        self.ui_ilu.label_text_status.setText("Conectado...")
         self.ui_ilu.label_conn_status.setHidden(True)
         
         # envio de senal de inicio 'i'
         self.turn_on_off_thread = TurnOnOffModule('i')
+        self.turn_on_off_thread.my_signal.connect(self.socket_free)
         self.turn_on_off_thread.start()
         
         self.ui_ilu.pushButton_start.clicked.connect(self.send_color_data)
@@ -45,6 +46,11 @@ class ModuleIlumination(QWidget):
         color_button_list = [self.findChild(QPushButton, f"pushButton_{i}") for i in range(1, 10)]
         for color_button in color_button_list:
             color_button.clicked.connect(self.get_selected_color)
+        
+        # defino el valor por defecto del slider que controla la intencidad
+        # 0=bajo, 1=normal, 2=alto
+        self.light_level = 1
+        self.ui_ilu.slider_level.valueChanged.connect(self.get_selected_level)
         
         # defino el color rojo por defecto para evitar valores nullos al momento de enviar datos
         
@@ -66,6 +72,13 @@ class ModuleIlumination(QWidget):
         self.turn_on_off_thread.start()
        
         event.accept()
+    
+    def socket_free(self, flag):
+        if flag == 'free':
+            self.ui_ilu.label_text_status.setHidden(True)
+            self.ui_ilu.label_conn_status.setHidden(False)
+        else:
+            self.ui_ilu.label_text_status.setText('!Sin Conexion')
     
     
     def set_module_images(self):
@@ -93,7 +106,11 @@ class ModuleIlumination(QWidget):
             self.ui_ilu.lineEdit_G_code.setDisabled(value)
             self.ui_ilu.lineEdit_B_code.setDisabled(value)
             
-        
+    
+    def get_selected_level(self, value):
+        print('nivel selccionado: ',value)
+        self.light_level = value
+    
     def get_selected_color(self):
         color_button = self.sender()
         color_code = color_button.objectName()
@@ -126,12 +143,15 @@ class ModuleIlumination(QWidget):
             self.ui_ilu.lineEdit_B_code.setText(str(value)) # actualiza el texto con el valor validado
             
     def send_color_data(self):
+        selected_color_code = ''
         if self.ui_ilu.radioButton_defined_color.isChecked():
             
             print("Se envia color definido:")
             
             selected_color_code = rgb_colors[self.ui_ilu.lineEdit_selected_color.text()]
             print("color seleccionado: "+self.ui_ilu.lineEdit_selected_color.text()+" > "+selected_color_code)
+            
+            selected_color_code += ','+str(self.light_level)
             
             self.send_data_thread = SendDataThread(selected_color_code)
             
@@ -154,9 +174,15 @@ class ModuleIlumination(QWidget):
             
             print('Color seleccionado: '+selected_color_code)
             
-            self.send_data_thread = SendDataThread(self.port,selected_color_code)
+            selected_color_code += ','+str(self.light_level)
+            
+            self.send_data_thread = SendDataThread(selected_color_code)
             
             self.send_data_thread.start()
+        
+        # se adjunto al color el nivel de intensidad,de la siguiente forma
+        # 255,255,255,1 ; el ultimo valor corresponde la nivel de instensidad
+
                 
             
             

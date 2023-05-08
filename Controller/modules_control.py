@@ -40,5 +40,6 @@ class TurnOnOffModule(QThread):
             self._is_runnig = False
         except Exception as ex:
             print("Error al enviar el caracter "+self.code)
+            self.my_signal.emit('not_free')
             print(ex)
 

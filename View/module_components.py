@@ -153,10 +153,12 @@ class ModuleGrafomotricidad(QWidget):
        
         event.accept()
         
-    def socket_free(self):
-        
-        self.ui_mod_grafo.label_9.setHidden(True)
-        self.ui_mod_grafo.label_conn_status.setHidden(False)
+    def socket_free(self, flag):
+        if flag == 'free':
+            self.ui_mod_grafo.label_9.setHidden(True)
+            self.ui_mod_grafo.label_conn_status.setHidden(False)
+        else:
+            self.ui_mod_grafo.label_9.setText('!Sin Conexion')
 
     def set_module_images(self):
         pixmap1 = QPixmap("Assets/modulo_1_grafomotricidad.jpg")
@@ -164,6 +166,15 @@ class ModuleGrafomotricidad(QWidget):
             pixmap1.scaled(
             self.ui_mod_grafo.label_module_image.width(),
             self.ui_mod_grafo.label_module_image.height(),
+            aspectRatioMode=False
+            )
+        )
+        
+        pixmap2 = QPixmap("Assets/logo1.png")
+        self.ui_mod_grafo.label_logo1.setPixmap(
+            pixmap2.scaled(
+            self.ui_mod_grafo.label_logo1.width(),
+            self.ui_mod_grafo.label_logo1.height(),
             aspectRatioMode=False
             )
         )
