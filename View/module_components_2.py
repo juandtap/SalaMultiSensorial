@@ -4,15 +4,15 @@
 
 import sys
 from PyQt5 import QtGui
-import serial, time, threading, random, bluetooth
+import serial,  threading, random, bluetooth, json
 
 
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 sys.path.append(".")
-from datetime import datetime
-from datetime import time as time2
+import datetime
+
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QGraphicsScene, QGraphicsRectItem, QGraphicsProxyWidget, QVBoxLayout
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal, QRectF, QDateTime
 from PyQt5.QtGui import QPixmap, QPen, QBrush, QColor
@@ -38,6 +38,11 @@ class ModuleVumeter(QWidget):
         self.set_module_images()
         self.ui_vum.label_text_status.setText('Conectado, Espere...')
         self.ui_vum.label_conn_status.setHidden(True)
+
+        # desactivo el boton de guardar y detener
+        self.ui_vum.pushButton_save.setDisabled(True)
+        self.ui_vum.pushButton_stop.setDisabled(True)
+        
         
         # envia la senal de inicio 'i' al modulo arduino
         
@@ -81,6 +86,7 @@ class ModuleVumeter(QWidget):
         
         self.ui_vum.pushButton_start.clicked.connect(self.start_listening_data)
         self.ui_vum.pushButton_stop.clicked.connect(self.stop_listening_data)
+        self.ui_vum.pushButton_save.clicked.connect(self.save_module_data)
         
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
@@ -98,6 +104,8 @@ class ModuleVumeter(QWidget):
     
     
     def start_listening_data(self):
+        self.ui_vum.pushButton_start.setDisabled(True)
+        self.ui_vum.pushButton_stop.setDisabled(False)
         self.serial_thread = VumeterDataThread()
         self.serial_thread.data_received.connect(self.updata_data_2)
         # self.serial_thread.finished.connect(self.serial_thread.quit)
@@ -129,6 +137,10 @@ class ModuleVumeter(QWidget):
         self.canvas.draw()
 
     def stop_listening_data(self):
+        self.ui_vum.pushButton_start.setDisabled(False)
+        self.ui_vum.pushButton_stop.setDisabled(True)
+        self.ui_vum.pushButton_save.setDisabled(False)
+        
         self.serial_thread.stop()
         print('Hilo de escucha detenido')
         print('estado del thread de escucha: '+str(self.serial_thread.isRunning()))
@@ -143,28 +155,30 @@ class ModuleVumeter(QWidget):
             )
         )
 
-    def update_data(self):
-        value = random.randint(0,9)
-        self.data.append(value)
-        # cada 100ms
-        self.timedata.append(len(self.timedata)*100) 
+    def save_module_data(self):
+        print('Guardando datos...')
+        self.ui_vum.pushButton_save.setDisabled(True)
+        # se guarda la lista[] 'data' en un archivo de texto
+        # 
+        # directorio para guardar los datos del vumetro
+        path = "ModuleData/DatosVumetro/"
+        now = datetime.datetime.now()
+        current_date = now.strftime("%Y-%m-%d")
+        current_time = now.strftime("%H-%M-%S")
+        # este valor se lo cada de self.sesion.id
+        current_sesion = "1"
+        filename = path+f"{current_sesion}_{current_date}_{current_time}_datavum.json"
+        print('archivo de datos del vumetro guardado en : ')
+        print(filename)
         
-        
-        # actualiza la grafica
-        
-        #limpia la grafica (clear)
-        plt.clf()
-        
-        plt.plot(self.timedata, self.data)
-        
-        plt.xlabel('Tiempo ms')
-        plt.ylabel('Nivel')
-        plt.grid(True)
-        
-        plt.subplots_adjust(top=1)
-        plt.subplots_adjust(bottom=0.12)
-        self.canvas.draw()
-        
+        ## prueba de datos
+        self.data.extend([1,2,3,4,4])
+        try:
+            json_data = json.dumps(self.data)
+            with open(filename, "w") as file:
+                file.write(json_data)
+        except Exception as ex:
+            print("error al guardar datos en archivo "+str(ex))
 
 # Thread para escuchar datos del vumetro
 class VumeterDataThread(QThread):

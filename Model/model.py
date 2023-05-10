@@ -1,6 +1,6 @@
 import sys
 sys.path.append(".")
-from sqlalchemy import create_engine, Table, Column, Integer, String, Date, Boolean, LargeBinary, ForeignKey, Time
+from sqlalchemy import create_engine, Table, Column, Integer, String, Date, Boolean, LargeBinary, ForeignKey, Time, Float
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
@@ -73,6 +73,14 @@ class ModuloGrafomotricidad(Base):
     tiempo_tomado = Column(Time)
     resultado = Column(String(20))
     
+class ModuloVumetro(Base):
+    __tablename__ = 'modulo_vumetro'
+    id = Column(Integer, primary_key=True)
+    id_sesion = Column(Integer, ForeignKey('sesion.id'))
+    nivel_maximo = Column(Integer)
+    nivel_promedio = Column(Float)
+    tiempo = Column(Time)
+    datos = Column(String(250))
     
     
 # Crea las tablas en la base de datos
