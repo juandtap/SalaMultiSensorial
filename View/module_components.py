@@ -40,7 +40,9 @@ class ModuleSelection(QWidget):
         self.ui_modules.label_5.setHidden(True)
         # ya no se usa el puerto COM
         
-        #1self.create_sesion()
+        
+        # comentar para que no se cree sesione innecesarias
+        self.create_sesion()
         
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
         self.ui_modules.pushButton_module_vumetro.clicked.connect(self.open_module_vumeter)
@@ -66,12 +68,12 @@ class ModuleSelection(QWidget):
         
     def open_module_grafomotricidad(self):
         # cambiar None por self.sesion 2
-        self.grafomotricidad = ModuleGrafomotricidad(None)
+        self.grafomotricidad = ModuleGrafomotricidad(self.sesion)
         self.grafomotricidad.show()
     
     def open_module_vumeter(self):
         
-        self.vumeter = ModuleVumeter(None)
+        self.vumeter = ModuleVumeter(self.sesion)
         self.vumeter.show()
         
     def open_module_ilumination(self):
@@ -88,8 +90,9 @@ class ModuleSelection(QWidget):
         self.ui_modules.label_nombres.setText(self.student.nombres)
 
     def closeEvent(self, event):
-        #3set_final_time(self.sesion, datetime.now().time())
-        #print("se agrego la hora fin a la sesion "+str(self.sesion))
+        #3
+        set_final_time(self.sesion, datetime.now().time())
+        print("se agrego la hora fin a la sesion "+str(self.sesion))
         event.accept()
 
 # En el texrfield lineEdit_time_taken se coloca el tiempo tomado hasta que se 
@@ -214,8 +217,6 @@ class ModuleGrafomotricidad(QWidget):
         # limpia los campos
         self.clear_fields()
 
-        # port = self.com_port
-        # print("puerto com :"+port)
 
        
         # Inicio Thread timer 

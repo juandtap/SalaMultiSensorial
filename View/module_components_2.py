@@ -177,14 +177,14 @@ class ModuleVumeter(QWidget):
         now = datetime.datetime.now()
         current_date = now.strftime("%Y-%m-%d")
         current_time = now.strftime("%H-%M-%S")
-        # este valor se lo cada de self.sesion.id
-        current_sesion = "1"
+        # este valor es de self.sesion.id
+        current_sesion = self.sesion
         filename = path+f"{current_sesion}_{current_date}_{current_time}_datavum.json"
         print('archivo de datos del vumetro guardado en : ')
         print(filename)
         
         ## prueba de datos
-        self.data.extend([1,2,3,4,4])
+        ##self.data.extend([1,2,3,4,4])
         try:
             json_data = json.dumps(self.data)
             with open(filename, "w") as file:
