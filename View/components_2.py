@@ -44,6 +44,7 @@ class StudentReport(QWidget):
         
         # variable temporal borrar despues
         self.download = 'ver modulos'
+        self.download_report = 'descargar reporte'
         
         self.ui_rep.scrollArea.setWidgetResizable(True)
 
@@ -86,14 +87,15 @@ class StudentReport(QWidget):
         
         self.table_reports.verticalHeader().setVisible(False)
         # defino las columnas de la tabla
-        self.table_reports.setColumnCount(5)
+        self.table_reports.setColumnCount(6)
         self.table_reports.setHorizontalHeaderLabels(
             [
                 'Sesion',
                 'Fecha',
                 'Hora Inicio',
                 'Hora Fin',
-                'Ver Modulos '               
+                'Ver Modulos ',
+                'Descargar Reporte de la Sesion'              
             ]
         )
         
@@ -125,6 +127,7 @@ class StudentReport(QWidget):
                 self.table_reports.setItem(i, 3, QTableWidgetItem(str(sesion.hora_fin).split('.')[0]))
                 self.table_reports.setItem(i, 4, QTableWidgetItem(self.download+"-"+(str(sesion.id))))
                 self.table_reports.item(i,4).setFont(self.font_table)
+                self.table_reports.setItem(i, 5, QTableWidgetItem(self.download_report+"-"+(str(sesion.id))))
                 
         
     def back_to(self, event):
@@ -149,12 +152,11 @@ class StudentReport(QWidget):
         id_ses = item.text().split('-')[-1]
         print("id sesion : "+id_ses)
         
-        self.ui_rep.label_back.setHidden(False)
         
-        self.ui_rep.scrollArea.takeWidget().deleteLater()
-       
-        
-        self.ui_rep.scrollArea.setWidget(self.load_modules_tables(id_ses))
+        if column == show_modules_pos:
+            self.ui_rep.label_back.setHidden(False)
+            self.ui_rep.scrollArea.takeWidget().deleteLater()
+            self.ui_rep.scrollArea.setWidget(self.load_modules_tables(id_ses))
        
         # recupera la sesion y muestra la info de los modulos
         # crear QWidget para mostrar la info de los modulos
@@ -183,6 +185,8 @@ class StudentReport(QWidget):
         
          # guarda los datos del Modulo de grafomotricidad en una lista y los muestra en una tabla
         grafomotricidad_list = self.sesion_selected.modulos_grafomotricidad
+        # datos del modulo vumetro
+        vumetro_list = self.sesion_selected.modulos_vumetro
         
         # crea la tabla donde muestra los datos del modulo de grafomotricidad
         self.table_grafomotricidad = QTableWidget()
@@ -222,7 +226,7 @@ class StudentReport(QWidget):
         
         # Modulo Vumetro
         # repite el proceso pero para el modulo vumetro
-        # se usan los datos del modulo de grafomotricidad por el momento
+        
         
         label_vumetro = QLabel("Modulo Vumetro")
         label_vumetro.setFont(self.font)
@@ -237,9 +241,9 @@ class StudentReport(QWidget):
         self.table_vumetro.setHorizontalHeaderLabels(
             [
                 'id',
-                'Figura',
-                'Tiempo Tomado',
-                'Resultado',
+                'nivel maximo',
+                'nivel promedio',
+                'tiempo',
                 
             ]
         )
@@ -252,15 +256,16 @@ class StudentReport(QWidget):
         
         # este codigo hace que las columnas  no sean redimensionables
         header = self.table_vumetro.horizontalHeader()
+        
         for i in range(header.count()):
             header.setSectionResizeMode(i,QHeaderView.Fixed)
             
-        for i, module in enumerate(grafomotricidad_list):
+        for i, module in enumerate(vumetro_list):
             self.table_vumetro.insertRow(i)
             self.table_vumetro.setItem(i, 0, QTableWidgetItem(str(module.id)))
-            self.table_vumetro.setItem(i, 1, QTableWidgetItem(str(module.figura)))
-            self.table_vumetro.setItem(i, 2, QTableWidgetItem(str(module.tiempo_tomado).split('.')[0]))
-            self.table_vumetro.setItem(i, 3, QTableWidgetItem(str(module.resultado)))
+            self.table_vumetro.setItem(i, 1, QTableWidgetItem(str(module.nivel_maximo)))
+            self.table_vumetro.setItem(i, 2, QTableWidgetItem(str(module.nivel_promedio)))
+            self.table_vumetro.setItem(i, 3, QTableWidgetItem(str(module.tiempo).split('.')[0]))
             
         # Modulo Iluminacion
         

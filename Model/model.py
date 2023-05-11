@@ -64,6 +64,7 @@ class Sesion(Base):
     hora_fin = Column(Time)
     id_estudiante = Column(Integer, ForeignKey('estudiante.id'))
     modulos_grafomotricidad = relationship('ModuloGrafomotricidad', backref='sesion')
+    modulos_vumetro = relationship('ModuloVumetro', backref='sesion')
 
 class ModuloGrafomotricidad(Base):
     __tablename__ = 'modulo_grafomotricidad'
