@@ -79,7 +79,7 @@ class ModuloVumetro(Base):
     id_sesion = Column(Integer, ForeignKey('sesion.id'))
     nivel_maximo = Column(Integer)
     nivel_promedio = Column(Integer)
-    tiempo = Column(Time)
+    tiempo = Column(String(50))
     datos = Column(String(250))
     
     

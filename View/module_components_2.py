@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 sys.path.append(".")
-import datetime
+from datetime import datetime, time, timedelta
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QGraphicsScene, QGraphicsRectItem, QGraphicsProxyWidget, QVBoxLayout
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal, QRectF, QDateTime
@@ -111,6 +111,11 @@ class ModuleVumeter(QWidget):
     
     
     def start_listening_data(self):
+        
+        plt.clf()
+        self.data = [0,]
+        self.timedata = [0,]
+        
         self.ui_vum.pushButton_start.setDisabled(True)
         self.ui_vum.pushButton_stop.setDisabled(False)
         self.serial_thread = VumeterDataThread()
@@ -119,7 +124,7 @@ class ModuleVumeter(QWidget):
         # self.serial_thread.finished.connect(self.serial_thread.deleteLater)
         
         
-        self.init_time = datetime.now().time()
+        self.init_time = datetime.now()
         self.serial_thread.start()
         
         
@@ -155,7 +160,7 @@ class ModuleVumeter(QWidget):
         self.serial_thread.stop()
         print('Hilo de escucha detenido')
         print('estado del thread de escucha: '+str(self.serial_thread.isRunning()))
-        self.end_time = datetime.now().time()
+        self.end_time = datetime.now()
         
     def set_module_images(self):
         pixmap1 = QPixmap("Assets/modulo_2_vumetro.png")
@@ -174,7 +179,7 @@ class ModuleVumeter(QWidget):
         # 
         # directorio para guardar los datos del vumetro
         path = "ModuleData/DatosVumetro/"
-        now = datetime.datetime.now()
+        now = datetime.now()
         current_date = now.strftime("%Y-%m-%d")
         current_time = now.strftime("%H-%M-%S")
         # este valor es de self.sesion.id
@@ -202,8 +207,8 @@ class ModuleVumeter(QWidget):
         new_vum = ModuloVumetro(
             id_sesion = self.sesion,
             nivel_maximo = max(self.data),
-            nivel_promedio = np.mean(self.data),
-            tiempo = self.total_time,
+            nivel_promedio = int(np.mean(self.data)),
+            tiempo = str(self.total_time),
             datos = filename
         )
         
