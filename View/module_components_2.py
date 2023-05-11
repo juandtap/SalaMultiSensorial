@@ -20,11 +20,12 @@ from PyQt5.QtCore import QTimer
 import pyqtgraph as pg
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import numpy as np
+from numpy import mean
 
 from View.module_vumeter_view import Ui_Form_modulo_vumetro
-from Controller.session_control import add_sesion_module, get_sesion_by_id
+from Controller.session_control import add_module_vumetro
 from Controller.module_codes import module_mac_address
-from Model.model import Sesion, ModuloGrafomotricidad
+from Model.model import Sesion, ModuloVumetro
 from View.components import MessageDialog
 from Controller.modules_control import TurnOnOffModule
 
@@ -88,6 +89,12 @@ class ModuleVumeter(QWidget):
         self.ui_vum.pushButton_stop.clicked.connect(self.stop_listening_data)
         self.ui_vum.pushButton_save.clicked.connect(self.save_module_data)
         
+        # variables para calcular el tiempo de uso del modulo
+        self.init_time = None
+        self.end_time = None
+        self.total_time = None
+        
+        
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
         self.turn_on_off_thread = TurnOnOffModule('f')
@@ -110,7 +117,11 @@ class ModuleVumeter(QWidget):
         self.serial_thread.data_received.connect(self.updata_data_2)
         # self.serial_thread.finished.connect(self.serial_thread.quit)
         # self.serial_thread.finished.connect(self.serial_thread.deleteLater)
+        
+        
+        self.init_time = datetime.now().time()
         self.serial_thread.start()
+        
         
     
     def updata_data_2(self, level):
@@ -144,7 +155,8 @@ class ModuleVumeter(QWidget):
         self.serial_thread.stop()
         print('Hilo de escucha detenido')
         print('estado del thread de escucha: '+str(self.serial_thread.isRunning()))
-    
+        self.end_time = datetime.now().time()
+        
     def set_module_images(self):
         pixmap1 = QPixmap("Assets/modulo_2_vumetro.png")
         self.ui_vum.label_module_image.setPixmap(
@@ -180,6 +192,30 @@ class ModuleVumeter(QWidget):
         except Exception as ex:
             print("error al guardar datos en archivo "+str(ex))
 
+        
+        # calcular tiempo de escucha
+        
+        self.total_time = self.end_time - self.init_time
+        
+        # guardar en base de datos
+        
+        new_vum = ModuloVumetro(
+            id_sesion = self.sesion,
+            nivel_maximo = max(self.data),
+            nivel_promedio = np.mean(self.data),
+            tiempo = self.total_time,
+            datos = filename
+        )
+        
+        if add_module_vumetro(new_vum):
+            self.message_dialog = MessageDialog("!Datos Vumetro Guardados")
+            self.message_dialog.show()
+        else:
+            self.message_dialog = MessageDialog("Error!")
+            self.message_dialog.show()
+            
+        
+        
 # Thread para escuchar datos del vumetro
 class VumeterDataThread(QThread):
     

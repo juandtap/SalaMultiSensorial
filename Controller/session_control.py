@@ -79,4 +79,20 @@ def set_final_time(id_sesion, final_time):
         session.close()
 
      
-     
+# modulo Vumetro
+
+# Create
+
+def add_module_vumetro(new_vum):
+    flag = False
+    try:
+        session.add(new_vum)
+        session.commit()
+        flag = True
+    except Exception as ex:
+        session.rollback()
+        print("Error ", ex)
+    finally:
+        session.close()
+    
+    return flag

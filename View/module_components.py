@@ -55,7 +55,9 @@ class ModuleSelection(QWidget):
             hora_fin = None, 
             id_estudiante=self.student.id
         )
-        
+        ## add_session_module retorna el id de la sesion
+        # self.sesion es un (int)
+        # se pasa como parametro para las ventanas de los modulos
         self.sesion = add_sesion_module(new_sesion)
         
         print('sesion #'+str(self.sesion)+' creada')
@@ -68,12 +70,7 @@ class ModuleSelection(QWidget):
         self.grafomotricidad.show()
     
     def open_module_vumeter(self):
-        # sesion = Sesion(
-        #     fecha= datetime.now().date(), 
-        #     hora_inicio = datetime.now().time(), 
-        #     hora_fin = None, 
-        #     id_estudiante=self.student.id
-        # )
+        
         self.vumeter = ModuleVumeter(None)
         self.vumeter.show()
         
