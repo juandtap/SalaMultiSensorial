@@ -2,7 +2,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style1.css">
+    <!-- <link rel="stylesheet" href="style1.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+
     <title>Document</title>
 </head>
 <body>
@@ -18,26 +20,27 @@
                 <img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/user.png" alt="">
             </div>
             <div class="student-discapacidad">
-                <p> <b>Cedula: </b> 0105922587</p>
-                <p> <b>Apellidos: </b> Tapia Vasquez</p>
-                <p> <b>Nombres: </b> Juan Diego </p>
-                <p> <b>Edad: </b> 10 años</p>
+                <p> <b>Cedula: </b> {{ estudiante['cedula'] }}</p>
+                <p> <b>Apellidos: </b> {{ estudiante['apellidos']}}</p>
+                <p> <b>Nombres: </b> {{ estudiante['nombres'] }} </p>
+                <p> <b>Edad: </b> {{estudiante['edad']}}</p>
                 
             </div>
         </div>
         <div class="student-info">
             
-            <p> <b>Fecha Nacimiento: </b> 01/02/2013</p>
-            <p> <b>Cedula Representante: </b> 0105922587</p>
-            <p> <b>Representante: </b> Elsa Vasquez</p>
-            <p> <b>Direccion: </b> Cuenca</p>
-            <p> <b>Telefonos Contacto: </b> 198425639</p>
+            <p> <b>Fecha Nacimiento: </b>  {{estudiante['fecha_nacimiento']}} </p>
+            <p> <b>Cedula Representante: </b> {{estudiante['cedula_representante']}} </p>
+            <p> <b>Representante: </b> {{estudiante['representante']}}</p>
+            <p> <b>Direccion: </b> {{estudiante['direccion']}}</p>
+            <p> <b>Telefonos Contacto: </b> {{estudiante['telefonos']}}</p>
             <p> <b>Discapacidad/es: </b> </p>
-                <ul>
-                    <li>Discapacidad 1</li>
-                    <li>Discapacidad 2</li>
-                    
-                </ul>
+            <ul>
+                {% for discapacidad in estudiante['discapacidades'] %}
+                    <li>{{ discapacidad.nombre_discapacidad}}</li>
+                {% endfor %}
+            </ul>
+                
 
         </div>
         
