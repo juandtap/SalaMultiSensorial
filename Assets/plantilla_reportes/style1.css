@@ -1,0 +1,110 @@
+@page {
+    size: A4 portrait;
+}
+
+body {
+    font-family: Arial;
+    width: 21cm;
+    height: 29.7cm;
+    margin: 0 auto;
+    
+}
+
+.header{
+    text-align: center;
+    border: 1px solid #333; 
+}
+
+.student{
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.student-info{
+    width: 50%;
+    /* border: 1px solid red; */
+    padding: 10px;
+    border: 1px solid #333; 
+}
+
+.student-more-info{
+    width: 50% ;
+    border: 1px solid #333; 
+    padding: 10px;
+    display: block;
+    align-items: center;
+    justify-self: center;
+    
+}
+
+.student-photo {
+   
+    display: block;
+    text-align: center;
+    align-items: center;
+    justify-self: center;
+    margin: 0 auto;
+    
+}
+
+.student-photo img{
+    
+    width: 150px;
+    height: 150px;
+    border: 1px solid #333;
+    
+    display: inline-block;
+}
+.student-discapacidad{
+    
+    margin: 0 auto;
+   
+}
+
+.student-info ul{
+    list-style-type: none;
+}
+
+.sesion {
+    text-align: center;
+    border: 1px solid #333;
+}
+
+.modulos{
+    border: 1px solid #333 ;
+}
+
+.modulos h3{
+    text-align: center;
+}
+
+.modulo-info{
+    border: 1px solid #333 ;
+    
+    
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+th {
+    background-color: #f2f2f2;
+}
+
+.modulo-plot{
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    
+}
+
+.modulo-plot img{
+    border: 1px solid #333;
+}
