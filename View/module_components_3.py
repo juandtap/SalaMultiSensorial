@@ -25,7 +25,7 @@ class ModuleIlumination(QWidget):
         self.ui_ilu.label_conn_status.setHidden(True)
         
         # envio de senal de inicio 'i'
-        self.turn_on_off_thread = TurnOnOffModule('i')
+        self.turn_on_off_thread = TurnOnOffModule('i',0)
         self.turn_on_off_thread.my_signal.connect(self.socket_free)
         self.turn_on_off_thread.start()
         
@@ -68,7 +68,7 @@ class ModuleIlumination(QWidget):
         
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
-        self.turn_on_off_thread = TurnOnOffModule('f')
+        self.turn_on_off_thread = TurnOnOffModule('f',0)
         self.turn_on_off_thread.start()
        
         event.accept()

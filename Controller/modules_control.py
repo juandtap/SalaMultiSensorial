@@ -18,18 +18,18 @@ class TurnOnOffModule(QThread):
     # enviar o recibir datos por el socket sin conflictos
     my_signal = pyqtSignal(str)
     
-    def __init__(self,signal_code):
+    def __init__(self,signal_code, module):
         super().__init__()
         self._is_runnig = False
         self.code = signal_code
-        
+        self.mod_num = module
         
         
     def run(self):
         self._is_runnig = True
         try:
             socket_bluetooth = bluetooth.BluetoothSocket()
-            socket_bluetooth.connect((module_mac_address[0],1))
+            socket_bluetooth.connect((module_mac_address[self.mod_num],1))
             socket_bluetooth.send(self.code.encode('utf-8'))
             socket_bluetooth.close()
             

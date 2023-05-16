@@ -112,7 +112,7 @@ class ModuleGrafomotricidad(QWidget):
         
         # envia la senal de inicio 'i' al modulo arduino
         
-        self.turn_on_off_thread = TurnOnOffModule('i')
+        self.turn_on_off_thread = TurnOnOffModule('i',1)
         self.turn_on_off_thread.my_signal.connect(self.socket_free)
         self.turn_on_off_thread.start()
         
@@ -148,7 +148,7 @@ class ModuleGrafomotricidad(QWidget):
         
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
-        self.turn_on_off_thread = TurnOnOffModule('f')
+        self.turn_on_off_thread = TurnOnOffModule('f',1)
         self.turn_on_off_thread.start()
        
         event.accept()
@@ -345,7 +345,7 @@ class ArduinoSerialThread(QThread):
         try:
             #bluetooth_serial = serial.Serial(self.port, self.baudrate, timeout=self.timeout)
             blue_socket = bluetooth.BluetoothSocket()
-            blue_socket.connect((module_mac_address[0],1))
+            blue_socket.connect((module_mac_address[1],1))
         except Exception as e:
             print("Error al intentar la conexion con HC05:", e)
             self.finished.emit()
