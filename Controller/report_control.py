@@ -1,12 +1,14 @@
 import sys
 sys.path.append(".")
-from weasyprint import HTML
+# import os
+# os.add_dll_directory(r'C:\\msys64\\mingw64\\bin')
+# from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
 from Controller.student_control import get_student_by_id
 from Controller.session_control import get_sesion_by_id
 # Cargar la plantilla desde el sistema de archivos
-env = Environment(loader=FileSystemLoader('/Assets/plantilla_reportes'))
-template = env.get_template('sesion_report_template.html')
+env = Environment(loader=FileSystemLoader('Assets/plantilla_reportes'))
+template = env.get_template('session_report_template.html')
 
 # pruebas de reportes
 
@@ -28,6 +30,10 @@ def calculate_age(date):
         
         return age
 
+flag_discapacidad = 'No'
+if student.discapacidad:
+    flag_discapacidad = 'Si'
+
 student_info = {
     'cedula' : student.cedula,
     'apellidos': student.apellidos,
@@ -36,9 +42,10 @@ student_info = {
     'representante': student.nombre_representante,
     'telefonos': student.telefonos,
     'direccion': student.direccion,
-    'dicapacidad': student.discapacidad,
+    'discapacidad': flag_discapacidad,
     'discapacidades': student.discapacidades,
-    'edad': calculate_age(student.fecha_nacimiento)
+    'edad': calculate_age(student.fecha_nacimiento),
+    'fecha_nacimiento': student.fecha_nacimiento
 }
 
 # obtengo una sesion asociada al estudiante (16)
@@ -54,15 +61,16 @@ if len(student_sesion.modulos_grafomotricidad) > 0:
 if len(student_sesion.modulos_vumetro) > 0:
     modulos += ', vumetro'
     
+estilo = '/Assets/plantilla_reportes/style1.css'
 
 # Renderizar la plantilla con el objeto como variable de contexto
-output = template.render(esttudiante=student_info,sesion=student_sesion,modulos_trabajados=modulos)
+output = template.render(css_file=estilo,estudiante=student_info,sesion=student_sesion,modulos_trabajados=modulos)
 
 # Guardar el resultado como archivo HTML
-with open('/SessionReports/reporte1.html', 'w') as file:
+with open('SessionReports/reporte1.html', 'w') as file:
     file.write(output)
     
     
 
 # Convertir el archivo HTML a PDF
-HTML(filename='/SessionReports/reporte1.html').write_pdf('reporte1.pdf')
+## HTML(filename='/SessionReports/reporte1.html').write_pdf('reporte1.pdf')
