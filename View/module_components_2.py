@@ -39,6 +39,7 @@ class ModuleVumeter(QWidget):
         self.set_module_images()
         self.ui_vum.label_text_status.setText('Conectado, Espere...')
         self.ui_vum.label_conn_status.setHidden(True)
+        self.ui_vum.label_reading_data.setHidden(True)
 
         # desactivo el boton de guardar y detener
         self.ui_vum.pushButton_save.setDisabled(True)
@@ -47,7 +48,7 @@ class ModuleVumeter(QWidget):
         
         # envia la senal de inicio 'i' al modulo arduino
         
-        self.turn_on_off_thread = TurnOnOffModule('i',2)
+        self.turn_on_off_thread = TurnOnOffModule('i',0)
         self.turn_on_off_thread.my_signal.connect(self.socket_free)
         self.turn_on_off_thread.start()
         
@@ -97,7 +98,7 @@ class ModuleVumeter(QWidget):
         
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
-        self.turn_on_off_thread = TurnOnOffModule('f',2)
+        self.turn_on_off_thread = TurnOnOffModule('f',0)
         self.turn_on_off_thread.start()
        
         event.accept()
@@ -116,6 +117,7 @@ class ModuleVumeter(QWidget):
         self.data = [0,]
         self.timedata = [0,]
         self.ui_vum.label_level.setText("")
+        self.ui_vum.label_reading_data.setHidden(False)
         self.ui_vum.pushButton_start.setDisabled(True)
         self.ui_vum.pushButton_stop.setDisabled(False)
         self.serial_thread = VumeterDataThread()
@@ -161,8 +163,11 @@ class ModuleVumeter(QWidget):
         print('Hilo de escucha detenido')
         print('estado del thread de escucha: '+str(self.serial_thread.isRunning()))
         self.end_time = datetime.now()
+        
+        self.ui_vum.label_reading_data.setHidden(True)
         self.ui_vum.label_textlevel.setText('Nivel maximo: ')
         self.ui_vum.label_level.setText(str(max(self.data)))
+        
         
     def set_module_images(self):
         pixmap1 = QPixmap("Assets/modulo_2_vumetro.png")
@@ -238,7 +243,7 @@ class VumeterDataThread(QThread):
         
         try:
             blue_socket = bluetooth.BluetoothSocket()
-            blue_socket.connect((module_mac_address[2],1)) 
+            blue_socket.connect((module_mac_address[0],1)) 
             
             self.running = True
             
