@@ -48,7 +48,7 @@ class ModuleVumeter(QWidget):
         
         # envia la senal de inicio 'i' al modulo arduino
         
-        self.turn_on_off_thread = TurnOnOffModule('i',0)
+        self.turn_on_off_thread = TurnOnOffModule('i',1)
         self.turn_on_off_thread.my_signal.connect(self.socket_free)
         self.turn_on_off_thread.start()
         
@@ -98,7 +98,7 @@ class ModuleVumeter(QWidget):
         
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
-        self.turn_on_off_thread = TurnOnOffModule('f',0)
+        self.turn_on_off_thread = TurnOnOffModule('f',2)
         self.turn_on_off_thread.start()
        
         event.accept()
@@ -243,7 +243,7 @@ class VumeterDataThread(QThread):
         
         try:
             blue_socket = bluetooth.BluetoothSocket()
-            blue_socket.connect((module_mac_address[0],1)) 
+            blue_socket.connect((module_mac_address[2],1)) 
             
             self.running = True
             
