@@ -34,6 +34,7 @@
             <p> <b>Representante: </b> {{estudiante['representante']}}</p>
             <p> <b>Direccion: </b> {{estudiante['direccion']}}</p>
             <p> <b>Telefonos Contacto: </b> {{estudiante['telefonos']}}</p>
+            <p> <b>Tiene Discapacidad: </b> {{estudiante['discapacidad']}}</p>
             <p> <b>Discapacidad/es: </b> </p>
             <ul>
                 {% for discapacidad in estudiante['discapacidades'] %}
@@ -48,17 +49,18 @@
 
     <div class="sesion">
         <h3>Sesión</h3>
-        <p> <b>Fecha:</b> 11/05/2023 &nbsp;
-            <b>Hora de inicio:</b> 14:00 &nbsp;
-            <b>Hora de finalizacion:</b> 15:00
+        <p> 
+            <b>Fecha:</b> {{ sesion.fecha }} &nbsp;
+            <b>Hora de inicio:</b> {{sesion.hora_inicio}} &nbsp;
+            <b>Hora de finalizacion:</b> {{sesion.hora_fin}}
         </p>
-        <p> <b>Módulos trabajados</b>  : grafomotricidad, vumetro </p>
+        <p> <b>Módulos trabajados</b> : {{ modulos_trabajados }}</p>
     </div>
 
     <div class="modulos">
         <h3>Módulos:</h3>
         <div class="modulo-info">
-            <p>  <b>Módulo de Grafomotricidad</b> </p>
+            <p> <b>Módulo de Grafomotricidad</b> </p>
             <table>
                 <tr>
                     <th>ID</th>
@@ -66,98 +68,53 @@
                     <th>Resultado</th>
                     <th>Tiempo</th>
                 </tr>
+    
+    
+                {% for modulo in sesion.modulos_grafomotricidad %}
                 <tr>
-                    <td>1</td>
-                    <td>Cuadrado</td>
-                    <td>Correcto</td>
-                    <td>00:05:23</td>
+                    <td>{{modulo.id}}</td>
+                    <td>{{modulo.figura}}</td>
+                    <td>{{modulo.resultado}}</td>
+                    <td>{{modulo.tiempo_tomado}}</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Círculo</td>
-                    <td>Incorrecto</td>
-                    <td>00:02:12</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Triángulo</td>
-                    <td>Correcto</td>
-                    <td>00:08:47</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Triángulo</td>
-                    <td>Correcto</td>
-                    <td>00:08:47</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Triángulo</td>
-                    <td>Correcto</td>
-                    <td>00:08:47</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>Triángulo</td>
-                    <td>Correcto</td>
-                    <td>00:08:47</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>Triángulo</td>
-                    <td>Correcto</td>
-                    <td>00:08:47</td>
-                </tr>
+    
+                {% endfor %}
+    
+    
             </table>
         </div>
-        <div class="module-info">
+        <div class="modulo-info">
             <p>  <b>Módulo de Vumetro</b> </p>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Nivel maximo</th>
-                    <th>Nivel promedio</th>
-                    <th>Tiempo</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>5</td>
-                    <td>3</td>
-                    <td>00:05:23</td>
-                </tr>
-               
-              
+            
                 
-            </table>
+                {% for modulo in sesion.modulos_vumetro %}
 
-            <div class="modulo-plot">
-                <img src="plottest.png" alt="">
-                <p>grafica nivel vs tiempo</p>
-            </div>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nivel maximo</th>
+                        <th>Nivel promedio</th>
+                        <th>Tiempo</th>
+                    </tr>
+                
+                    <tr>
+                        <td>{{modulo.id}}</td>
+                        <td>{{modulo.nivel_maximo}}</td>
+                        <td>{{modulo.nivel_promedio}}</td>
+                        <td>{{modulo.tiempo}}</td>
+                    </tr>
+                
+                </table>
+
+                <div class="modulo-plot">
+                    <img src="plottest.png" alt="">
+                    <p>grafica nivel vs tiempo</p>
+                </div>
+    
+                {% endfor %}
+               
 
            
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Nivel maximo</th>
-                    <th>Nivel promedio</th>
-                    <th>Tiempo</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>5</td>
-                    <td>3</td>
-                    <td>00:05:23</td>
-                </tr>
-               
-              
-                
-            </table>
-
-            <div class="modulo-plot">
-                <img src="plottest.png" alt="">
-                <p>grafica nivel vs tiempo</p>
-            </div>
         </div>
     </div>
 
