@@ -13,7 +13,7 @@ from Controller.modules_control import TurnOnOffModule
 from PyQt5 import QtCore
 from View.module_iluminacion_view import Ui_Form_modulo_iluminacion
 from View.components import MessageDialog
-
+from datetime import datetime
 
 class ModuleIlumination(QWidget):
     def __init__(self, sesion):
@@ -78,6 +78,12 @@ class ModuleIlumination(QWidget):
         
         self.ui_ilu.lineEdit_B_code.setValidator(QIntValidator(0,255))
         self.ui_ilu.lineEdit_B_code.textChanged.connect(self.check_code)
+        
+        
+        # variables para tomar el tiempo desde que presiona el boton encender hasta el boton de guardar
+        self.init_time = None
+        self.end_time = None
+        self.total_time = None
         
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
@@ -161,6 +167,8 @@ class ModuleIlumination(QWidget):
             
             print("Se envia color definido:")
             
+            self.init_time = datetime.now()
+            
             selected_color_code = rgb_colors[self.ui_ilu.lineEdit_selected_color.text()]
             print("color seleccionado: "+self.ui_ilu.lineEdit_selected_color.text()+" > "+selected_color_code)
             
@@ -205,6 +213,8 @@ class ModuleIlumination(QWidget):
         if radio_button_sender.text() == 'NO':
             self.recognize = 'NO'
             print("Reconoce el color : NO")
+            
+        self.end_time = datetime.now()
     
     def save_module_data(self):
         if self.recognize == '':
@@ -212,16 +222,21 @@ class ModuleIlumination(QWidget):
             self.message_dialog = MessageDialog("! Reconoce el color?")
             self.message_dialog.show()
         else:
+            
+            # calcular tiempo que tarda en reconocer el color
+        
+            self.total_time = self.end_time - self.init_time
+            
             if self.ui_ilu.radioButton_defined_color.isChecked():
                 print("Datos a guardar (color definido):")
                 color = self.ui_ilu.lineEdit_selected_color.text()
                 reconoce_color = self.recognize
-                print(color + " "+ reconoce_color)
+                print(color + " "+ reconoce_color+" "+str(self.total_time))
             else:
                 print("Datos a guardar (color personalizado):")
                 color = self.ui_ilu.lineEdit_R_code.text()+","+self.ui_ilu.lineEdit_G_code.text()+","+self.ui_ilu.lineEdit_B_code.text()
                 reconoce_color = self.recognize
-                print(color + " "+ reconoce_color)
+                print(color + " "+ reconoce_color+" "+str(self.total_time))
                 
 
             

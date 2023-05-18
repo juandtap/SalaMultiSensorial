@@ -90,7 +90,7 @@ class ModuleVumeter(QWidget):
         self.ui_vum.pushButton_stop.clicked.connect(self.stop_listening_data)
         self.ui_vum.pushButton_save.clicked.connect(self.save_module_data)
         
-        # variables para calcular el tiempo de uso del modulo
+        # variables para calcular el tiempo de uso del modulo desde que presiona iniciar hasta detener
         self.init_time = None
         self.end_time = None
         self.total_time = None
