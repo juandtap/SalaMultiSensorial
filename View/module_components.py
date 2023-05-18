@@ -42,7 +42,7 @@ class ModuleSelection(QWidget):
         
         
         # comentar para que no se cree sesione innecesarias
-        self.create_sesion()
+        #self.create_sesion()
         
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
         self.ui_modules.pushButton_module_vumetro.clicked.connect(self.open_module_vumeter)
@@ -91,9 +91,10 @@ class ModuleSelection(QWidget):
 
     def closeEvent(self, event):
         #3
-        set_final_time(self.sesion, datetime.now().time())
-        print("se agrego la hora fin a la sesion "+str(self.sesion))
-        event.accept()
+        print("finalizo la sesion")
+        # set_final_time(self.sesion, datetime.now().time())
+        # print("se agrego la hora fin a la sesion "+str(self.sesion))
+        # event.accept()
 
 # En el texrfield lineEdit_time_taken se coloca el tiempo tomado hasta que se 
 # se presiono el boton de detener

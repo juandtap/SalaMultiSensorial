@@ -82,7 +82,14 @@ class ModuloVumetro(Base):
     nivel_promedio = Column(Integer)
     tiempo = Column(String(50))
     datos = Column(String(250))
-    
+
+class ModuloIluminacion(Base):
+    __tablename__ = 'modulo_iluminacion'
+    id = Column(Integer, primary_key=True)
+    id_sesion = Column(Integer, ForeignKey('sesion.id'))
+    color = Column(String(50))
+    reconoce_color = Column(String(20))
+    tiempo = Column(String(50))
     
 # Crea las tablas en la base de datos
 Base.metadata.create_all(engine)

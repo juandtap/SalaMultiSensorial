@@ -50,6 +50,7 @@ class Ui_Form_modulo_iluminacion(object):
         font.setFamily("Arial")
         font.setPointSize(9)
         self.textEdit_instructions.setFont(font)
+        self.textEdit_instructions.setReadOnly(True)
         self.textEdit_instructions.setObjectName("textEdit_instructions")
         self.label_logo1 = QtWidgets.QLabel(Form_modulo_iluminacion)
         self.label_logo1.setGeometry(QtCore.QRect(0, 0, 161, 131))
@@ -77,7 +78,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.label_text_status.setFont(font)
         self.label_text_status.setObjectName("label_text_status")
         self.pushButton_start = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton_start.setGeometry(QtCore.QRect(720, 610, 101, 31))
+        self.pushButton_start.setGeometry(QtCore.QRect(710, 610, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
@@ -96,7 +97,7 @@ class Ui_Form_modulo_iluminacion(object):
 "}")
         self.pushButton_start.setObjectName("pushButton_start")
         self.pushButton_stop = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton_stop.setGeometry(QtCore.QRect(840, 610, 101, 31))
+        self.pushButton_stop.setGeometry(QtCore.QRect(830, 610, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
@@ -115,7 +116,7 @@ class Ui_Form_modulo_iluminacion(object):
 "}")
         self.pushButton_stop.setObjectName("pushButton_stop")
         self.pushButton_save = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton_save.setGeometry(QtCore.QRect(960, 610, 101, 31))
+        self.pushButton_save.setGeometry(QtCore.QRect(950, 610, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
@@ -134,7 +135,7 @@ class Ui_Form_modulo_iluminacion(object):
 "}")
         self.pushButton_save.setObjectName("pushButton_save")
         self.pushButton_1 = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton_1.setGeometry(QtCore.QRect(540, 190, 61, 61))
+        self.pushButton_1.setGeometry(QtCore.QRect(540, 170, 61, 51))
         self.pushButton_1.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
 "    background-color: rgb(255, 0, 0);\n"
@@ -149,7 +150,7 @@ class Ui_Form_modulo_iluminacion(object):
 "}")
         self.pushButton_1.setObjectName("pushButton_1")
         self.pushButton_2 = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton_2.setGeometry(QtCore.QRect(620, 190, 61, 61))
+        self.pushButton_2.setGeometry(QtCore.QRect(620, 170, 61, 51))
         self.pushButton_2.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
 "    background-color: rgb(0,255, 0);\n"
@@ -164,7 +165,7 @@ class Ui_Form_modulo_iluminacion(object):
 "}")
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_3 = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton_3.setGeometry(QtCore.QRect(700, 190, 61, 61))
+        self.pushButton_3.setGeometry(QtCore.QRect(700, 170, 61, 51))
         self.pushButton_3.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
 "    background-color: rgb(0, 0, 255);\n"
@@ -179,7 +180,7 @@ class Ui_Form_modulo_iluminacion(object):
 "}")
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_4 = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton_4.setGeometry(QtCore.QRect(780, 190, 61, 61))
+        self.pushButton_4.setGeometry(QtCore.QRect(780, 170, 61, 51))
         self.pushButton_4.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
 "    background-color: rgb(255,215,0);\n"
@@ -194,7 +195,7 @@ class Ui_Form_modulo_iluminacion(object):
 "}")
         self.pushButton_4.setObjectName("pushButton_4")
         self.pushButton_5 = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton_5.setGeometry(QtCore.QRect(860, 190, 61, 61))
+        self.pushButton_5.setGeometry(QtCore.QRect(860, 170, 61, 51))
         self.pushButton_5.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
 "    background-color: rgb(0, 255, 255);\n"
@@ -209,7 +210,7 @@ class Ui_Form_modulo_iluminacion(object):
 "}")
         self.pushButton_5.setObjectName("pushButton_5")
         self.pushButton_6 = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton_6.setGeometry(QtCore.QRect(940, 190, 61, 61))
+        self.pushButton_6.setGeometry(QtCore.QRect(940, 170, 61, 51))
         self.pushButton_6.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
 "    background-color: rgb(255, 255,255);\n"
@@ -225,7 +226,7 @@ class Ui_Form_modulo_iluminacion(object):
 "}")
         self.pushButton_6.setObjectName("pushButton_6")
         self.pushButton_7 = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton_7.setGeometry(QtCore.QRect(1020, 190, 61, 61))
+        self.pushButton_7.setGeometry(QtCore.QRect(1020, 170, 61, 51))
         self.pushButton_7.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
 "    background-color: rgb(255,69,0);\n"
@@ -240,7 +241,7 @@ class Ui_Form_modulo_iluminacion(object):
 "}")
         self.pushButton_7.setObjectName("pushButton_7")
         self.pushButton_8 = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton_8.setGeometry(QtCore.QRect(1100, 190, 61, 61))
+        self.pushButton_8.setGeometry(QtCore.QRect(1100, 170, 61, 51))
         self.pushButton_8.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
 "    background-color: rgb(255,0,255);\n"
@@ -255,7 +256,7 @@ class Ui_Form_modulo_iluminacion(object):
 "}")
         self.pushButton_8.setObjectName("pushButton_8")
         self.pushButton_9 = QtWidgets.QPushButton(Form_modulo_iluminacion)
-        self.pushButton_9.setGeometry(QtCore.QRect(1180, 190, 61, 61))
+        self.pushButton_9.setGeometry(QtCore.QRect(1180, 170, 61, 51))
         self.pushButton_9.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
 "    background-color: rgb(128,0,128);\n"
@@ -270,7 +271,7 @@ class Ui_Form_modulo_iluminacion(object):
 "}")
         self.pushButton_9.setObjectName("pushButton_9")
         self.horizontalLayoutWidget = QtWidgets.QWidget(Form_modulo_iluminacion)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(730, 390, 336, 80))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(710, 310, 336, 61))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -323,7 +324,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.lineEdit_B_code.setObjectName("lineEdit_B_code")
         self.horizontalLayout.addWidget(self.lineEdit_B_code)
         self.horizontalLayoutWidget_2 = QtWidgets.QWidget(Form_modulo_iluminacion)
-        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(720, 280, 321, 51))
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(720, 230, 321, 51))
         self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -352,26 +353,30 @@ class Ui_Form_modulo_iluminacion(object):
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
         self.radioButton_defined_color.setFont(font)
         self.radioButton_defined_color.setStyleSheet("color: rgb(56, 71, 151);")
         self.radioButton_defined_color.setObjectName("radioButton_defined_color")
         self.radioButton_custom_color = QtWidgets.QRadioButton(Form_modulo_iluminacion)
-        self.radioButton_custom_color.setGeometry(QtCore.QRect(760, 360, 271, 20))
+        self.radioButton_custom_color.setGeometry(QtCore.QRect(750, 290, 271, 20))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
         self.radioButton_custom_color.setFont(font)
         self.radioButton_custom_color.setStyleSheet("color: rgb(56, 71, 151);")
         self.radioButton_custom_color.setObjectName("radioButton_custom_color")
         self.slider_level = QtWidgets.QSlider(Form_modulo_iluminacion)
-        self.slider_level.setGeometry(QtCore.QRect(810, 530, 160, 22))
+        self.slider_level.setGeometry(QtCore.QRect(800, 420, 160, 22))
         self.slider_level.setMaximum(2)
         self.slider_level.setPageStep(1)
         self.slider_level.setProperty("value", 1)
         self.slider_level.setOrientation(QtCore.Qt.Horizontal)
         self.slider_level.setObjectName("slider_level")
         self.label_9 = QtWidgets.QLabel(Form_modulo_iluminacion)
-        self.label_9.setGeometry(QtCore.QRect(820, 480, 158, 49))
+        self.label_9.setGeometry(QtCore.QRect(810, 388, 158, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(11)
@@ -381,7 +386,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.label_9.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_9.setObjectName("label_9")
         self.label_level1 = QtWidgets.QLabel(Form_modulo_iluminacion)
-        self.label_level1.setGeometry(QtCore.QRect(800, 550, 191, 20))
+        self.label_level1.setGeometry(QtCore.QRect(790, 440, 191, 20))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(9)
@@ -389,6 +394,30 @@ class Ui_Form_modulo_iluminacion(object):
         self.label_level1.setStyleSheet("\n"
 "color: rgb(56, 71, 151);")
         self.label_level1.setObjectName("label_level1")
+        self.verticalLayoutWidget = QtWidgets.QWidget(Form_modulo_iluminacion)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(720, 490, 321, 80))
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.label_11 = QtWidgets.QLabel(self.verticalLayoutWidget)
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_11.setFont(font)
+        self.label_11.setStyleSheet("color: rgb(56, 71, 151);")
+        self.label_11.setObjectName("label_11")
+        self.verticalLayout.addWidget(self.label_11)
+        self.radioButton_yes = QtWidgets.QRadioButton(self.verticalLayoutWidget)
+        self.radioButton_yes.setStyleSheet("color: rgb(56, 71, 151);")
+        self.radioButton_yes.setObjectName("radioButton_yes")
+        self.verticalLayout.addWidget(self.radioButton_yes)
+        self.radioButton_no = QtWidgets.QRadioButton(self.verticalLayoutWidget)
+        self.radioButton_no.setStyleSheet("color: rgb(56, 71, 151);")
+        self.radioButton_no.setObjectName("radioButton_no")
+        self.verticalLayout.addWidget(self.radioButton_no)
 
         self.retranslateUi(Form_modulo_iluminacion)
         QtCore.QMetaObject.connectSlotsByName(Form_modulo_iluminacion)
@@ -425,3 +454,6 @@ class Ui_Form_modulo_iluminacion(object):
         self.radioButton_custom_color.setText(_translate("Form_modulo_iluminacion", "Color Personalizado (RGB):"))
         self.label_9.setText(_translate("Form_modulo_iluminacion", "Nivel intensidad:"))
         self.label_level1.setText(_translate("Form_modulo_iluminacion", "bajo           normal             alto"))
+        self.label_11.setText(_translate("Form_modulo_iluminacion", "Reconoce el color seleccionado?:"))
+        self.radioButton_yes.setText(_translate("Form_modulo_iluminacion", "SI"))
+        self.radioButton_no.setText(_translate("Form_modulo_iluminacion", "NO"))

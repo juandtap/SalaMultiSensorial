@@ -10,8 +10,10 @@ from PyQt5.QtGui import QPixmap, QPen, QBrush, QColor, QIntValidator
 from PyQt5.QtCore import QTimer
 from Controller.module_codes import ilumination_colors, rgb_colors, module_mac_address
 from Controller.modules_control import TurnOnOffModule
-
+from PyQt5 import QtCore
 from View.module_iluminacion_view import Ui_Form_modulo_iluminacion
+from View.components import MessageDialog
+
 
 class ModuleIlumination(QWidget):
     def __init__(self, sesion):
@@ -19,6 +21,7 @@ class ModuleIlumination(QWidget):
         self.ui_ilu = Ui_Form_modulo_iluminacion()
         self.ui_ilu.setupUi(self)
         self.sesion = sesion
+        
        
         self.set_module_images()
         self.ui_ilu.label_text_status.setText("Conectado...")
@@ -30,6 +33,16 @@ class ModuleIlumination(QWidget):
         self.turn_on_off_thread.start()
         
         self.ui_ilu.pushButton_start.clicked.connect(self.send_color_data)
+        
+        
+        #variable que guarda si reconocio o no el valor
+        self.recognize = ''
+        # eventos radio buttons SI,NO
+        self.ui_ilu.radioButton_yes.clicked.connect(lambda: self.does_recognize_color(self.ui_ilu.radioButton_yes))
+        self.ui_ilu.radioButton_no.clicked.connect(lambda: self.does_recognize_color(self.ui_ilu.radioButton_no))
+        
+        
+        self.ui_ilu.pushButton_save.clicked.connect(self.save_module_data)
         
         # radiobutton color definido seleccionado por default
         self.ui_ilu.radioButton_defined_color.setChecked(True)
@@ -183,8 +196,34 @@ class ModuleIlumination(QWidget):
         # se adjunto al color el nivel de intensidad,de la siguiente forma
         # 255,255,255,1 ; el ultimo valor corresponde la nivel de instensidad
 
+    def does_recognize_color(self, radio_button_sender):
+        
+        if radio_button_sender.text() == 'SI':
+            self.recognize = 'SI'
+            print("Reconoce el color : SI")
+        
+        if radio_button_sender.text() == 'NO':
+            self.recognize = 'NO'
+            print("Reconoce el color : NO")
+    
+    def save_module_data(self):
+        if self.recognize == '':
+            print("no se ha marcado la opcion de SI o NO")
+            self.message_dialog = MessageDialog("! Reconoce el color?")
+            self.message_dialog.show()
+        else:
+            if self.ui_ilu.radioButton_defined_color.isChecked():
+                print("Datos a guardar (color definido):")
+                color = self.ui_ilu.lineEdit_selected_color.text()
+                reconoce_color = self.recognize
+                print(color + " "+ reconoce_color)
+            else:
+                print("Datos a guardar (color personalizado):")
+                color = self.ui_ilu.lineEdit_R_code.text()+","+self.ui_ilu.lineEdit_G_code.text()+","+self.ui_ilu.lineEdit_B_code.text()
+                reconoce_color = self.recognize
+                print(color + " "+ reconoce_color)
                 
-            
+
             
 class SendDataThread(QThread):
     def __init__(self,color_data):
