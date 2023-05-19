@@ -195,12 +195,23 @@ class AddStudent(QWidget):
         self.checkeable_combo = CheckableComboBox()
         self.ui_addstu.gridLayout_2.addWidget(self.checkeable_combo, 1,1,1,1)
         
+        
+        
         # eventos ComboBox Discapacidades
         self.checkeable_combo.activated.connect(self.get_selected_discapacidades)
         
         self.load_discapacidades()
         
         self.ui_addstu.pushButton_add_discapacidad.clicked.connect(self.open_add_discapacidad)
+        
+        # oculta la lista de combobox y el boton de agregar discapacidad 
+        # si el checkbox tiene discapacidad no esta marcado
+        
+        self.checkeable_combo.setHidden(True)
+        self.ui_addstu.pushButton_add_discapacidad.setHidden(True)
+        
+        self.ui_addstu.checkBox_discapacidad.clicked.connect(self.show_combo_discapacidades)
+        
         
         # revisa que el campo cedula no exeda los 10 caracteres y solo se ingrese numeros
         validator = QIntValidator(self)
@@ -240,6 +251,16 @@ class AddStudent(QWidget):
         for sc in school_list:
             self.school_names.append(sc.nombre)
         self.ui_addstu.comboBox_unidad_educativa.addItems(self.school_names)
+        
+        
+    def show_combo_discapacidades(self):
+        if self.ui_addstu.checkBox_discapacidad.isChecked():
+            self.checkeable_combo.setHidden(False)
+            self.ui_addstu.pushButton_add_discapacidad.setHidden(False)
+        else:
+            self.checkeable_combo.setHidden(True)
+            self.ui_addstu.pushButton_add_discapacidad.setHidden(True)
+            
     
     # Combo Box con checkitems
     def load_discapacidades(self):
