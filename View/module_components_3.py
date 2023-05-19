@@ -43,6 +43,11 @@ class ModuleIlumination(QWidget):
         self.ui_ilu.radioButton_yes.clicked.connect(lambda: self.does_recognize_color(self.ui_ilu.radioButton_yes))
         self.ui_ilu.radioButton_no.clicked.connect(lambda: self.does_recognize_color(self.ui_ilu.radioButton_no))
         
+        # se bloquea los radio button de si y no, se activan al pulsar el boton 'enviar'
+        self.ui_ilu.radioButton_yes.setEnabled(False)
+        self.ui_ilu.radioButton_no.setEnabled(False)
+        self.ui_ilu.pushButton_save.setEnabled(False)
+        
         
         self.ui_ilu.pushButton_save.clicked.connect(self.save_module_data)
         
@@ -165,6 +170,13 @@ class ModuleIlumination(QWidget):
             
     def send_color_data(self):
         selected_color_code = ''
+        
+        self.ui_ilu.radioButton_no.setEnabled(True)
+        self.ui_ilu.radioButton_yes.setEnabled(True)
+        
+        self.ui_ilu.radioButton_yes.setChecked(False)
+        self.ui_ilu.radioButton_no.setChecked(False)
+        
         if self.ui_ilu.radioButton_defined_color.isChecked():
             
             print("Se envia color definido:")
@@ -217,6 +229,7 @@ class ModuleIlumination(QWidget):
             print("Reconoce el color : NO")
             
         self.end_time = datetime.now()
+        self.ui_ilu.pushButton_save.setEnabled(True)
     
     def save_module_data(self):
         
@@ -229,6 +242,12 @@ class ModuleIlumination(QWidget):
             self.message_dialog = MessageDialog("! Reconoce el color?")
             self.message_dialog.show()
         else:
+            
+            self.ui_ilu.radioButton_yes.setChecked(False)
+            self.ui_ilu.radioButton_no.setChecked(False)
+            self.ui_ilu.radioButton_yes.setEnabled(False)
+            self.ui_ilu.radioButton_no.setEnabled(False)
+            self.ui_ilu.pushButton_save.setEnabled(False)
             
             # calcular tiempo que tarda en reconocer el color
         
