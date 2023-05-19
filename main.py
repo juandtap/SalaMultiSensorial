@@ -53,6 +53,9 @@ class MainWindow(QMainWindow):
         
         self.ui_main.pushButton_goto_reports.clicked.connect(self.open_student_reports)
         
+        # boton de selccion de usuario invitado
+        self.ui_main.pushButton_reportes.clicked.connect(self.open_guest_user)
+        
     def open_add_student(self):
         self.add_stu = AddStudent()
         self.add_stu.show()
@@ -165,7 +168,12 @@ class MainWindow(QMainWindow):
     
     def get_selected_cedula(self, selected_student):
         return selected_student.split('-')[-1].strip()
-        
+    
+    def open_guest_user(self):
+        # el usario invitado es el que tiene el id=1
+        guest = get_student_by_id(1)
+        self.load_info_student(guest)
+        self.ui_main.scrollArea_info_estudiante.setHidden(False)
     
     def open_modules(self):
         self.modules = ModuleSelection(get_student_by_cedula(self.ui_main.label_cedula.text()))
