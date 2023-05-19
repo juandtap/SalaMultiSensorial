@@ -162,6 +162,8 @@ class StudentReport(QWidget):
         # crear QWidget para mostrar la info de los modulos
         # probar conectarse, enviar y recibir datos por bluetooth usando MAC y no el puerto
 
+    # esta funcion muestra los modulos trabajados en cada sesion
+    
     def load_modules_tables(self, id_ses):
         container = QWidget()
         
@@ -187,7 +189,8 @@ class StudentReport(QWidget):
         grafomotricidad_list = self.sesion_selected.modulos_grafomotricidad
         # datos del modulo vumetro
         vumetro_list = self.sesion_selected.modulos_vumetro
-        
+        # data del modulo de iluminacion
+        iluminacion_list = self.sesion_selected.modulos_iluminacion
         # crea la tabla donde muestra los datos del modulo de grafomotricidad
         self.table_grafomotricidad = QTableWidget()
         layout.addWidget(self.table_grafomotricidad)
@@ -269,43 +272,43 @@ class StudentReport(QWidget):
             
         # Modulo Iluminacion
         
-        # label_iluminacion = QLabel("Modulo Iluminacion")
-        # label_iluminacion.setFont(self.font)
-        # layout.addWidget(label_iluminacion)
+        label_iluminacion = QLabel("Modulo Iluminacion")
+        label_iluminacion.setFont(self.font)
+        layout.addWidget(label_iluminacion)
         
-        # self.table_iluminacion = QTableWidget()
-        # layout.addWidget(self.table_iluminacion)
+        self.table_iluminacion = QTableWidget()
+        layout.addWidget(self.table_iluminacion)
         
-        # self.table_iluminacion.verticalHeader().setVisible(False)
+        self.table_iluminacion.verticalHeader().setVisible(False)
         # # defino las columnas de la tabla
-        # self.table_iluminacion.setColumnCount(4)
-        # self.table_iluminacion.setHorizontalHeaderLabels(
-        #     [
-        #         'id',
-        #         'Figura',
-        #         'Tiempo Tomado',
-        #         'Resultado',
+        self.table_iluminacion.setColumnCount(4)
+        self.table_iluminacion.setHorizontalHeaderLabels(
+            [
+                'id',
+                'Color',
+                'Reconoce color',
+                'Tiempo',
                 
-        #     ]
-        # )
+            ]
+        )
         
-        # self.table_iluminacion.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        # self.table_iluminacion.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table_iluminacion.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.table_iluminacion.setSelectionBehavior(QAbstractItemView.SelectRows)
         
         # # hace que la ultima columna ocupe el espacio restante de la tabla
-        # self.table_iluminacion.horizontalHeader().setStretchLastSection(True)
+        self.table_iluminacion.horizontalHeader().setStretchLastSection(True)
         
         # # este codigo hace que las columnas  no sean redimensionables
-        # header = self.table_iluminacion.horizontalHeader()
-        # for i in range(header.count()):
-        #     header.setSectionResizeMode(i,QHeaderView.Fixed)
+        header = self.table_iluminacion.horizontalHeader()
+        for i in range(header.count()):
+            header.setSectionResizeMode(i,QHeaderView.Fixed)
             
-        # for i, module in enumerate(grafomotricidad_list):
-        #     self.table_iluminacion.insertRow(i)
-        #     self.table_iluminacion.setItem(i, 0, QTableWidgetItem(str(module.id)))
-        #     self.table_iluminacion.setItem(i, 1, QTableWidgetItem(str(module.figura)))
-        #     self.table_iluminacion.setItem(i, 2, QTableWidgetItem(str(module.tiempo_tomado).split('.')[0]))
-        #     self.table_iluminacion.setItem(i, 3, QTableWidgetItem(str(module.resultado)))
+        for i, module in enumerate(iluminacion_list):
+            self.table_iluminacion.insertRow(i)
+            self.table_iluminacion.setItem(i, 0, QTableWidgetItem(str(module.id)))
+            self.table_iluminacion.setItem(i, 1, QTableWidgetItem(str(module.color)))
+            self.table_iluminacion.setItem(i, 2, QTableWidgetItem(str(module.reconoce_color)))
+            self.table_iluminacion.setItem(i, 3, QTableWidgetItem(str(module.tiempo).split('.')[0]))
         
         
         # label_pictograma = QLabel("Modulo Pictogramas")
