@@ -10,10 +10,12 @@ from PyQt5.QtGui import QPixmap, QPen, QBrush, QColor, QIntValidator
 from PyQt5.QtCore import QTimer
 from Controller.module_codes import ilumination_colors, rgb_colors, module_mac_address
 from Controller.modules_control import TurnOnOffModule
+from Controller.session_control import add_module_iluminacion
 from PyQt5 import QtCore
 from View.module_iluminacion_view import Ui_Form_modulo_iluminacion
 from View.components import MessageDialog
 from datetime import datetime
+from Model.model import ModuloIluminacion
 
 class ModuleIlumination(QWidget):
     def __init__(self, sesion):
@@ -217,6 +219,11 @@ class ModuleIlumination(QWidget):
         self.end_time = datetime.now()
     
     def save_module_data(self):
+        
+        sel_color = ''
+        reconoce_sel_color = ''
+        
+        
         if self.recognize == '':
             print("no se ha marcado la opcion de SI o NO")
             self.message_dialog = MessageDialog("! Reconoce el color?")
@@ -229,14 +236,31 @@ class ModuleIlumination(QWidget):
             
             if self.ui_ilu.radioButton_defined_color.isChecked():
                 print("Datos a guardar (color definido):")
-                color = self.ui_ilu.lineEdit_selected_color.text()
-                reconoce_color = self.recognize
-                print(color + " "+ reconoce_color+" "+str(self.total_time))
+                sel_color = self.ui_ilu.lineEdit_selected_color.text()
+                reconoce_sel_color = self.recognize
+                print(sel_color + " "+ reconoce_sel_color+" "+str(self.total_time))
+                
+                    
             else:
                 print("Datos a guardar (color personalizado):")
-                color = self.ui_ilu.lineEdit_R_code.text()+","+self.ui_ilu.lineEdit_G_code.text()+","+self.ui_ilu.lineEdit_B_code.text()
-                reconoce_color = self.recognize
-                print(color + " "+ reconoce_color+" "+str(self.total_time))
+                sel_color = self.ui_ilu.lineEdit_R_code.text()+","+self.ui_ilu.lineEdit_G_code.text()+","+self.ui_ilu.lineEdit_B_code.text()
+                reconoce_sel_color = self.recognize
+                print(sel_color + " "+ reconoce_sel_color+" "+str(self.total_time))
+            
+            new_ilu = ModuloIluminacion(
+                id_sesion = self.sesion,
+                color = sel_color,
+                reconoce_color = reconoce_sel_color,
+                tiempo = str(self.total_time)
+                
+            )
+              
+            if add_module_iluminacion(new_ilu):
+                self.message_dialog = MessageDialog("!Datos guardados")
+                self.message_dialog.show()
+            else:
+                self.message_dialog = MessageDialog("Error al guardar")
+                self.message_dialog.show()
                 
 
             

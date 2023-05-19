@@ -96,3 +96,19 @@ def add_module_vumetro(new_vum):
         session.close()
     
     return flag
+
+# modulo Iluminacion
+
+def add_module_iluminacion(new_ilu):
+    flag = False
+    try:
+        session.add(new_ilu)
+        session.commit()
+        flag = True
+    except Exception as ex:
+        session.rollback()
+        print("Error ", ex)
+    finally:
+        session.close()
+    return flag
+    
