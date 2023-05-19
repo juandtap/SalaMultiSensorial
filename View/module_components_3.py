@@ -4,7 +4,7 @@ import sys
 
 sys.path.append(".")
 import serial, threading, bluetooth
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QPushButton, QButtonGroup
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal, QRectF
 from PyQt5.QtGui import QPixmap, QPen, QBrush, QColor, QIntValidator
 from PyQt5.QtCore import QTimer
@@ -36,6 +36,16 @@ class ModuleIlumination(QWidget):
         
         self.ui_ilu.pushButton_start.clicked.connect(self.send_color_data)
         
+        # se agregar los radiobutton a un buttonGroup
+        self.button_group = QButtonGroup()
+        self.button_group.addButton(self.ui_ilu.radioButton_yes)
+        self.button_group.addButton(self.ui_ilu.radioButton_no)
+        
+        
+        # se bloquea los radio button de si y no, se activan al pulsar el boton 'enviar'
+        self.ui_ilu.radioButton_yes.setEnabled(False)
+        self.ui_ilu.radioButton_no.setEnabled(False)
+        self.ui_ilu.pushButton_save.setEnabled(False)
         
         #variable que guarda si reconocio o no el valor
         self.recognize = ''
@@ -43,10 +53,7 @@ class ModuleIlumination(QWidget):
         self.ui_ilu.radioButton_yes.clicked.connect(lambda: self.does_recognize_color(self.ui_ilu.radioButton_yes))
         self.ui_ilu.radioButton_no.clicked.connect(lambda: self.does_recognize_color(self.ui_ilu.radioButton_no))
         
-        # se bloquea los radio button de si y no, se activan al pulsar el boton 'enviar'
-        self.ui_ilu.radioButton_yes.setEnabled(False)
-        self.ui_ilu.radioButton_no.setEnabled(False)
-        self.ui_ilu.pushButton_save.setEnabled(False)
+        
         
         
         self.ui_ilu.pushButton_save.clicked.connect(self.save_module_data)
@@ -171,11 +178,14 @@ class ModuleIlumination(QWidget):
     def send_color_data(self):
         selected_color_code = ''
         
+        self.button_group.setExclusive(False)
+        self.ui_ilu.radioButton_yes.setChecked(False)
+        self.ui_ilu.radioButton_no.setChecked(False)
+        self.button_group.setExclusive(True)
         self.ui_ilu.radioButton_no.setEnabled(True)
         self.ui_ilu.radioButton_yes.setEnabled(True)
         
-        self.ui_ilu.radioButton_yes.setChecked(False)
-        self.ui_ilu.radioButton_no.setChecked(False)
+        
         
         if self.ui_ilu.radioButton_defined_color.isChecked():
             
