@@ -180,10 +180,7 @@ class StudentReport(QWidget):
         label_info_sesion.setFont(self.font)
         layout.addWidget(label_info_sesion)
         
-        # muestra el nombre del primer modulo
-        label_grafomotricidad = QLabel("Modulo Grafomotricidad")
-        label_grafomotricidad.setFont(self.font)
-        layout.addWidget(label_grafomotricidad)
+        
         
          # guarda los datos del Modulo de grafomotricidad en una lista y los muestra en una tabla
         grafomotricidad_list = self.sesion_selected.modulos_grafomotricidad
@@ -191,124 +188,136 @@ class StudentReport(QWidget):
         vumetro_list = self.sesion_selected.modulos_vumetro
         # data del modulo de iluminacion
         iluminacion_list = self.sesion_selected.modulos_iluminacion
-        # crea la tabla donde muestra los datos del modulo de grafomotricidad
-        self.table_grafomotricidad = QTableWidget()
-        layout.addWidget(self.table_grafomotricidad)
         
-        # configura la tabla
-        self.table_grafomotricidad.verticalHeader().setVisible(False)
-        # defino las columnas de la tabla
-        self.table_grafomotricidad.setColumnCount(4)
-        self.table_grafomotricidad.setHorizontalHeaderLabels(
-            [
-                'id',
-                'Figura',
-                'Tiempo Tomado',
-                'Resultado',
-                
-            ]
-        )
         
-        self.table_grafomotricidad.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.table_grafomotricidad.setSelectionBehavior(QAbstractItemView.SelectRows)
-        
-        # hace que la ultima columna ocupe el espacio restante de la tabla
-        self.table_grafomotricidad.horizontalHeader().setStretchLastSection(True)
-        
-        # este codigo hace que las columnas  no sean redimensionables
-        header = self.table_grafomotricidad.horizontalHeader()
-        for i in range(header.count()):
-            header.setSectionResizeMode(i,QHeaderView.Fixed)
+        if grafomotricidad_list:
             
-        for i, module in enumerate(grafomotricidad_list):
-            self.table_grafomotricidad.insertRow(i)
-            self.table_grafomotricidad.setItem(i, 0, QTableWidgetItem(str(module.id)))
-            self.table_grafomotricidad.setItem(i, 1, QTableWidgetItem(str(module.figura)))
-            self.table_grafomotricidad.setItem(i, 2, QTableWidgetItem(str(module.tiempo_tomado).split('.')[0]))
-            self.table_grafomotricidad.setItem(i, 3, QTableWidgetItem(str(module.resultado)))
+            # muestra el nombre del primer modulo
+            label_grafomotricidad = QLabel("Modulo Grafomotricidad")
+            label_grafomotricidad.setFont(self.font)
+            layout.addWidget(label_grafomotricidad)
+            
+            # crea la tabla donde muestra los datos del modulo de grafomotricidad
+            self.table_grafomotricidad = QTableWidget()
+            layout.addWidget(self.table_grafomotricidad)
+            
+            # configura la tabla
+            self.table_grafomotricidad.verticalHeader().setVisible(False)
+            # defino las columnas de la tabla
+            self.table_grafomotricidad.setColumnCount(4)
+            self.table_grafomotricidad.setHorizontalHeaderLabels(
+                [
+                    'id',
+                    'Figura',
+                    'Tiempo Tomado',
+                    'Resultado',
+                    
+                ]
+            )
+            
+            self.table_grafomotricidad.setEditTriggers(QAbstractItemView.NoEditTriggers)
+            self.table_grafomotricidad.setSelectionBehavior(QAbstractItemView.SelectRows)
+            
+            # hace que la ultima columna ocupe el espacio restante de la tabla
+            self.table_grafomotricidad.horizontalHeader().setStretchLastSection(True)
+            
+            # este codigo hace que las columnas  no sean redimensionables
+            header = self.table_grafomotricidad.horizontalHeader()
+            for i in range(header.count()):
+                header.setSectionResizeMode(i,QHeaderView.Fixed)
+                
+            for i, module in enumerate(grafomotricidad_list):
+                self.table_grafomotricidad.insertRow(i)
+                self.table_grafomotricidad.setItem(i, 0, QTableWidgetItem(str(module.id)))
+                self.table_grafomotricidad.setItem(i, 1, QTableWidgetItem(str(module.figura)))
+                self.table_grafomotricidad.setItem(i, 2, QTableWidgetItem(str(module.tiempo_tomado).split('.')[0]))
+                self.table_grafomotricidad.setItem(i, 3, QTableWidgetItem(str(module.resultado)))
         
         # Modulo Vumetro
         # repite el proceso pero para el modulo vumetro
         
+        if vumetro_list:
         
-        label_vumetro = QLabel("Modulo Vumetro")
-        label_vumetro.setFont(self.font)
-        layout.addWidget(label_vumetro)
-        
-        self.table_vumetro = QTableWidget()
-        layout.addWidget(self.table_vumetro)
-        
-        self.table_vumetro.verticalHeader().setVisible(False)
-        # defino las columnas de la tabla
-        self.table_vumetro.setColumnCount(4)
-        self.table_vumetro.setHorizontalHeaderLabels(
-            [
-                'id',
-                'nivel maximo',
-                'nivel promedio',
-                'tiempo',
-                
-            ]
-        )
-        
-        self.table_vumetro.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.table_vumetro.setSelectionBehavior(QAbstractItemView.SelectRows)
-        
-        # hace que la ultima columna ocupe el espacio restante de la tabla
-        self.table_vumetro.horizontalHeader().setStretchLastSection(True)
-        
-        # este codigo hace que las columnas  no sean redimensionables
-        header = self.table_vumetro.horizontalHeader()
-        
-        for i in range(header.count()):
-            header.setSectionResizeMode(i,QHeaderView.Fixed)
+            label_vumetro = QLabel("Modulo Vumetro")
+            label_vumetro.setFont(self.font)
+            layout.addWidget(label_vumetro)
             
-        for i, module in enumerate(vumetro_list):
-            self.table_vumetro.insertRow(i)
-            self.table_vumetro.setItem(i, 0, QTableWidgetItem(str(module.id)))
-            self.table_vumetro.setItem(i, 1, QTableWidgetItem(str(module.nivel_maximo)))
-            self.table_vumetro.setItem(i, 2, QTableWidgetItem(str(module.nivel_promedio)))
-            self.table_vumetro.setItem(i, 3, QTableWidgetItem(str(module.tiempo).split('.')[0]))
+            self.table_vumetro = QTableWidget()
+            layout.addWidget(self.table_vumetro)
+            
+            self.table_vumetro.verticalHeader().setVisible(False)
+            # defino las columnas de la tabla
+            self.table_vumetro.setColumnCount(4)
+            self.table_vumetro.setHorizontalHeaderLabels(
+                [
+                    'id',
+                    'nivel maximo',
+                    'nivel promedio',
+                    'tiempo',
+                    
+                ]
+            )
+            
+            self.table_vumetro.setEditTriggers(QAbstractItemView.NoEditTriggers)
+            self.table_vumetro.setSelectionBehavior(QAbstractItemView.SelectRows)
+            
+            # hace que la ultima columna ocupe el espacio restante de la tabla
+            self.table_vumetro.horizontalHeader().setStretchLastSection(True)
+            
+            # este codigo hace que las columnas  no sean redimensionables
+            header = self.table_vumetro.horizontalHeader()
+            
+            for i in range(header.count()):
+                header.setSectionResizeMode(i,QHeaderView.Fixed)
+                
+            for i, module in enumerate(vumetro_list):
+                self.table_vumetro.insertRow(i)
+                self.table_vumetro.setItem(i, 0, QTableWidgetItem(str(module.id)))
+                self.table_vumetro.setItem(i, 1, QTableWidgetItem(str(module.nivel_maximo)))
+                self.table_vumetro.setItem(i, 2, QTableWidgetItem(str(module.nivel_promedio)))
+                self.table_vumetro.setItem(i, 3, QTableWidgetItem(str(module.tiempo).split('.')[0]))
             
         # Modulo Iluminacion
         
-        label_iluminacion = QLabel("Modulo Iluminacion")
-        label_iluminacion.setFont(self.font)
-        layout.addWidget(label_iluminacion)
+        if iluminacion_list:
         
-        self.table_iluminacion = QTableWidget()
-        layout.addWidget(self.table_iluminacion)
-        
-        self.table_iluminacion.verticalHeader().setVisible(False)
-        # # defino las columnas de la tabla
-        self.table_iluminacion.setColumnCount(4)
-        self.table_iluminacion.setHorizontalHeaderLabels(
-            [
-                'id',
-                'Color',
-                'Reconoce color',
-                'Tiempo',
-                
-            ]
-        )
-        
-        self.table_iluminacion.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.table_iluminacion.setSelectionBehavior(QAbstractItemView.SelectRows)
-        
-        # # hace que la ultima columna ocupe el espacio restante de la tabla
-        self.table_iluminacion.horizontalHeader().setStretchLastSection(True)
-        
-        # # este codigo hace que las columnas  no sean redimensionables
-        header = self.table_iluminacion.horizontalHeader()
-        for i in range(header.count()):
-            header.setSectionResizeMode(i,QHeaderView.Fixed)
+            label_iluminacion = QLabel("Modulo Iluminacion")
+            label_iluminacion.setFont(self.font)
+            layout.addWidget(label_iluminacion)
             
-        for i, module in enumerate(iluminacion_list):
-            self.table_iluminacion.insertRow(i)
-            self.table_iluminacion.setItem(i, 0, QTableWidgetItem(str(module.id)))
-            self.table_iluminacion.setItem(i, 1, QTableWidgetItem(str(module.color)))
-            self.table_iluminacion.setItem(i, 2, QTableWidgetItem(str(module.reconoce_color)))
-            self.table_iluminacion.setItem(i, 3, QTableWidgetItem(str(module.tiempo).split('.')[0]))
+            self.table_iluminacion = QTableWidget()
+            layout.addWidget(self.table_iluminacion)
+            
+            self.table_iluminacion.verticalHeader().setVisible(False)
+            # # defino las columnas de la tabla
+            self.table_iluminacion.setColumnCount(4)
+            self.table_iluminacion.setHorizontalHeaderLabels(
+                [
+                    'id',
+                    'Color',
+                    'Reconoce color',
+                    'Tiempo',
+                    
+                ]
+            )
+            
+            self.table_iluminacion.setEditTriggers(QAbstractItemView.NoEditTriggers)
+            self.table_iluminacion.setSelectionBehavior(QAbstractItemView.SelectRows)
+            
+            # # hace que la ultima columna ocupe el espacio restante de la tabla
+            self.table_iluminacion.horizontalHeader().setStretchLastSection(True)
+            
+            # # este codigo hace que las columnas  no sean redimensionables
+            header = self.table_iluminacion.horizontalHeader()
+            for i in range(header.count()):
+                header.setSectionResizeMode(i,QHeaderView.Fixed)
+                
+            for i, module in enumerate(iluminacion_list):
+                self.table_iluminacion.insertRow(i)
+                self.table_iluminacion.setItem(i, 0, QTableWidgetItem(str(module.id)))
+                self.table_iluminacion.setItem(i, 1, QTableWidgetItem(str(module.color)))
+                self.table_iluminacion.setItem(i, 2, QTableWidgetItem(str(module.reconoce_color)))
+                self.table_iluminacion.setItem(i, 3, QTableWidgetItem(str(module.tiempo).split('.')[0]))
         
         
         # label_pictograma = QLabel("Modulo Pictogramas")
