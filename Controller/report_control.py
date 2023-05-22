@@ -61,10 +61,10 @@ if len(student_sesion.modulos_grafomotricidad) > 0:
 if len(student_sesion.modulos_vumetro) > 0:
     modulos += ', vumetro'
     
-estilo = '/Assets/plantilla_reportes/style1.css'
+
 
 # Renderizar la plantilla con el objeto como variable de contexto
-output = template.render(css_file=estilo,estudiante=student_info,sesion=student_sesion,modulos_trabajados=modulos)
+output = template.render(estudiante=student_info,sesion=student_sesion,modulos_trabajados=modulos)
 
 # Guardar el resultado como archivo HTML
 with open('SessionReports/reporte1.html', 'w') as file:

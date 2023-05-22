@@ -280,7 +280,7 @@ class ModuleIlumination(QWidget):
                 id_sesion = self.sesion,
                 color = sel_color,
                 reconoce_color = reconoce_sel_color,
-                tiempo = str(self.total_time)
+                tiempo = str(self.total_time).split('.')[0]
                 
             )
               

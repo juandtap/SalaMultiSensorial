@@ -1,16 +1,127 @@
 <!DOCTYPE html>
 
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style1.css">
-    <!-- <link rel="stylesheet" href= "/Assets/plantilla_reportes/style1.css"> -->
     
+   
+    <style>
+        @page {
+            size: A4 portrait;
+        }
+        
+        body {
+            font-family: Arial;
+            width: 21cm;
+            height: 29.7cm;
+            margin: 0 auto;
+            
+        }
+        
+        .header{
+            text-align: center;
+            border: 1px solid #333; 
+        }
+        
+        .student{
+            display: flex;
+            justify-content: space-between;
+            
+        }
+        
+        .student-info{
+            width: 50%;
+            /* border: 1px solid red; */
+            padding: 10px;
+            border: 1px solid #333; 
+        }
+        
+        .student-more-info{
+            width: 50% ;
+            border: 1px solid #333; 
+            padding: 10px;
+            display: block;
+            align-items: center;
+            justify-self: center;
+            
+        }
+        
+        .student-photo {
+           
+            display: block;
+            text-align: center;
+            align-items: center;
+            justify-self: center;
+            margin: 0 auto;
+            
+        }
+        
+        .student-photo img{
+            
+            width: 150px;
+            height: 150px;
+            border: 1px solid #333;
+            
+            display: inline-block;
+        }
+        .student-discapacidad{
+            
+            margin: 0 auto;
+           
+        }
+        
+        .student-info ul{
+            list-style-type: none;
+        }
+        
+        .sesion {
+            text-align: center;
+            border: 1px solid #333;
+        }
+        
+        .modulos{
+            border: 1px solid #333 ;
+        }
+        
+        .modulos h3{
+            text-align: center;
+        }
+        
+        .modulo-info{
+            border: 1px solid #333 ;
+            
+            
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .modulo-plot{
+            display: block;
+            text-align: center;
+            margin: 0 auto;
+            
+        }
+        
+        .modulo-plot img{
+            border: 1px solid #333;
+        }
+    </style>
+
     <title>Reporte</title>
 </head>
 <body>
     <div class="header">
         <h1>Sala Multisensorial</h1>
-        <h2>Reporte Sesiï¿½n # 1</h2>
+        <h2>Reporte Sesión # 1</h2>
         <h3>Informacion  Estudiante:</h3>
     </div>
     <div class="student">
@@ -20,9 +131,9 @@
                 <img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/user.png" alt="">
             </div>
             <div class="student-discapacidad">
-                <p> <b>Cedula: </b> 0105922587</p>
-                <p> <b>Apellidos: </b> TAPIA VASQUEZ</p>
-                <p> <b>Nombres: </b> JUAN DIEGO </p>
+                <p> <b>Cedula: </b> 0000000000</p>
+                <p> <b>Apellidos: </b> USUARIO</p>
+                <p> <b>Nombres: </b> INVITADO </p>
                 <p> <b>Edad: </b> 8</p>
                 
             </div>
@@ -30,15 +141,19 @@
         <div class="student-info">
             
             <p> <b>Fecha Nacimiento: </b>  2015-01-24 </p>
-            <p> <b>Cedula Representante: </b> 0101234566 </p>
-            <p> <b>Representante: </b> ELSA VASQUEZ</p>
-            <p> <b>Direccion: </b> QUINTA CHICA ALTA</p>
-            <p> <b>Telefonos Contacto: </b> 0984239035, 4085702</p>
+            <p> <b>Cedula Representante: </b> 0000000001 </p>
+            <p> <b>Representante: </b> USUARIO DE PRUEBAS</p>
+            <p> <b>Direccion: </b> SIN ESPECIFICAR</p>
+            <p> <b>Telefonos Contacto: </b> 00000000</p>
             <p> <b>Tiene Discapacidad: </b> Si</p>
             <p> <b>Discapacidad/es: </b> </p>
             <ul>
                 
                     <li>AUTISMO</li>
+                
+                    <li>DISLEXIA</li>
+                
+                    <li>DEFICIT DE ATENCION</li>
                 
             </ul>
                 
@@ -48,19 +163,19 @@
     </div>
 
     <div class="sesion">
-        <h3>Sesiï¿½n</h3>
+        <h3>Sesión</h3>
         <p> 
             <b>Fecha:</b> 2023-05-11 &nbsp;
-            <b>Hora de inicio:</b> 00:47:47.358758 &nbsp;
-            <b>Hora de finalizacion:</b> 00:50:40.219183
+            <b>Hora de inicio:</b> 00h 47m 47s &nbsp;
+            <b>Hora de finalizacion:</b> 00h 50m 40s
         </p>
-        <p> <b>Mï¿½dulos trabajados</b> : grafomotricidad, vumetro</p>
+        <p> <b>Módulos trabajados</b> : grafomotricidad, vumetro</p>
     </div>
 
     <div class="modulos">
-        <h3>Mï¿½dulos:</h3>
+        <h3>Módulos:</h3>
         <div class="modulo-info">
-            <p> <b>Mï¿½dulo de Grafomotricidad</b> </p>
+            <p> <b>Módulo de Grafomotricidad</b> </p>
             <table>
                 <tr>
                     <th>ID</th>
@@ -75,7 +190,7 @@
                     <td>18</td>
                     <td>cuadrado</td>
                     <td>Correcto</td>
-                    <td>00:00:02</td>
+                    <td>00h:00m:02s</td>
                 </tr>
     
                 
@@ -83,7 +198,7 @@
                     <td>19</td>
                     <td>tortuga</td>
                     <td>Incorrecto</td>
-                    <td>00:00:06</td>
+                    <td>00h:00m:06s</td>
                 </tr>
     
                 
@@ -91,7 +206,7 @@
                     <td>20</td>
                     <td>perro</td>
                     <td>Incorrecto</td>
-                    <td>00:00:06</td>
+                    <td>00h:00m:06s</td>
                 </tr>
     
                 
@@ -99,7 +214,7 @@
                     <td>21</td>
                     <td>circulo</td>
                     <td>Correcto</td>
-                    <td>00:00:04</td>
+                    <td>00h:00m:04s</td>
                 </tr>
     
                 
@@ -108,7 +223,7 @@
             </table>
         </div>
         <div class="modulo-info">
-            <p>  <b>Mï¿½dulo de Vumetro</b> </p>
+            <p>  <b>Módulo de Vumetro</b> </p>
             
                 
                 
@@ -125,7 +240,8 @@
                         <td>1</td>
                         <td>2</td>
                         <td>1.373134328358209</td>
-                        <td>0:00:28.832100</td>
+                        
+                        <td>0h:00m:28.832100s</td>
                     </tr>
                 
                 </table>
@@ -149,7 +265,8 @@
                         <td>2</td>
                         <td>2</td>
                         <td>1.3814432989690721</td>
-                        <td>0:00:13.861753</td>
+                        
+                        <td>0h:00m:13.861753s</td>
                     </tr>
                 
                 </table>

@@ -215,7 +215,7 @@ class ModuleVumeter(QWidget):
             id_sesion = self.sesion,
             nivel_maximo = max(self.data),
             nivel_promedio = int(np.mean(self.data)),
-            tiempo = str(self.total_time),
+            tiempo = str(self.total_time).split('.')[0],
             datos = filename
         )
         

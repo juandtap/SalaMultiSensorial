@@ -2,8 +2,119 @@
 
 <head>
     
-    <!-- <link rel="stylesheet" href="style1.css"> -->
-    <link rel="stylesheet" href= "{{ css_file }}">
+   
+    <style>
+        @page {
+            size: A4 portrait;
+        }
+        
+        body {
+            font-family: Arial;
+            width: 21cm;
+            height: 29.7cm;
+            margin: 0 auto;
+            
+        }
+        
+        .header{
+            text-align: center;
+            border: 1px solid #333; 
+        }
+        
+        .student{
+            display: flex;
+            justify-content: space-between;
+            
+        }
+        
+        .student-info{
+            width: 50%;
+            /* border: 1px solid red; */
+            padding: 10px;
+            border: 1px solid #333; 
+        }
+        
+        .student-more-info{
+            width: 50% ;
+            border: 1px solid #333; 
+            padding: 10px;
+            display: block;
+            align-items: center;
+            justify-self: center;
+            
+        }
+        
+        .student-photo {
+           
+            display: block;
+            text-align: center;
+            align-items: center;
+            justify-self: center;
+            margin: 0 auto;
+            
+        }
+        
+        .student-photo img{
+            
+            width: 150px;
+            height: 150px;
+            border: 1px solid #333;
+            
+            display: inline-block;
+        }
+        .student-discapacidad{
+            
+            margin: 0 auto;
+           
+        }
+        
+        .student-info ul{
+            list-style-type: none;
+        }
+        
+        .sesion {
+            text-align: center;
+            border: 1px solid #333;
+        }
+        
+        .modulos{
+            border: 1px solid #333 ;
+        }
+        
+        .modulos h3{
+            text-align: center;
+        }
+        
+        .modulo-info{
+            border: 1px solid #333 ;
+            
+            
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .modulo-plot{
+            display: block;
+            text-align: center;
+            margin: 0 auto;
+            
+        }
+        
+        .modulo-plot img{
+            border: 1px solid #333;
+        }
+    </style>
 
     <title>Reporte</title>
 </head>
@@ -51,8 +162,8 @@
         <h3>Sesión</h3>
         <p> 
             <b>Fecha:</b> {{ sesion.fecha }} &nbsp;
-            <b>Hora de inicio:</b> {{sesion.hora_inicio}} &nbsp;
-            <b>Hora de finalizacion:</b> {{sesion.hora_fin}}
+            <b>Hora de inicio:</b> {{sesion.hora_inicio.strftime("%Hh %Mm %Ss")}} &nbsp;
+            <b>Hora de finalizacion:</b> {{sesion.hora_fin.strftime("%Hh %Mm %Ss")}}
         </p>
         <p> <b>Módulos trabajados</b> : {{ modulos_trabajados }}</p>
     </div>
@@ -75,7 +186,7 @@
                     <td>{{modulo.id}}</td>
                     <td>{{modulo.figura}}</td>
                     <td>{{modulo.resultado}}</td>
-                    <td>{{modulo.tiempo_tomado}}</td>
+                    <td>{{modulo.tiempo_tomado.strftime("%Hh:%Mm:%Ss")}}</td>
                 </tr>
     
                 {% endfor %}
@@ -101,13 +212,14 @@
                         <td>{{modulo.id}}</td>
                         <td>{{modulo.nivel_maximo}}</td>
                         <td>{{modulo.nivel_promedio}}</td>
-                        <td>{{modulo.tiempo}}</td>
+                        {% set tiempo_parts = modulo.tiempo.split(':') %}
+                        <td>{{ tiempo_parts[0] }}h:{{ tiempo_parts[1] }}m:{{ tiempo_parts[2] }}s</td>
                     </tr>
                 
                 </table>
 
                 <div class="modulo-plot">
-                    <img src="/Assets/plantilla_reportes/plottest.png" alt="">
+                    <img src="plottest.png" alt="">
                     <p>grafica nivel vs tiempo</p>
                 </div>
     
