@@ -250,7 +250,7 @@ class VumeterDataThread(QThread):
             print("inicia thread de escucha")
             
             while self.running:
-                self.msleep(100)
+                self.msleep(50)
                 print("leyendo datos...")
                 data = blue_socket.recv(1024)
                 

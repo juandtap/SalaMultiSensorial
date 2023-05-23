@@ -115,7 +115,8 @@ class StudentReport(QWidget):
     
     def load_table(self):
          # recuperar de la DB las sesiones del estudiante
-        self.student_sessions_list = get_session_by_student_id(self.student.id)
+        
+        self.student_sessions_list = self.student.sesiones
         if self.student_sessions_list:
             # la lista contiene elementos
             # Agregar las filas a la tabla
@@ -157,6 +158,7 @@ class StudentReport(QWidget):
             self.ui_rep.label_back.setHidden(False)
             self.ui_rep.scrollArea.takeWidget().deleteLater()
             self.ui_rep.scrollArea.setWidget(self.load_modules_tables(id_ses))
+            self.ui_rep.scrollArea.setWidgetResizable(True)
        
         # recupera la sesion y muestra la info de los modulos
         # crear QWidget para mostrar la info de los modulos
