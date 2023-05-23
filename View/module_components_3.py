@@ -30,7 +30,7 @@ class ModuleIlumination(QWidget):
         self.ui_ilu.label_conn_status.setHidden(True)
         
         # envio de senal de inicio 'i'
-        self.turn_on_off_thread = TurnOnOffModule('i',0)
+        self.turn_on_off_thread = TurnOnOffModule('i',3)
         self.turn_on_off_thread.my_signal.connect(self.socket_free)
         self.turn_on_off_thread.start()
         
@@ -101,7 +101,7 @@ class ModuleIlumination(QWidget):
         
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
-        self.turn_on_off_thread = TurnOnOffModule('f',0)
+        self.turn_on_off_thread = TurnOnOffModule('f',3)
         self.turn_on_off_thread.start()
        
         event.accept()
@@ -303,7 +303,7 @@ class SendDataThread(QThread):
         self._is_runnig = True
         try:
             socket_bluetooth = bluetooth.BluetoothSocket()
-            socket_bluetooth.connect((module_mac_address[0],1))
+            socket_bluetooth.connect((module_mac_address[3],1))
             socket_bluetooth.send(self.color_data.encode('utf-8'))
             socket_bluetooth.close()
             print('codigo de color '+self.color_data+ " enviado por el puerto el socket bluetooth")

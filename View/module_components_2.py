@@ -48,7 +48,7 @@ class ModuleVumeter(QWidget):
         
         # envia la senal de inicio 'i' al modulo arduino
         
-        self.turn_on_off_thread = TurnOnOffModule('i',1)
+        self.turn_on_off_thread = TurnOnOffModule('i',2)
         self.turn_on_off_thread.my_signal.connect(self.socket_free)
         self.turn_on_off_thread.start()
         

@@ -1,9 +1,21 @@
 # diccionario con las direcciones MAC de los modulos HC05
 
+# module_mac_address = {
+#      0:'00:22:03:01:8A:12',  # HC05 de prueba
+#      1:'00:22:03:01:7D:DC',  # HC05 del modulo grafomotricidad
+#      2:'00:22:03:01:8D:B5', # HC05 del vumetro
+     
+#      3:'00:22:03:01:8A:12', # HC05 de prueba
+#      4:'00:22:03:01:8A:12' # HC05 de prueba
+# }
+
+# para pruebas, comentar a la hora de probar con los modulos
 module_mac_address = {
-     0:'00:22:03:01:8A:12',  # HC05 de prueba
-     1:'00:22:03:01:7D:DC',  # HC05 del modulo grafomotricidad
-     2:'00:22:03:01:8D:B5', # HC05 del vumetro
+     0:'00:22:03:01:8A:12',  
+     1:'00:22:03:01:8A:12', 
+     2:'00:22:03:01:8A:12', 
+     3:'00:22:03:01:8A:12', 
+     4:'00:22:03:01:8A:12' 
 }
 
 
