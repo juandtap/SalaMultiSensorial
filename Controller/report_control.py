@@ -74,8 +74,7 @@ with open('SessionReports/reporte1.html', 'w') as file:
 
 # Convertir el archivo HTML a PDF
 ## HTML(filename='/SessionReports/reporte1.html').write_pdf('reporte1.pdf')
-# Crea un objeto Document con el HTML renderizado
-doc = HTML(string=output)
 
-# Guarda el archivo PDF resultante
-doc.write_pdf('SessionReports/pdfreport1.pdf')
+
+HTML(string=output, base_url='SessionReports/').write_pdf('SessionReports/pdfreport1.pdf')
+print("reporte PDF generado")
