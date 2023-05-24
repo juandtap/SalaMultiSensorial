@@ -13,22 +13,22 @@ template = env.get_template('session_report_template.html')
 # pruebas de reportes
 
 # obtener estudiante
-student = get_student_by_id(1)
+student = get_student_by_id(10)
 
 # creo un diccionario con los datos del estudiante
 
 def calculate_age(date):
-        # Obtenemos la fecha actual
-        current_date = date.today()
+    # Obtenemos la fecha actual
+    current_date = date.today()
     
-        # Calculamos la edad restando el año actual menos el año de nacimiento
-        age = current_date.year - date.year
+    # Calculamos la edad restando el año actual menos el año de nacimiento
+    age = current_date.year - date.year
     
-        # Si el cumpleaños de la persona aun no ha llegado en el anioo actual, se resta 1 a la edad
-        if (current_date.month, current_date.day) < (date.month, date.day):
-            age -= 1
+    # Si el cumpleaños de la persona aun no ha llegado en el anioo actual, se resta 1 a la edad
+    if (current_date.month, current_date.day) < (date.month, date.day):
+        age -= 1
         
-        return age
+    return age
 
 flag_discapacidad = 'No'
 if student.discapacidad:
@@ -50,7 +50,7 @@ student_info = {
 
 # obtengo una sesion asociada al estudiante (16)
 
-student_sesion = get_sesion_by_id(16)
+student_sesion = get_sesion_by_id(50)
 
 # obtengo los modulos trabajados
 
@@ -60,6 +60,8 @@ if len(student_sesion.modulos_grafomotricidad) > 0:
     modulos += 'grafomotricidad'
 if len(student_sesion.modulos_vumetro) > 0:
     modulos += ', vumetro'
+if len(student_sesion.modulos_iluminacion) > 0:
+    modulos += ', iluminación'
     
 
 
@@ -76,5 +78,5 @@ with open('SessionReports/reporte1.html', 'w') as file:
 ## HTML(filename='/SessionReports/reporte1.html').write_pdf('reporte1.pdf')
 
 
-HTML(string=output, base_url='SessionReports/').write_pdf('SessionReports/pdfreport1.pdf')
+HTML(string=output, base_url='SessionReports/').write_pdf('SessionReports/pdfreport2.pdf')
 print("reporte PDF generado")

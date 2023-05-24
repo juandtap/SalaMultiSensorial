@@ -5,7 +5,7 @@
    
     <style>
         @page {
-            size: A4 portrait;
+            /*size: A4 portrait;*/
         }
         
         body {
@@ -34,16 +34,18 @@
           
           
           .top-left {
+            margin-top: 2px;
+            margin-left: 2px;
             position: absolute;
-            height: 180px;
-            width: 250px;
+            height: 135px;
+            width: 200px;
             left: 0;
           }
           
           .top-right {
             position: absolute;
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             
             right: 0;
           }
@@ -144,19 +146,20 @@
     </style>
 
     <title>Reporte</title>
+    <meta charset="utf-8">
 </head>
 <body>
     <div class="header">
-        <h2>Sala Multisensorial</h2>
+        <h2> <br/> <br/>  <br/>Sala Multisensorial</h2>
         <h2>El Tambo</h2>
-        <h3>Reporte Sesión # 1</h3>
+        <h3>Reporte Sesión # {{sesion.id}}</h3>
         
         <div class="container">
             <img src="logo1.png" alt="logo 1" class="top-left">
             <img src="logo2.png" alt="logo 2" class="top-right">
         </div>
-        <br/>
-        <br/>
+        
+       
     </div>
     <div class="student">
         
@@ -165,7 +168,7 @@
                 <img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/user.png" alt="user_image">
             </div>
             <div class="student-discapacidad">
-                <p> <b>Cedula: </b> {{ estudiante['cedula'] }}</p>
+                <p> <b>Cédula: </b> {{ estudiante['cedula'] }}</p>
                 <p> <b>Apellidos: </b> {{ estudiante['apellidos']}}</p>
                 <p> <b>Nombres: </b> {{ estudiante['nombres'] }} </p>
                 <p> <b>Edad: </b> {{estudiante['edad']}}</p>
@@ -175,10 +178,10 @@
         <div class="student-info">
             
             <p> <b>Fecha Nacimiento: </b>  {{estudiante['fecha_nacimiento']}} </p>
-            <p> <b>Cedula Representante: </b> {{estudiante['cedula_representante']}} </p>
+            <p> <b>Cédula Representante: </b> {{estudiante['cedula_representante']}} </p>
             <p> <b>Representante: </b> {{estudiante['representante']}}</p>
-            <p> <b>Direccion: </b> {{estudiante['direccion']}}</p>
-            <p> <b>Telefonos Contacto: </b> {{estudiante['telefonos']}}</p>
+            <p> <b>Dirección: </b> {{estudiante['direccion']}}</p>
+            <p> <b>Teléfonos Contacto: </b> {{estudiante['telefonos']}}</p>
             <p> <b>Tiene Discapacidad: </b> {{estudiante['discapacidad']}}</p>
             <p> <b>Discapacidad/es: </b> </p>
             <ul>
@@ -196,8 +199,8 @@
         <h3>Sesión</h3>
         <p> 
             <b>Fecha:</b> {{ sesion.fecha }} &nbsp;
-            <b>Hora de inicio:</b> {{sesion.hora_inicio.strftime("%Hh %Mm %Ss")}} &nbsp;
-            <b>Hora de finalizacion:</b> {{sesion.hora_fin.strftime("%Hh %Mm %Ss")}}
+            <b>Hora de inicio:</b> {{sesion.hora_inicio.strftime("%H:%M")}} &nbsp;
+            <b>Hora de finalización:</b> {{sesion.hora_fin.strftime("%H:%M")}}
         </p>
         <p> <b>Módulos trabajados</b> : {{ modulos_trabajados }}</p>
     </div>
@@ -206,6 +209,7 @@
         <h3>Módulos:</h3>
         <div class="modulo-info">
             <p> <b>Módulo de Grafomotricidad</b> </p>
+            {% if sesion.modulos_grafomotricidad %}
             <table>
                 <tr>
                     <th>ID</th>
@@ -227,17 +231,20 @@
     
     
             </table>
+            {% else %}
+            <p>No hay datos disponibles.</p>
+            {% endif %}
         </div>
         <div class="modulo-info">
             <p>  <b>Módulo de Vumetro</b> </p>
-            
+                {% if sesion.modulos_vumetro %}
                 
                 {% for modulo in sesion.modulos_vumetro %}
 
                 <table>
                     <tr>
                         <th>ID</th>
-                        <th>Nivel maximo</th>
+                        <th>Nivel máximo</th>
                         <th>Nivel promedio</th>
                         <th>Tiempo</th>
                     </tr>
@@ -259,8 +266,41 @@
     
                 {% endfor %}
                
-
+                {% else %}
+                <p>No hay datos disponibles.</p>
+                {% endif %}
            
+        </div>
+
+        
+        <div class="modulo-info">
+            <p>  <b>Módulo de Iluminación</b> </p>
+            {% if sesion.modulos_iluminacion %}
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Color</th>
+                    <th>Reconoce color</th>
+                    <th>Tiempo</th>
+                </tr>
+    
+    
+                {% for modulo in sesion.modulos_iluminacion %}
+                <tr>
+                    <td>{{modulo.id}}</td>
+                    <td>{{modulo.color}}</td>
+                    <td>{{modulo.reconoce_color}}</td>
+                    {% set tiempo_parts = modulo.tiempo.split(':') %}
+                    <td>{{ tiempo_parts[0] }}h:{{ tiempo_parts[1] }}m:{{ tiempo_parts[2] }}s</td>
+                </tr>
+    
+                {% endfor %}
+    
+    
+            </table>
+            {% else %}
+            <p>No hay datos disponibles.</p>
+            {% endif %}
         </div>
     </div>
 
