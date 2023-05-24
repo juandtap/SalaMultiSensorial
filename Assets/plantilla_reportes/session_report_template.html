@@ -150,7 +150,7 @@
 </head>
 <body>
     <div class="header">
-        <h2> <br/> <br/>  <br/>Sala Multisensorial</h2>
+        <h2> <br/> <br/>  <br/> <br/> Sala Multisensorial</h2>
         <h2>El Tambo</h2>
         <h3>Reporte Sesión # {{sesion.id}}</h3>
         
@@ -212,7 +212,7 @@
             {% if sesion.modulos_grafomotricidad %}
             <table>
                 <tr>
-                    <th>ID</th>
+                    
                     <th>Figura</th>
                     <th>Resultado</th>
                     <th>Tiempo</th>
@@ -221,7 +221,7 @@
     
                 {% for modulo in sesion.modulos_grafomotricidad %}
                 <tr>
-                    <td>{{modulo.id}}</td>
+                    
                     <td>{{modulo.figura}}</td>
                     <td>{{modulo.resultado}}</td>
                     <td>{{modulo.tiempo_tomado.strftime("%Hh:%Mm:%Ss")}}</td>
@@ -243,14 +243,14 @@
 
                 <table>
                     <tr>
-                        <th>ID</th>
+                        
                         <th>Nivel máximo</th>
                         <th>Nivel promedio</th>
                         <th>Tiempo</th>
                     </tr>
                 
                     <tr>
-                        <td>{{modulo.id}}</td>
+                        
                         <td>{{modulo.nivel_maximo}}</td>
                         <td>{{modulo.nivel_promedio}}</td>
                         {% set tiempo_parts = modulo.tiempo.split(':') %}
@@ -278,7 +278,7 @@
             {% if sesion.modulos_iluminacion %}
             <table>
                 <tr>
-                    <th>ID</th>
+                   
                     <th>Color</th>
                     <th>Reconoce color</th>
                     <th>Tiempo</th>
@@ -287,7 +287,7 @@
     
                 {% for modulo in sesion.modulos_iluminacion %}
                 <tr>
-                    <td>{{modulo.id}}</td>
+                    
                     <td>{{modulo.color}}</td>
                     <td>{{modulo.reconoce_color}}</td>
                     {% set tiempo_parts = modulo.tiempo.split(':') %}

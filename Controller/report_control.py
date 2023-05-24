@@ -1,7 +1,6 @@
 import sys
 sys.path.append(".")
-# import os
-# os.add_dll_directory(r'C:\\msys64\\mingw64\\bin')
+
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
 from Controller.student_control import get_student_by_id
@@ -57,11 +56,11 @@ student_sesion = get_sesion_by_id(50)
 modulos = ''
 
 if len(student_sesion.modulos_grafomotricidad) > 0:
-    modulos += 'grafomotricidad'
+    modulos += 'grafomotricidad,'
 if len(student_sesion.modulos_vumetro) > 0:
-    modulos += ', vumetro'
+    modulos += ' vumetro,'
 if len(student_sesion.modulos_iluminacion) > 0:
-    modulos += ', iluminación'
+    modulos += ' iluminación,'
     
 
 

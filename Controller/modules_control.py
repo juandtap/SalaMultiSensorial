@@ -3,7 +3,7 @@
 # si se envia i prende el modulo, si se envia f lo apaga  
 
 import sys
-import serial, bluetooth
+import bluetooth
 
 sys.path.append(".")
 from datetime import datetime
