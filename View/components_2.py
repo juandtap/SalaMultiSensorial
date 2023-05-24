@@ -3,7 +3,7 @@
 import sys
 from PyQt5 import QtCore
 sys.path.append(".")
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget,QSizePolicy, QVBoxLayout, QLabel, QComboBox, QFileDialog,QTableWidget, QAbstractItemView, QTableWidgetItem, QHeaderView
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget,QSizePolicy, QVBoxLayout, QLabel, QComboBox, QFileDialog,QTableWidget, QAbstractItemView, QTableWidgetItem, QHeaderView, QAbstractScrollArea
 from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtGui import  QStandardItemModel , QColor, QBrush, QFont
 from datetime import time, date
@@ -157,8 +157,11 @@ class StudentReport(QWidget):
         if column == show_modules_pos:
             self.ui_rep.label_back.setHidden(False)
             self.ui_rep.scrollArea.takeWidget().deleteLater()
+            self.ui_rep.scrollArea.setWidgetResizable(False)
+           
             self.ui_rep.scrollArea.setWidget(self.load_modules_tables(id_ses))
-            self.ui_rep.scrollArea.setWidgetResizable(True)
+            
+            self.ui_rep.scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
        
         # recupera la sesion y muestra la info de los modulos
         # crear QWidget para mostrar la info de los modulos
@@ -223,17 +226,27 @@ class StudentReport(QWidget):
             # hace que la ultima columna ocupe el espacio restante de la tabla
             self.table_grafomotricidad.horizontalHeader().setStretchLastSection(True)
             
-            # este codigo hace que las columnas  no sean redimensionables
-            header = self.table_grafomotricidad.horizontalHeader()
-            for i in range(header.count()):
-                header.setSectionResizeMode(i,QHeaderView.Fixed)
-                
+            
+
+            self.table_grafomotricidad.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+            self.table_grafomotricidad.resize(self.ui_rep.scrollArea.width(),self.ui_rep.scrollArea.height())
+            
+
+                            
             for i, module in enumerate(grafomotricidad_list):
                 self.table_grafomotricidad.insertRow(i)
                 self.table_grafomotricidad.setItem(i, 0, QTableWidgetItem(str(module.id)))
                 self.table_grafomotricidad.setItem(i, 1, QTableWidgetItem(str(module.figura)))
                 self.table_grafomotricidad.setItem(i, 2, QTableWidgetItem(str(module.tiempo_tomado).split('.')[0]))
                 self.table_grafomotricidad.setItem(i, 3, QTableWidgetItem(str(module.resultado)))
+                
+            
+            
+            #este codigo hace que las columnas  no sean redimensionables
+            header = self.table_grafomotricidad.horizontalHeader()
+            
+            for i in range(header.count()):
+                header.setSectionResizeMode(i,QHeaderView.ResizeToContents)
         
         # Modulo Vumetro
         # repite el proceso pero para el modulo vumetro
@@ -266,11 +279,14 @@ class StudentReport(QWidget):
             # hace que la ultima columna ocupe el espacio restante de la tabla
             self.table_vumetro.horizontalHeader().setStretchLastSection(True)
             
+            self.table_vumetro.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+            self.table_reports.resize(self.ui_rep.scrollArea.width(),self.ui_rep.scrollArea.height())
+            
             # este codigo hace que las columnas  no sean redimensionables
             header = self.table_vumetro.horizontalHeader()
             
             for i in range(header.count()):
-                header.setSectionResizeMode(i,QHeaderView.Fixed)
+                header.setSectionResizeMode(i,QHeaderView.ResizeToContents)
                 
             for i, module in enumerate(vumetro_list):
                 self.table_vumetro.insertRow(i)
@@ -309,10 +325,13 @@ class StudentReport(QWidget):
             # # hace que la ultima columna ocupe el espacio restante de la tabla
             self.table_iluminacion.horizontalHeader().setStretchLastSection(True)
             
+            self.table_iluminacion.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+            self.table_iluminacion.resize(self.ui_rep.scrollArea.width(),self.ui_rep.scrollArea.height())
+            
             # # este codigo hace que las columnas  no sean redimensionables
             header = self.table_iluminacion.horizontalHeader()
             for i in range(header.count()):
-                header.setSectionResizeMode(i,QHeaderView.Fixed)
+                header.setSectionResizeMode(i,QHeaderView.ResizeToContents)
                 
             for i, module in enumerate(iluminacion_list):
                 self.table_iluminacion.insertRow(i)
