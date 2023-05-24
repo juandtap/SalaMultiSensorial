@@ -33,6 +33,8 @@ class ModuleSelection(QWidget):
         self.student = student
         self.load_info_student()
         
+        self.set_logos()
+        
         # eliminar label, line edit del puerto COM
         self.ui_modules.label_bluetooth_status.setHidden(True)
         self.ui_modules.lineEdit_com_port.setHidden(True)
@@ -42,13 +44,36 @@ class ModuleSelection(QWidget):
         
         
         # comentar para que no se cree sesione innecesarias
-        self.create_sesion()
+        #self.create_sesion()
         
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
         self.ui_modules.pushButton_module_vumetro.clicked.connect(self.open_module_vumeter)
         self.ui_modules.pushButton_module_iluminacion.clicked.connect(self.open_module_ilumination)
         self.ui_modules.pushButton_module_pictograma.clicked.connect(self.open_module_pictogram)
+    
+    
+    def set_logos(self):
+        pixmap1 = QPixmap("Assets/logo1.png")
+        self.ui_modules.label_logo_1.setPixmap(
+            pixmap1.scaled(
+            self.ui_modules.label_logo_1.width(),
+            self.ui_modules.label_logo_1.height(),
+            aspectRatioMode=False
+            )
+        )
         
+        pixmap2 = QPixmap("Assets/logo2.png")
+        self.ui_modules.label_logo_2.setPixmap(
+            pixmap2.scaled(
+            self.ui_modules.label_logo_2.width(),
+            self.ui_modules.label_logo_2.height(),
+            aspectRatioMode=False
+            )
+        )
+        
+        
+    
+     
     def create_sesion(self):
         
         new_sesion = Sesion(
@@ -92,8 +117,8 @@ class ModuleSelection(QWidget):
     def closeEvent(self, event):
         
         print("finalizo la sesion")
-        set_final_time(self.sesion, datetime.now().time())
-        print("se agrego la hora fin a la sesion "+str(self.sesion))
+        #set_final_time(self.sesion, datetime.now().time())
+        #print("se agrego la hora fin a la sesion "+str(self.sesion))
         event.accept()
 
 # En el texrfield lineEdit_time_taken se coloca el tiempo tomado hasta que se 
