@@ -61,7 +61,9 @@ if len(student_sesion.modulos_vumetro) > 0:
     modulos += ' vumetro,'
 if len(student_sesion.modulos_iluminacion) > 0:
     modulos += ' iluminación,'
-    
+
+# enviar array de path de las imagenes del plot del modulo vumetro
+
 
 
 # Renderizar la plantilla con el objeto como variable de contexto

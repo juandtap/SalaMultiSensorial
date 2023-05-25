@@ -280,7 +280,7 @@ class StudentReport(QWidget):
             self.table_vumetro.horizontalHeader().setStretchLastSection(True)
             
             self.table_vumetro.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-            self.table_reports.resize(self.ui_rep.scrollArea.width(),self.ui_rep.scrollArea.height())
+            self.table_vumetro.resize(self.ui_rep.scrollArea.width(),self.ui_rep.scrollArea.height())
             
             # este codigo hace que las columnas  no sean redimensionables
             header = self.table_vumetro.horizontalHeader()
