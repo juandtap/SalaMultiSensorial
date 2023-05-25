@@ -5,6 +5,7 @@ from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
 from Controller.student_control import get_student_by_id
 from Controller.session_control import get_sesion_by_id
+from Controller.plot_vum_test import lista_plots
 # Cargar la plantilla desde el sistema de archivos
 env = Environment(loader=FileSystemLoader('Assets/plantilla_reportes'))
 template = env.get_template('session_report_template.html')
@@ -49,7 +50,7 @@ student_info = {
 
 # obtengo una sesion asociada al estudiante (16)
 
-student_sesion = get_sesion_by_id(50)
+student_sesion = get_sesion_by_id(39)
 
 # obtengo los modulos trabajados
 
@@ -64,10 +65,10 @@ if len(student_sesion.modulos_iluminacion) > 0:
 
 # enviar array de path de las imagenes del plot del modulo vumetro
 
-
+vumetro_list = lista_plots
 
 # Renderizar la plantilla con el objeto como variable de contexto
-output = template.render(estudiante=student_info,sesion=student_sesion,modulos_trabajados=modulos)
+output = template.render(estudiante=student_info,sesion=student_sesion,modulos_trabajados=modulos,lista_vumetro=vumetro_list)
 
 # Guardar el resultado como archivo HTML
 with open('SessionReports/reporte1.html', 'w') as file:

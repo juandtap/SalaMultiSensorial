@@ -6,7 +6,7 @@ sys.path.append(".")
 
 from Controller.session_control import get_sesion_by_id
 
-sesion_estudiante = get_sesion_by_id(32)
+sesion_estudiante = get_sesion_by_id(39)
 
 modulos_vumetro = sesion_estudiante.modulos_vumetro
 
