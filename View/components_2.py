@@ -129,7 +129,7 @@ class StudentReport(QWidget):
                 self.table_reports.setItem(i, 4, QTableWidgetItem(self.download+"-"+(str(sesion.id))))
                 self.table_reports.item(i,4).setFont(self.font_table)
                 self.table_reports.setItem(i, 5, QTableWidgetItem(self.download_report+"-"+(str(sesion.id))))
-                
+                self.table_reports.item(i,5).setFont(self.font_table)
         
     def back_to(self, event):
         print("se hizo click en la label back")
@@ -147,8 +147,10 @@ class StudentReport(QWidget):
         
         
     def show_reports(self, row, column):
-        # la ultima columna para abrir la ventana donde se muestran el resto de tablas
+        # la  columna 4 es para abrir la ventana donde se muestran el resto de tablas
+        # la 5 (ultima) es para descargar en pdf el reporte
         show_modules_pos = 4
+        download_pos = 5
         item = self.table_reports.item(row, 4)
         id_ses = item.text().split('-')[-1]
         print("id sesion : "+id_ses)
@@ -164,8 +166,9 @@ class StudentReport(QWidget):
             self.ui_rep.scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
        
         # recupera la sesion y muestra la info de los modulos
-        # crear QWidget para mostrar la info de los modulos
-        # probar conectarse, enviar y recibir datos por bluetooth usando MAC y no el puerto
+        elif column == download_pos:
+            print("Se descarga reporte de la sesion "+id_ses)
+       
 
     # esta funcion muestra los modulos trabajados en cada sesion
     
