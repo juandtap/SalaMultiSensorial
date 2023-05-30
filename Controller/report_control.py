@@ -1,11 +1,81 @@
+# La clase Report realiza el proceso de enviar los datos de la sesion seleccionada
+# a una plantilla en HTML la cual se convertira en PDF y permitira al usario
+# descargarlo en el directorio que elija
+
+# La clase GeneralReport envia los datos generales del estudiante y las sesiones trabajadas 
+# hasta el momento a la otra plantilla HTML y luego a PDF
+
+
 import sys
 sys.path.append(".")
-
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
 from Controller.student_control import get_student_by_id
 from Controller.session_control import get_sesion_by_id
-from Controller.plot_vum_test import lista_plots
+from Controller.plot_vum_control import PlotVumeter
+
+
+class Report:
+    def __init__(self, student, id_sesion):
+        self.student = student
+        self.id_sesion = id_sesion
+        
+    def download_report(self):
+        print("Descargando reporte pdf...")
+        # Cargar la plantilla 
+        env = Environment(loader=FileSystemLoader('Assets/plantilla_reportes'))
+        template = env.get_template('session_report_template.html')
+
+        # creo un diccionario con los datos del estudiante, para enviarlos a la plantilla
+        # se crea el diccionario para enviar datos adicionales que no estan en el objeto Student, como la edad
+        
+        flag_discapacidad = 'No'
+        if self.student.discapacidad:
+            flag_discapacidad = 'Si'
+
+        student_info = {
+            'cedula' : self.student.cedula,
+            'apellidos': self.student.apellidos,
+            'nombres' : self.student.nombres,
+            'cedula_representante': self.student.cedula_representante,
+            'representante': self.student.nombre_representante,
+            'telefonos': self.student.telefonos,
+            'direccion': self.student.direccion,
+            'discapacidad': flag_discapacidad,
+            'discapacidades': self.student.discapacidades,
+            'edad': self.calculate_age(self.student.fecha_nacimiento),
+            'fecha_nacimiento': self.student.fecha_nacimiento
+        }
+        
+        # obtengo los modulos trabajados
+        # agregar modulo de grafomotricidad
+        student_sesion = get_sesion_by_id(self.id_sesion)
+        modulos = ''
+
+        if len(student_sesion.modulos_grafomotricidad) > 0:
+            modulos += 'grafomotricidad,'
+        if len(student_sesion.modulos_vumetro) > 0:
+            modulos += ' vumetro,'
+        if len(student_sesion.modulos_iluminacion) > 0:
+            modulos += ' iluminación,'
+      
+    # aqui nos quedamos..
+        
+    def calculate_age(self, date):
+        # Obtenemos la fecha actual
+        current_date = date.today()
+        
+        # Calculamos la edad restando el año actual menos el año de nacimiento
+        age = current_date.year - date.year
+        
+        # Si el cumpleaños de la persona aun no ha llegado en el anioo actual, se resta 1 a la edad
+        if (current_date.month, current_date.day) < (date.month, date.day):
+            age -= 1
+            
+        return age  
+        
+        
+
 # Cargar la plantilla desde el sistema de archivos
 env = Environment(loader=FileSystemLoader('Assets/plantilla_reportes'))
 template = env.get_template('session_report_template.html')
