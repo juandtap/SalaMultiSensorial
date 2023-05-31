@@ -11,6 +11,7 @@ from datetime import time, date
 from View.student_report_view import Ui_Form_student_report
 from Controller.session_control import get_session_by_student_id, get_sesion_by_id
 from Controller.report_control import Report
+from View.components import MessageDialog
 
 class StudentReport(QWidget):
     def __init__(self, student):
@@ -139,7 +140,8 @@ class StudentReport(QWidget):
         self.load_table()
         self.ui_rep.scrollArea.setWidget(self.area_table)
         self.table_reports.cellClicked.connect(self.show_reports)
-        self.ui_rep.label_back.setHidden(True)  
+        self.ui_rep.label_back.setHidden(True)
+        self.ui_rep.label_general_report.setText("Descargar Reporte General") 
     
     def load_info_student(self):
         self.ui_rep.label_cedula.setText(self.student.cedula)
@@ -171,12 +173,15 @@ class StudentReport(QWidget):
             print("Se descarga reporte de la sesion "+id_ses)
             report = Report(self.student, id_ses)
             report.download_report()
+            self.message = MessageDialog("Reporte guardado en Descargas")
+            self.message.show()
             
        
 
     # esta funcion muestra los modulos trabajados en cada sesion
     
     def load_modules_tables(self, id_ses):
+        self.ui_rep.label_general_report.setText("Descargar Reporte de Sesión")
         container = QWidget()
         
         layout = QVBoxLayout()

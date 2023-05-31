@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Message_dialog(object):
     def setupUi(self, Message_dialog):
         Message_dialog.setObjectName("Message_dialog")
-        Message_dialog.resize(350, 100)
-        Message_dialog.setMinimumSize(QtCore.QSize(350, 100))
-        Message_dialog.setMaximumSize(QtCore.QSize(350, 100))
+        Message_dialog.resize(365, 100)
+        Message_dialog.setMinimumSize(QtCore.QSize(365, 100))
+        Message_dialog.setMaximumSize(QtCore.QSize(365, 100))
         Message_dialog.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.label_1 = QtWidgets.QLabel(Message_dialog)
         self.label_1.setGeometry(QtCore.QRect(20, 20, 71, 21))
@@ -43,7 +43,7 @@ class Ui_Message_dialog(object):
 "")
         self.pushButton_accept_dialog.setObjectName("pushButton_accept_dialog")
         self.label_message = QtWidgets.QLabel(Message_dialog)
-        self.label_message.setGeometry(QtCore.QRect(100, 20, 231, 21))
+        self.label_message.setGeometry(QtCore.QRect(100, 20, 240, 21))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)

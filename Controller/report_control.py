@@ -7,9 +7,12 @@
 
 
 import sys
+import os
 sys.path.append(".")
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
+from PyQt5.QtWidgets import QApplication, QFileDialog
+from PyQt5.QtCore import Qt, QStandardPaths
 from Controller.student_control import get_student_by_id
 from Controller.session_control import get_sesion_by_id
 from Controller.plot_vum_control import PlotVumeter
@@ -32,7 +35,9 @@ class Report:
         flag_discapacidad = 'No'
         if self.student.discapacidad:
             flag_discapacidad = 'Si'
-
+        
+        # agregar foto del estudiante recuperar de la base
+        
         student_info = {
             'cedula' : self.student.cedula,
             'apellidos': self.student.apellidos,
@@ -74,9 +79,43 @@ class Report:
         # Guardar el resultado como archivo HTML
         with open('SessionReports/reporte1.html', 'w') as file:
             file.write(output)
+        
+        
+        # Codigo para guardar en una ruta especifica
+        # HTML(string=output, base_url='SessionReports/').write_pdf('SessionReports/reportpdf.pdf')
+        # print("reporte PDF generado")
+        
+        # codigo para abrir el explorador de archivos para guardar el reporte
+        
+        
+        # Obtener la ruta por defecto de la carpeta "Descargas"
+        default_folder = QStandardPaths.writableLocation(QStandardPaths.DownloadLocation)
+        default_pdf_name = os.path.join(
+            default_folder,
+            f"reporte_{self.student.apellidos}_{self.student.nombres}_sesion_{str(self.id_sesion)}.pdf"
+        )
+
+        
+        docpdf = HTML(string=output, base_url='SessionReports/')
+        
+        options = QFileDialog.Options()
+        
+        # esta linea evita usar el dialogo nativo del SO
+        #options |= QFileDialog.DontUseNativeDialog
+        
+        file_path, _ = QFileDialog.getSaveFileName(None, "Guardar Reporte PDF",default_pdf_name, "PDF (*.pdf)", options=options)
+        
+        if file_path:
+            # Guardar el archivo PDF resultante en la ruta seleccionada
+            if not file_path.lower().endswith(".pdf"):
+                file_path += ".pdf"
             
-        HTML(string=output, base_url='SessionReports/').write_pdf('SessionReports/reportpdf.pdf')
-        print("reporte PDF generado")
+            docpdf.write_pdf(file_path)
+
+            print("reporte PDF guardado en :"+file_path)
+            
+        
+        
             
        
     def calculate_age(self, date):

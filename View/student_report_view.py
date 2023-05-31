@@ -141,7 +141,7 @@ class Ui_Form_student_report(object):
         self.label_back.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_back.setObjectName("label_back")
         self.label_general_report = QtWidgets.QLabel(Form_student_report)
-        self.label_general_report.setGeometry(QtCore.QRect(950, 160, 211, 20))
+        self.label_general_report.setGeometry(QtCore.QRect(925, 160, 220, 20))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)

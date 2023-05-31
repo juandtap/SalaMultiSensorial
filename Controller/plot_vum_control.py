@@ -32,6 +32,10 @@ class PlotVumeter:
 
             nombre_plot = f"plot_vumetro_{i+1}.png"
             lista_plots.append(nombre_plot)
+            
+            # ajustar margenes del plot
+            plt.subplots_adjust(top=0.95)
+            
             # Guardar la imagen como archivo
             plt.savefig('SessionReports/'+nombre_plot)
             print("Grafica "+str(i+1)+" creada")
