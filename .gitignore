@@ -34,8 +34,8 @@ tmp/**
 .vs/
 test-results*.xml
 xunit-test-results.xml
+build/
 build/ci/performance/performance-results.json
-!build/
 debug*.log
 debugpy*.log
 pydevd*.log
@@ -46,3 +46,5 @@ dist/**
 *.xlf
 package.nls.*.json
 l10n/
+*.spec
+main.exe
