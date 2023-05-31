@@ -13,6 +13,7 @@
             /*width: 21cm;
             height: 29.7cm;*/
             margin: 0 auto;
+            font-size: 15px;
             
         }
         
@@ -167,7 +168,7 @@
         
         <div class="student-more-info">
             <div class="student-photo">
-                <img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/user.png" alt="user_image">
+                <img src="{{ estudiante['fotografia'] }}" alt="user_image">
             </div>
             <div class="student-discapacidad">
                 <p> <b>Cédula: </b> {{ estudiante['cedula'] }}</p>
@@ -273,7 +274,7 @@
            
         </div>
 
-        
+
         <div class="modulo-info">
             <p>  <b>Módulo de Iluminación</b> </p>
             {% if sesion.modulos_iluminacion %}

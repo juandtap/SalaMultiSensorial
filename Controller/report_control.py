@@ -7,12 +7,13 @@
 
 
 import sys
-import os
+import os, io
 sys.path.append(".")
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
 from PyQt5.QtWidgets import QApplication, QFileDialog
 from PyQt5.QtCore import Qt, QStandardPaths
+from PIL import Image
 from Controller.student_control import get_student_by_id
 from Controller.session_control import get_sesion_by_id
 from Controller.plot_vum_control import PlotVumeter
@@ -30,13 +31,24 @@ class Report:
         template = env.get_template('session_report_template.html')
 
         # creo un diccionario con los datos del estudiante, para enviarlos a la plantilla
-        # se crea el diccionario para enviar datos adicionales que no estan en el objeto Student, como la edad
+        # se crea el diccionario para enviar datos adicionales que no estan en el objeto Student, como la edad y la foto
         
         flag_discapacidad = 'No'
         if self.student.discapacidad:
             flag_discapacidad = 'Si'
         
-        # agregar foto del estudiante recuperar de la base
+        # Recuperar la foto de la base de datos
+        fotografia = self.student.fotografia
+        photo_name = f'fotografia_{self.student.cedula}'
+        # extrae la extencion de la foto alamacenada (png, jpg, ...)
+        imagen = Image.open(io.BytesIO(fotografia))
+        extention = imagen.format.lower()
+        
+        photo_path = os.path.join('SessionReports/', photo_name + '.' + extention)
+        with open(photo_path, 'wb') as photo_file:
+            photo_file.write(fotografia)
+        
+        print("Fotografia estudiante recuperada en : "+photo_path)
         
         student_info = {
             'cedula' : self.student.cedula,
@@ -49,7 +61,8 @@ class Report:
             'discapacidad': flag_discapacidad,
             'discapacidades': self.student.discapacidades,
             'edad': self.calculate_age(self.student.fecha_nacimiento),
-            'fecha_nacimiento': self.student.fecha_nacimiento
+            'fecha_nacimiento': self.student.fecha_nacimiento,
+            'fotografia': (photo_name + '.' + extention),
         }
         
         # obtengo los modulos trabajados
@@ -63,7 +76,8 @@ class Report:
             modulos += ' vumetro,'
         if len(student_sesion.modulos_iluminacion) > 0:
             modulos += ' iluminación,'
-      
+
+        # agregar modulo de pictogramas
         
         plots_vumeter = PlotVumeter(student_sesion)
         vumeter_list = plots_vumeter.getPlotList()
