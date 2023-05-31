@@ -10,6 +10,7 @@ from datetime import time, date
 
 from View.student_report_view import Ui_Form_student_report
 from Controller.session_control import get_session_by_student_id, get_sesion_by_id
+from Controller.report_control import Report
 
 class StudentReport(QWidget):
     def __init__(self, student):
@@ -168,6 +169,9 @@ class StudentReport(QWidget):
         # recupera la sesion y muestra la info de los modulos
         elif column == download_pos:
             print("Se descarga reporte de la sesion "+id_ses)
+            report = Report(self.student, id_ses)
+            report.download_report()
+            
        
 
     # esta funcion muestra los modulos trabajados en cada sesion

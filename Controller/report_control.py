@@ -59,8 +59,26 @@ class Report:
         if len(student_sesion.modulos_iluminacion) > 0:
             modulos += ' iluminación,'
       
-    # aqui nos quedamos..
         
+        plots_vumeter = PlotVumeter(student_sesion)
+        vumeter_list = plots_vumeter.getPlotList()
+        
+        # Renderizar la plantilla html
+        output = template.render(
+            estudiante=student_info,
+            sesion=student_sesion,
+            modulos_trabajados=modulos,
+            lista_vumetro=vumeter_list
+        )
+        
+        # Guardar el resultado como archivo HTML
+        with open('SessionReports/reporte1.html', 'w') as file:
+            file.write(output)
+            
+        HTML(string=output, base_url='SessionReports/').write_pdf('SessionReports/reportpdf.pdf')
+        print("reporte PDF generado")
+            
+       
     def calculate_age(self, date):
         # Obtenemos la fecha actual
         current_date = date.today()
@@ -76,79 +94,79 @@ class Report:
         
         
 
-# Cargar la plantilla desde el sistema de archivos
-env = Environment(loader=FileSystemLoader('Assets/plantilla_reportes'))
-template = env.get_template('session_report_template.html')
+# # Cargar la plantilla desde el sistema de archivos
+# env = Environment(loader=FileSystemLoader('Assets/plantilla_reportes'))
+# template = env.get_template('session_report_template.html')
 
-# pruebas de reportes
+# # pruebas de reportes
 
-# obtener estudiante
-student = get_student_by_id(10)
+# # obtener estudiante
+# student = get_student_by_id(10)
 
-# creo un diccionario con los datos del estudiante
+# # creo un diccionario con los datos del estudiante
 
-def calculate_age(date):
-    # Obtenemos la fecha actual
-    current_date = date.today()
+# def calculate_age(date):
+#     # Obtenemos la fecha actual
+#     current_date = date.today()
     
-    # Calculamos la edad restando el año actual menos el año de nacimiento
-    age = current_date.year - date.year
+#     # Calculamos la edad restando el año actual menos el año de nacimiento
+#     age = current_date.year - date.year
     
-    # Si el cumpleaños de la persona aun no ha llegado en el anioo actual, se resta 1 a la edad
-    if (current_date.month, current_date.day) < (date.month, date.day):
-        age -= 1
+#     # Si el cumpleaños de la persona aun no ha llegado en el anioo actual, se resta 1 a la edad
+#     if (current_date.month, current_date.day) < (date.month, date.day):
+#         age -= 1
         
-    return age
+#     return age
 
-flag_discapacidad = 'No'
-if student.discapacidad:
-    flag_discapacidad = 'Si'
+# flag_discapacidad = 'No'
+# if student.discapacidad:
+#     flag_discapacidad = 'Si'
 
-student_info = {
-    'cedula' : student.cedula,
-    'apellidos': student.apellidos,
-    'nombres' : student.nombres,
-    'cedula_representante': student.cedula_representante,
-    'representante': student.nombre_representante,
-    'telefonos': student.telefonos,
-    'direccion': student.direccion,
-    'discapacidad': flag_discapacidad,
-    'discapacidades': student.discapacidades,
-    'edad': calculate_age(student.fecha_nacimiento),
-    'fecha_nacimiento': student.fecha_nacimiento
-}
+# student_info = {
+#     'cedula' : student.cedula,
+#     'apellidos': student.apellidos,
+#     'nombres' : student.nombres,
+#     'cedula_representante': student.cedula_representante,
+#     'representante': student.nombre_representante,
+#     'telefonos': student.telefonos,
+#     'direccion': student.direccion,
+#     'discapacidad': flag_discapacidad,
+#     'discapacidades': student.discapacidades,
+#     'edad': calculate_age(student.fecha_nacimiento),
+#     'fecha_nacimiento': student.fecha_nacimiento
+# }
 
-# obtengo una sesion asociada al estudiante (16)
+# # obtengo una sesion asociada al estudiante (16)
 
-student_sesion = get_sesion_by_id(39)
+# student_sesion = get_sesion_by_id(39)
 
-# obtengo los modulos trabajados
+# # obtengo los modulos trabajados
 
-modulos = ''
+# modulos = ''
 
-if len(student_sesion.modulos_grafomotricidad) > 0:
-    modulos += 'grafomotricidad,'
-if len(student_sesion.modulos_vumetro) > 0:
-    modulos += ' vumetro,'
-if len(student_sesion.modulos_iluminacion) > 0:
-    modulos += ' iluminación,'
+# if len(student_sesion.modulos_grafomotricidad) > 0:
+#     modulos += 'grafomotricidad,'
+# if len(student_sesion.modulos_vumetro) > 0:
+#     modulos += ' vumetro,'
+# if len(student_sesion.modulos_iluminacion) > 0:
+#     modulos += ' iluminación,'
 
-# enviar array de path de las imagenes del plot del modulo vumetro
+# # enviar array de path de las imagenes del plot del modulo vumetro
 
-vumetro_list = lista_plots
+# #vumetro_list = lista_plots
 
-# Renderizar la plantilla con el objeto como variable de contexto
-output = template.render(estudiante=student_info,sesion=student_sesion,modulos_trabajados=modulos,lista_vumetro=vumetro_list)
+# # Renderizar la plantilla con el objeto como variable de contexto
+# output = template.render(estudiante=student_info,sesion=student_sesion,modulos_trabajados=modulos,lista_vumetro=vumetro_list)
 
-# Guardar el resultado como archivo HTML
-with open('SessionReports/reporte1.html', 'w') as file:
-    file.write(output)
+# # Guardar el resultado como archivo HTML
+# with open('SessionReports/reporte1.html', 'w') as file:
+#     file.write(output)
     
     
 
-# Convertir el archivo HTML a PDF
-## HTML(filename='/SessionReports/reporte1.html').write_pdf('reporte1.pdf')
+# # Convertir el archivo HTML a PDF
+# ## HTML(filename='/SessionReports/reporte1.html').write_pdf('reporte1.pdf')
 
 
-HTML(string=output, base_url='SessionReports/').write_pdf('SessionReports/pdfreport2.pdf')
-print("reporte PDF generado")
+# HTML(string=output, base_url='SessionReports/').write_pdf('SessionReports/pdfreport2.pdf')
+# print("reporte PDF generado")
