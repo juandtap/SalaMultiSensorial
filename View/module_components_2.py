@@ -122,8 +122,7 @@ class ModuleVumeter(QWidget):
         self.ui_vum.pushButton_stop.setDisabled(False)
         self.serial_thread = VumeterDataThread()
         self.serial_thread.data_received.connect(self.updata_data_2)
-        # self.serial_thread.finished.connect(self.serial_thread.quit)
-        # self.serial_thread.finished.connect(self.serial_thread.deleteLater)
+        
         
         
         self.init_time = datetime.now()

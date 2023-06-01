@@ -4,7 +4,7 @@ import sys
 from PyQt5 import QtCore
 sys.path.append(".")
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget,QSizePolicy, QVBoxLayout, QLabel, QComboBox, QFileDialog,QTableWidget, QAbstractItemView, QTableWidgetItem, QHeaderView, QAbstractScrollArea
-from PyQt5.QtCore import Qt, QDate
+from PyQt5.QtCore import Qt, QDate, QObject, QEvent
 from PyQt5.QtGui import  QStandardItemModel , QColor, QBrush, QFont, QPixmap
 from datetime import time, date
 
@@ -23,6 +23,10 @@ class StudentReport(QWidget):
         self.load_info_student()
         
         self.set_logos()
+        
+        # Si esta en True descarga el reporte general
+        # en False descarga el reporte de la sesion
+        self.flag_download = True
        
         # esconder label de regresar
         self.ui_rep.label_back.setHidden(True)
@@ -63,12 +67,39 @@ class StudentReport(QWidget):
         self.ui_rep.label_back.enterEvent = self.mouse_over
         self.ui_rep.label_back.leaveEvent = self.mouse_out
         
-    
+        # eventos label: descargar reportes
+        self.ui_rep.label_general_report.mousePressEvent = self.get_report
+        self.ui_rep.label_general_report.enterEvent = self.mouse_over_2
+        self.ui_rep.label_general_report.leaveEvent = self.mouse_out_2
+
+    def mouse_over_2(self, event):
+        self.ui_rep.label_general_report.setFont(self.font_in)
+
+    def mouse_out_2(self, event):
+        self.ui_rep.label_general_report.setFont(self.font_out)
+
     def mouse_over(self, event):
         self.ui_rep.label_back.setFont(self.font_in)
-    
+        
     def mouse_out(self,event):
         self.ui_rep.label_back.setFont(self.font_out)
+        
+    
+    # Si self.flag = True se descarga el reporte general
+    # caso contrario se descarga el reporte de sesion
+    def get_report(self, event):
+        if self.flag_download:
+            print("Se descarga reporte General")
+            
+        else:
+            print("Se descarga reporte de Sesion")
+            print("sesion seleccionada: "+str(self.sesion_selected.id))
+            sesion_report = Report(self.student, self.sesion_selected.id)
+            sesion_report.download_report()
+        
+        self.message = MessageDialog("Reporte Guardado en Descargas")
+        self.message.show()
+            
         
     def set_logos(self):
         pixmap1 = QPixmap("Assets/logo1.png")
@@ -98,8 +129,7 @@ class StudentReport(QWidget):
         
         self.area_table_layout.addWidget(self.table_reports)
         
-        #self.ui_rep.scrollArea.setMinimumWidth(1100)
-        #self.ui_rep.scrollArea.setMinimumHeight(400)
+        
         self.ui_rep.scrollArea.setWidgetResizable(True)
         self.ui_rep.scrollArea.setWidget(self.area_table)
         
@@ -157,7 +187,8 @@ class StudentReport(QWidget):
         self.ui_rep.scrollArea.setWidget(self.area_table)
         self.table_reports.cellClicked.connect(self.show_reports)
         self.ui_rep.label_back.setHidden(True)
-        self.ui_rep.label_general_report.setText("Descargar Reporte General") 
+        self.ui_rep.label_general_report.setText("Descargar Reporte General")
+        self.flag_download = True
     
     def load_info_student(self):
         self.ui_rep.label_cedula.setText(self.student.cedula)
@@ -198,6 +229,7 @@ class StudentReport(QWidget):
     
     def load_modules_tables(self, id_ses):
         self.ui_rep.label_general_report.setText("Descargar Reporte de Sesión")
+        self.flag_download = False
         container = QWidget()
         
         layout = QVBoxLayout()

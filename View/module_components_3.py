@@ -3,8 +3,8 @@
 import sys
 
 sys.path.append(".")
-import serial, threading, bluetooth
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QPushButton, QButtonGroup
+import bluetooth
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QButtonGroup
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal, QRectF
 from PyQt5.QtGui import QPixmap, QPen, QBrush, QColor, QIntValidator
 from PyQt5.QtCore import QTimer
