@@ -26,6 +26,8 @@ class MainWindow(QMainWindow):
         self.ui_main.setupUi(self)
         self.ui_main.scrollArea_info_estudiante.setHidden(True)
         
+        self.set_logos()
+        
         # campo de discapacidades del estudiante no son editables
         self.ui_main.textEdit_discapacidad_est.setReadOnly(True)
         
@@ -68,6 +70,24 @@ class MainWindow(QMainWindow):
         self.stu_report = StudentReport(get_student_by_cedula(self.ui_main.label_cedula.text()))
         self.stu_report.show()
         
+    def set_logos(self):
+        pixmap1 = QPixmap("Assets/logo2.png")
+        self.ui_main.label_logo1.setPixmap(
+            pixmap1.scaled(
+            self.ui_main.label_logo1.width(),
+            self.ui_main.label_logo1.height(),
+            aspectRatioMode=False
+            )
+        )
+        pixmap2 = QPixmap("Assets/logo1.png")
+        self.ui_main.label_logo2.setPixmap(
+            pixmap2.scaled(
+            self.ui_main.label_logo2.width(),
+            self.ui_main.label_logo2.height(),
+            aspectRatioMode=False
+            )
+        )
+    
     # no se esta llamando, considerar eliminar este metodo
     def show_student_list(self):
         student_list = get_all_students()

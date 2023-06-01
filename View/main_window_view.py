@@ -37,7 +37,16 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "\n"
-"")
+"")     
+        #labels para los logos
+        self.label_logo1 = QtWidgets.QLabel(self.centralwidget)
+        self.label_logo1.setGeometry(QtCore.QRect(0,0,110,110))
+        self.label_logo1.setObjectName("label_logo1")
+        
+        self.label_logo2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_logo2.setGeometry(QtCore.QRect(1010,0,270,140))
+        self.label_logo2.setObjectName("label_logo2")
+        
         self.pushButton_add_estudiante.setObjectName("pushButton_add_estudiante")
         self.listWidget_estudiantes = QtWidgets.QListWidget(self.centralwidget)
         self.listWidget_estudiantes.setGeometry(QtCore.QRect(20, 180, 441, 461))
@@ -342,6 +351,8 @@ class Ui_MainWindow(object):
         self.pushButton_add_estudiante.setText(_translate("MainWindow", "Agregar Estudiante"))
         self.label_apellido.setText(_translate("MainWindow", "Tapia Vasquez"))
         self.label_imagen.setText(_translate("MainWindow", "Sin Imagen"))
+        self.label_logo1.setText(_translate("MainWindow", ""))
+        self.label_logo2.setText(_translate("MainWindow", ""))
         self.label_nombre.setText(_translate("MainWindow", "Juan Diego"))
         self.label_5.setText(_translate("MainWindow", "Apellidos:"))
         self.label_6.setText(_translate("MainWindow", "Nombres:"))
