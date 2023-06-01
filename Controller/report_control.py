@@ -39,12 +39,12 @@ class Report:
         
         # Recuperar la foto de la base de datos
         fotografia = self.student.fotografia
-        photo_name = f'fotografia_{self.student.cedula}'
+        photo_name = 'fotografia_estudiante'
         # extrae la extencion de la foto alamacenada (png, jpg, ...)
         imagen = Image.open(io.BytesIO(fotografia))
         extention = imagen.format.lower()
         
-        photo_path = os.path.join('SessionReports/', photo_name + '.' + extention)
+        photo_path = os.path.join('Assets/SessionReports/', photo_name + '.' + extention)
         with open(photo_path, 'wb') as photo_file:
             photo_file.write(fotografia)
         
@@ -91,16 +91,16 @@ class Report:
         )
         
         # Guardar el resultado como archivo HTML
-        with open('SessionReports/reporte1.html', 'w') as file:
+        with open('Assets/SessionReports/reporte.html', 'w') as file:
             file.write(output)
         
         
         # Codigo para guardar en una ruta especifica
-        # HTML(string=output, base_url='SessionReports/').write_pdf('SessionReports/reportpdf.pdf')
+        # HTML(string=output, base_url='SessionReports/').write_pdf('Assets/SessionReports/reportpdf.pdf')
         # print("reporte PDF generado")
         
-        # codigo para abrir el explorador de archivos para guardar el reporte
         
+        # codigo para abrir el explorador de archivos para guardar el reporte
         
         # Obtener la ruta por defecto de la carpeta "Descargas"
         default_folder = QStandardPaths.writableLocation(QStandardPaths.DownloadLocation)
@@ -110,7 +110,7 @@ class Report:
         )
 
         
-        docpdf = HTML(string=output, base_url='SessionReports/')
+        docpdf = HTML(string=output, base_url='Assets/SessionReports/')
         
         options = QFileDialog.Options()
         
@@ -145,81 +145,3 @@ class Report:
             
         return age  
         
-        
-
-# # Cargar la plantilla desde el sistema de archivos
-# env = Environment(loader=FileSystemLoader('Assets/plantilla_reportes'))
-# template = env.get_template('session_report_template.html')
-
-# # pruebas de reportes
-
-# # obtener estudiante
-# student = get_student_by_id(10)
-
-# # creo un diccionario con los datos del estudiante
-
-# def calculate_age(date):
-#     # Obtenemos la fecha actual
-#     current_date = date.today()
-    
-#     # Calculamos la edad restando el año actual menos el año de nacimiento
-#     age = current_date.year - date.year
-    
-#     # Si el cumpleaños de la persona aun no ha llegado en el anioo actual, se resta 1 a la edad
-#     if (current_date.month, current_date.day) < (date.month, date.day):
-#         age -= 1
-        
-#     return age
-
-# flag_discapacidad = 'No'
-# if student.discapacidad:
-#     flag_discapacidad = 'Si'
-
-# student_info = {
-#     'cedula' : student.cedula,
-#     'apellidos': student.apellidos,
-#     'nombres' : student.nombres,
-#     'cedula_representante': student.cedula_representante,
-#     'representante': student.nombre_representante,
-#     'telefonos': student.telefonos,
-#     'direccion': student.direccion,
-#     'discapacidad': flag_discapacidad,
-#     'discapacidades': student.discapacidades,
-#     'edad': calculate_age(student.fecha_nacimiento),
-#     'fecha_nacimiento': student.fecha_nacimiento
-# }
-
-# # obtengo una sesion asociada al estudiante (16)
-
-# student_sesion = get_sesion_by_id(39)
-
-# # obtengo los modulos trabajados
-
-# modulos = ''
-
-# if len(student_sesion.modulos_grafomotricidad) > 0:
-#     modulos += 'grafomotricidad,'
-# if len(student_sesion.modulos_vumetro) > 0:
-#     modulos += ' vumetro,'
-# if len(student_sesion.modulos_iluminacion) > 0:
-#     modulos += ' iluminación,'
-
-# # enviar array de path de las imagenes del plot del modulo vumetro
-
-# #vumetro_list = lista_plots
-
-# # Renderizar la plantilla con el objeto como variable de contexto
-# output = template.render(estudiante=student_info,sesion=student_sesion,modulos_trabajados=modulos,lista_vumetro=vumetro_list)
-
-# # Guardar el resultado como archivo HTML
-# with open('SessionReports/reporte1.html', 'w') as file:
-#     file.write(output)
-    
-    
-
-# # Convertir el archivo HTML a PDF
-# ## HTML(filename='/SessionReports/reporte1.html').write_pdf('reporte1.pdf')
-
-
-# HTML(string=output, base_url='SessionReports/').write_pdf('SessionReports/pdfreport2.pdf')
-# print("reporte PDF generado")

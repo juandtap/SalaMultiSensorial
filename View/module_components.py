@@ -3,7 +3,7 @@
 # tambien estas las clases QThread para el envio y recepcion de datos arduino
 
 import sys
-import serial, threading, bluetooth
+import  threading, bluetooth
 
 sys.path.append(".")
 from datetime import datetime
@@ -369,7 +369,7 @@ class ArduinoSerialThread(QThread):
         
         print("se ejecuta el hilo de escucha socket bluetooth")
         try:
-            #bluetooth_serial = serial.Serial(self.port, self.baudrate, timeout=self.timeout)
+           
             blue_socket = bluetooth.BluetoothSocket()
             blue_socket.connect((module_mac_address[1],1))
         except Exception as e:
@@ -401,8 +401,4 @@ class ArduinoSerialThread(QThread):
         self.stopped = True
         print("Hilo Escucha socket bluetooth terminado por el usuario")
         
-# revisar Qtimer, hacer que se reinicie al presionar el boton de inicio
-# revisar figure code linea 227 en la funcion show_data_received
-# nivel de instensida 1  2 3 , bajo, medio , alto
-# cada 50ms los datos del vumetro 
-# se guarda nivel maximo alcanzado, considerar nivel intermedio y bajo, sabiendo que el nivel 1 va a ser siempre el bajo y el tiempo 
+        

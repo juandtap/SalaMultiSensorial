@@ -37,7 +37,7 @@ class PlotVumeter:
             plt.subplots_adjust(top=0.95)
             
             # Guardar la imagen como archivo
-            plt.savefig('SessionReports/'+nombre_plot)
+            plt.savefig('Assets/SessionReports/'+nombre_plot)
             print("Grafica "+str(i+1)+" creada")
             plt.clf()
             # Mostrar el gráfico en pantalla (opcional)

@@ -6,15 +6,14 @@ import sys
 import bluetooth
 
 sys.path.append(".")
-from datetime import datetime
-from datetime import time 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QRadioButton
+
+
 from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal
 from Controller.module_codes import module_mac_address
 
 class TurnOnOffModule(QThread):
     # envia una signal a la ventana del modulo una vez este thread 
-    # libera el socket pata que los modulos puedan 
+    # libera el socket para que los modulos puedan 
     # enviar o recibir datos por el socket sin conflictos
     my_signal = pyqtSignal(str)
     
