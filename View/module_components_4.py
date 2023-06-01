@@ -15,12 +15,12 @@ from Controller.modules_control import TurnOnOffModule
 from View.module_pictogram_view import Ui_Form_modulo_pictograma
 
 class ModulePictogram(QWidget):
-    def __init__(self, sesion, com_port):
+    def __init__(self, sesion):
         super().__init__()
         self.ui_pic = Ui_Form_modulo_pictograma()
         self.ui_pic.setupUi(self)
         self.sesion = sesion
-        self.port = com_port
+       
         self.set_module_images()
         self.ui_pic.label_text_status.setHidden(True)
         self.ui_pic.label_conn_status.setHidden(True)
@@ -31,6 +31,24 @@ class ModulePictogram(QWidget):
             pixmap1.scaled(
             self.ui_pic.label_module_image.width(),
             self.ui_pic.label_module_image.height(),
+            aspectRatioMode=False
+            )
+        )
+        
+        pixmap2 = QPixmap("Assets/logo1.png")
+        self.ui_pic.label_logo1.setPixmap(
+            pixmap2.scaled(
+            self.ui_pic.label_logo1.width(),
+            self.ui_pic.label_logo1.height(),
+            aspectRatioMode=False
+            )
+        )
+        
+        pixmap3 = QPixmap("Assets/logo2.png")
+        self.ui_pic.label_logo2.setPixmap(
+            pixmap3.scaled(
+            self.ui_pic.label_logo2.width(),
+            self.ui_pic.label_logo2.height(),
             aspectRatioMode=False
             )
         )

@@ -178,6 +178,24 @@ class ModuleVumeter(QWidget):
             aspectRatioMode=False
             )
         )
+        
+        pixmap2 = QPixmap("Assets/logo1.png")
+        self.ui_vum.label_logo1.setPixmap(
+            pixmap2.scaled(
+            self.ui_vum.label_logo1.width(),
+            self.ui_vum.label_logo1.height(),
+            aspectRatioMode=False
+            )
+        )
+        
+        pixmap3 = QPixmap("Assets/logo2.png")
+        self.ui_vum.label_logo2.setPixmap(
+            pixmap3.scaled(
+            self.ui_vum.label_logo2.width(),
+            self.ui_vum.label_logo2.height(),
+            aspectRatioMode=False
+            )
+        )
 
     def save_module_data(self):
         print('Guardando datos...')

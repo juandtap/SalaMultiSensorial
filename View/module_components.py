@@ -36,14 +36,17 @@ class ModuleSelection(QWidget):
         self.set_logos()
         
         # eliminar label, line edit del puerto COM
+        # ya no se usa el puerto COM
         self.ui_modules.label_bluetooth_status.setHidden(True)
         self.ui_modules.lineEdit_com_port.setHidden(True)
         self.ui_modules.label_3.setHidden(True)
         self.ui_modules.label_5.setHidden(True)
-        # ya no se usa el puerto COM
         
         
-        # comentar para que no se cree sesione innecesarias
+        
+        # comentar para que no se cree sesione innecesarias, 
+        # no olvidar tambien descomentar en el metodo closeEvent()
+        
         #self.create_sesion()
         
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
@@ -92,17 +95,20 @@ class ModuleSelection(QWidget):
         
         
     def open_module_grafomotricidad(self):
-        # cambiar None por self.sesion 2
-        self.grafomotricidad = ModuleGrafomotricidad(self.sesion)
+        # cambiar None por self.sesion 
+        # self.grafomotricidad = ModuleGrafomotricidad(self.sesion)
+        self.grafomotricidad = ModuleGrafomotricidad(None)
         self.grafomotricidad.show()
     
     def open_module_vumeter(self):
         
-        self.vumeter = ModuleVumeter(self.sesion)
+        # self.vumeter = ModuleVumeter(self.sesion)
+        self.vumeter = ModuleVumeter(None)
         self.vumeter.show()
         
     def open_module_ilumination(self):
-        self.ilumination = ModuleIlumination(self.sesion)
+        # self.ilumination = ModuleIlumination(self.sesion)
+        self.ilumination = ModuleIlumination(None)
         self.ilumination.show()
         
     def open_module_pictogram(self):
@@ -201,6 +207,15 @@ class ModuleGrafomotricidad(QWidget):
             pixmap2.scaled(
             self.ui_mod_grafo.label_logo1.width(),
             self.ui_mod_grafo.label_logo1.height(),
+            aspectRatioMode=False
+            )
+        )
+        
+        pixmap3 = QPixmap("Assets/logo2.png")
+        self.ui_mod_grafo.label_logo2.setPixmap(
+            pixmap3.scaled(
+            self.ui_mod_grafo.label_logo2.width(),
+            self.ui_mod_grafo.label_logo2.height(),
             aspectRatioMode=False
             )
         )

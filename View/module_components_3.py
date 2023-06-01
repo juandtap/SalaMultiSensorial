@@ -123,6 +123,23 @@ class ModuleIlumination(QWidget):
             aspectRatioMode=False
             )
         )
+        
+        pixmap2 = QPixmap("Assets/logo1.png")
+        self.ui_ilu.label_logo1.setPixmap(
+            pixmap2.scaled(
+            self.ui_ilu.label_logo1.width(),
+            self.ui_ilu.label_logo1.height(),
+            aspectRatioMode=False
+            )
+        )
+        pixmap3 = QPixmap("Assets/logo2.png")
+        self.ui_ilu.label_logo2.setPixmap(
+            pixmap3.scaled(
+            self.ui_ilu.label_logo2.width(),
+            self.ui_ilu.label_logo2.height(),
+            aspectRatioMode=False
+            )
+        )
     
     # funcion para seleccionar como se envian los colores, definidos, o personalizados con codigo RGB  
     def disable_RGB_text(self):
