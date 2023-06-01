@@ -5,7 +5,7 @@ from PyQt5 import QtCore
 sys.path.append(".")
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget,QSizePolicy, QVBoxLayout, QLabel, QComboBox, QFileDialog,QTableWidget, QAbstractItemView, QTableWidgetItem, QHeaderView, QAbstractScrollArea
 from PyQt5.QtCore import Qt, QDate
-from PyQt5.QtGui import  QStandardItemModel , QColor, QBrush, QFont
+from PyQt5.QtGui import  QStandardItemModel , QColor, QBrush, QFont, QPixmap
 from datetime import time, date
 
 from View.student_report_view import Ui_Form_student_report
@@ -22,7 +22,7 @@ class StudentReport(QWidget):
         
         self.load_info_student()
         
-       
+        self.set_logos()
        
         # esconder label de regresar
         self.ui_rep.label_back.setHidden(True)
@@ -70,7 +70,23 @@ class StudentReport(QWidget):
     def mouse_out(self,event):
         self.ui_rep.label_back.setFont(self.font_out)
         
-    
+    def set_logos(self):
+        pixmap1 = QPixmap("Assets/logo1.png")
+        self.ui_rep.label_logo1.setPixmap(
+            pixmap1.scaled(
+            self.ui_rep.label_logo1.width(),
+            self.ui_rep.label_logo1.height(),
+            aspectRatioMode=False
+            )
+        )
+        pixmap2 = QPixmap("Assets/logo2.png")
+        self.ui_rep.label_logo2.setPixmap(
+            pixmap2.scaled(
+            self.ui_rep.label_logo2.width(),
+            self.ui_rep.label_logo2.height(),
+            aspectRatioMode=False
+            )
+        )
     
        
     def set_table(self):

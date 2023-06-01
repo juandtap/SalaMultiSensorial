@@ -37,7 +37,7 @@ class Ui_Form_student_report(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.label_logo1 = QtWidgets.QLabel(Form_student_report)
-        self.label_logo1.setGeometry(QtCore.QRect(0, 0, 161, 131))
+        self.label_logo1.setGeometry(QtCore.QRect(0, 0, 260, 140))
         self.label_logo1.setText("")
         self.label_logo1.setObjectName("label_logo1")
         self.label_8 = QtWidgets.QLabel(Form_student_report)
