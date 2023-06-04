@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<head>
+    
+   
+    <style>
+        @page {
+            /*size: A4 portrait;*/
+        }
+        
+        body {
+            font-family: Arial;
+            /*width: 21cm;
+            height: 29.7cm;*/
+            margin: 0 auto;
+            font-size: 15px;
+            
+        }
+        
+        .header{
+            position: relative;
+
+            text-align: center;
+            border: 1px solid #333; 
+        }
+
+        .container {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            
+          }
+          
+          
+          
+          .top-left {
+            margin-top: 2px;
+            margin-left: 2px;
+            position: absolute;
+            height: 135px;
+            width: 200px;
+            left: 0;
+          }
+          
+          .top-right {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            
+            right: 0;
+          }
+        
+        .student{
+            display: flex;
+            justify-content: space-between;
+            
+        }
+        
+        .student-info{
+            width: 50%;
+            /* border: 1px solid red; */
+            padding: 10px;
+            border: 1px solid #333; 
+        }
+        
+        .student-more-info{
+            width: 50% ;
+            border: 1px solid #333; 
+            padding: 10px;
+            display: block;
+            align-items: center;
+            justify-self: center;
+            
+        }
+        
+        .student-photo {
+           
+            display: block;
+            text-align: center;
+            align-items: center;
+            justify-self: center;
+            margin: 0 auto;
+            
+        }
+        
+        .student-photo img{
+            
+            width: 150px;
+            height: 150px;
+            border: 1px solid #333;
+            
+            display: inline-block;
+        }
+        .student-discapacidad{
+            
+            margin: 0 auto;
+           
+        }
+        
+        .student-info ul{
+            list-style-type: none;
+        }
+        
+        .sesion {
+            text-align: center;
+            border: 1px solid #333;
+        }
+        
+        .modulos{
+            border: 1px solid #333 ;
+        }
+        
+        .modulos h3{
+            text-align: center;
+        }
+        
+        .modulo-info{
+            border: 1px solid #333 ;
+            
+            
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .modulo-plot{
+            display: block;
+            text-align: center;
+            margin: 0 auto;
+            
+        }
+        
+        .modulo-plot img{
+            width: 560px;
+            height: 400px;
+
+        }
+    </style>
+
+    <title>Reporte</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <div class="header">
+        <h2> <br/> <br/>  <br/> <br/> Sala Multisensorial</h2>
+        <h2>El Tambo</h2>
+        <h3>Reporte General del Estudiante</h3>
+        <h3>Fecha: 04/06/2023 13:29</h3>
+        <div class="container">
+            <img src="logo1.png" alt="logo 1" class="top-left">
+            <img src="logo2.png" alt="logo 2" class="top-right">
+        </div>
+        
+       
+    </div>
+    <div class="student">
+        
+        <div class="student-more-info">
+            <div class="student-photo">
+                <img src="fotografia_estudiante.png" alt="user_image">
+            </div>
+            <div class="student-discapacidad">
+                <p> <b>Cédula: </b> 0102233445</p>
+                <p> <b>Apellidos: </b> VASQUEZ TAPIA</p>
+                <p> <b>Nombres: </b> DIEGO JUAN </p>
+                <p> <b>Edad: </b> 13</p>
+                
+            </div>
+        </div>
+        <div class="student-info">
+            
+            <p> <b>Fecha Nacimiento: </b>  16/04/2010 </p>
+            <p> <b>Cédula Representante: </b> 123456879 </p>
+            <p> <b>Representante: </b> RODRIGO VASQUEZ</p>
+            <p> <b>Dirección: </b> CUENCA ECUADOR</p>
+            <p> <b>Teléfonos Contacto: </b> 098456239</p>
+            <p> <b>Tiene Discapacidad: </b> Si</p>
+            <p> <b>Discapacidad/es: </b> </p>
+            <ul>
+                
+                    <li>AUTISMO</li>
+                
+                    <li>DISLEXIA</li>
+                
+            </ul>
+                
+
+        </div>
+        
+    </div>
+
+    <div class="sesion">
+        <h3>Sesiones</h3>
+        <p> 
+            <b>Numero de sesiones: </b>  4 
+            <br><br>
+            <b>Ultima sesión:</b> 16/05/2023  20:38 - 20:40 
+            <br><br>
+            <b>Historial Sesiones:</b>
+        </p>
+
+        
+        <table>
+            <tr>
+                
+                <th>id</th>
+                <th>Fecha</th>
+                <th>Hora inicio</th>
+                <th>Hora fin</th>
+            </tr>
+
+
+            
+            <tr>
+                
+                <td>34</td>
+                <td>16/05/2023</td>
+                <td>20:28</td>
+                <td>20:31</td>
+            </tr>
+
+            
+            <tr>
+                
+                <td>35</td>
+                <td>16/05/2023</td>
+                <td>20:34</td>
+                <td>20:34</td>
+            </tr>
+
+            
+            <tr>
+                
+                <td>36</td>
+                <td>16/05/2023</td>
+                <td>20:36</td>
+                <td>20:36</td>
+            </tr>
+
+            
+            <tr>
+                
+                <td>37</td>
+                <td>16/05/2023</td>
+                <td>20:38</td>
+                <td>20:40</td>
+            </tr>
+
+            
+
+
+        </table>
+        
+
+
+       
+    </div>
+
+    
+</body>
+</html>

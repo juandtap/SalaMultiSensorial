@@ -10,7 +10,7 @@ from datetime import time, date
 
 from View.student_report_view import Ui_Form_student_report
 from Controller.session_control import get_session_by_student_id, get_sesion_by_id
-from Controller.report_control import Report
+from Controller.report_control import Report, GeneralReport
 from View.components import MessageDialog
 
 class StudentReport(QWidget):
@@ -90,6 +90,8 @@ class StudentReport(QWidget):
     def get_report(self, event):
         if self.flag_download:
             print("Se descarga reporte General")
+            general_report = GeneralReport(self.student)
+            general_report.download_general_report()
             
         else:
             print("Se descarga reporte de Sesion")

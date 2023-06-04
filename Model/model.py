@@ -32,7 +32,7 @@ class Estudiante(Base):
     discapacidades = relationship('Discapacidad',secondary='estudiante_discapacidad', back_populates='estudiantes')
     
     sesiones = relationship('Sesion', backref='estudiante')
-    # unidad_educativa = relationship("Unidad_Educativa", back_populates="estudiantes")
+   
     # extend_existing=True
     
 # tabla Unidad_educativa

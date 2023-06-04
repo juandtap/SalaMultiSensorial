@@ -124,6 +124,8 @@
         table {
             border-collapse: collapse;
             width: 100%;
+            padding-left: 5px;
+            padding-right: 5px;
         }
         th, td {
             text-align: left;
@@ -155,8 +157,8 @@
     <div class="header">
         <h2> <br/> <br/>  <br/> <br/> Sala Multisensorial</h2>
         <h2>El Tambo</h2>
-        <h3>Reporte Sesión # {{sesion.id}}</h3>
-        
+        <h3>Reporte General del Estudiante</h3>
+        <h3>Fecha: {{fecha_reporte}}</h3>
         <div class="container">
             <img src="logo1.png" alt="logo 1" class="top-left">
             <img src="logo2.png" alt="logo 2" class="top-right">
@@ -199,111 +201,45 @@
     </div>
 
     <div class="sesion">
-        <h3>Sesión</h3>
+        <h3>Sesiones</h3>
         <p> 
-            <b>Fecha:</b> {{ sesion.fecha.strftime("%d/%m/%Y") }} &nbsp;
-            <b>Hora de inicio:</b> {{sesion.hora_inicio.strftime("%H:%M")}} &nbsp;
-            <b>Hora de finalización:</b> {{sesion.hora_fin.strftime("%H:%M")}}
+            <b>Numero de sesiones: </b>  {{estudiante['numero_sesiones']}} 
+            <br><br>
+            <b>Ultima sesión:</b> {{ estudiante['ultima_sesion'] }} 
+            <br><br>
+            <b>Historial Sesiones:</b>
         </p>
-        <p> <b>Módulos trabajados</b> : {{ modulos_trabajados }}</p>
-    </div>
 
-    <div class="modulos">
-        <h3>Módulos:</h3>
-        <div class="modulo-info">
-            <p> <b>Módulo de Grafomotricidad</b> </p>
-            {% if sesion.modulos_grafomotricidad %}
-            <table>
-                <tr>
-                    
-                    <th>Figura</th>
-                    <th>Resultado</th>
-                    <th>Tiempo</th>
-                </tr>
-    
-    
-                {% for modulo in sesion.modulos_grafomotricidad %}
-                <tr>
-                    
-                    <td>{{modulo.figura}}</td>
-                    <td>{{modulo.resultado}}</td>
-                    <td>{{modulo.tiempo_tomado.strftime("%Hh:%Mm:%Ss")}}</td>
-                </tr>
-    
-                {% endfor %}
-    
-    
-            </table>
-            {% else %}
-            <p>No hay datos disponibles.</p>
-            {% endif %}
-        </div>
-        <div class="modulo-info">
-            <p>  <b>Módulo de Vumetro</b> </p>
-                {% if sesion.modulos_vumetro %}
+        {% if sesiones %}
+        <table>
+            <tr>
                 
-                {% for modulo in sesion.modulos_vumetro %}
+                <th>id</th>
+                <th>Fecha</th>
+                <th>Hora inicio</th>
+                <th>Hora fin</th>
+            </tr>
 
-                <table>
-                    <tr>
-                        <th>Nivel máximo</th>
-                        <th>Nivel promedio</th>
-                        <th>Tiempo</th>
-                    </tr>
+
+            {% for sesion in sesiones %}
+            <tr>
                 
-                    <tr>
-                        
-                        <td>{{modulo.nivel_maximo}}</td>
-                        <td>{{modulo.nivel_promedio}}</td>
-                        {% set tiempo_parts = modulo.tiempo.split(':') %}
-                        <td>{{ tiempo_parts[0] }}h:{{ tiempo_parts[1] }}m:{{ tiempo_parts[2] }}s</td>
-                    </tr>
-                
-                </table>
+                <td>{{ sesion.id }}</td>
+                <td>{{ sesion.fecha.strftime("%d/%m/%Y") }}</td>
+                <td>{{ sesion.hora_inicio.strftime("%H:%M") }}</td>
+                <td>{{ sesion.hora_fin.strftime("%H:%M") }}</td>
+            </tr>
 
-                <div class="modulo-plot">
-                    <img src="{{ lista_vumetro[loop.index0] }}" alt="imagen vumetro">
-                    <!-- <p>grafica nivel vs tiempo</p> -->
-                </div>
-    
-                {% endfor %}
-               
-                {% else %}
-                <p>No hay datos disponibles.</p>
-                {% endif %}
-           
-        </div>
+            {% endfor %}
 
 
-        <div class="modulo-info">
-            <p>  <b>Módulo de Iluminación</b> </p>
-            {% if sesion.modulos_iluminacion %}
-            <table>
-                <tr>
-                   
-                    <th>Color</th>
-                    <th>Reconoce color</th>
-                    <th>Tiempo</th>
-                </tr>
-    
-    
-                {% for modulo in sesion.modulos_iluminacion %}
-                <tr>
-                    
-                    <td>{{modulo.color}}</td>
-                    <td>{{modulo.reconoce_color}}</td>
-                    {% set tiempo_parts = modulo.tiempo.split(':') %}
-                    <td>{{ tiempo_parts[0] }}h:{{ tiempo_parts[1] }}m:{{ tiempo_parts[2] }}s</td>
-                </tr>
-    
-                {% endfor %}
-    
-    
-            </table>
-            {% else %}
-            <p>No hay datos disponibles.</p>
-            {% endif %}
-        </div>
+        </table>
+        {% else %}
+        <p>No hay datos disponibles.</p>
+        {% endif %}
+
+
+       
     </div>
 
     

@@ -1,3 +1,5 @@
 Aqui se guardan las imagenes de los graficos del vumetro y los html que se usaran para generar un 
-reporte en PDF, los archivos se sobreecriben asi que NO hay necesidad de borrarlos para ahorrar espacio,
-a exepcion de los archivos; logo1.png, logo2.png y firma.png que son las imagenes que no varian en los reportes
+reporte en PDF, los archivos logo1.png, logo2.png y firma.png son las imagenes que no varian en los reportes y No deben ser borrados 
+El resto de archivos se sobreecriben asi que tampoco es necesario borrarlos para ahorrar espacio
+
+
