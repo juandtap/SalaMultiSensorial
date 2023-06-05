@@ -16,6 +16,7 @@ from View.module_iluminacion_view import Ui_Form_modulo_iluminacion
 from View.components import MessageDialog
 from datetime import datetime
 from Model.model import ModuloIluminacion
+from View.instructions import instrucciones_iluminacion
 
 class ModuleIlumination(QWidget):
     def __init__(self, sesion):
@@ -24,6 +25,8 @@ class ModuleIlumination(QWidget):
         self.ui_ilu.setupUi(self)
         self.sesion = sesion
         
+        # instrucciones
+        self.ui_ilu.textEdit_instructions.setText(instrucciones_iluminacion)
        
         self.set_module_images()
         self.ui_ilu.label_text_status.setText("Conectado...")

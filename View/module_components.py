@@ -19,7 +19,7 @@ from View.module_components_4 import ModulePictogram
 from Controller.session_control import add_sesion_module, get_sesion_by_id, add_module_grafomotricidad, set_final_time
 from Model.model import Sesion, ModuloGrafomotricidad
 from View.components import MessageDialog
-
+from View.instructions import instrucciones_grafomotricidad
 from Controller.module_codes import path_figuras, codigo_figuras, module_mac_address
 from Controller.modules_control import TurnOnOffModule
 
@@ -141,6 +141,9 @@ class ModuleGrafomotricidad(QWidget):
         self.ui_mod_grafo.label_conn_status.setHidden(True)
         self.ui_mod_grafo.label_9.setText('Conectando, Espere...')
         self.ui_mod_grafo.label_3.setText("   Tiempo")
+        
+        # Instrucciones
+        self.ui_mod_grafo.textEdit_instructions.setText(instrucciones_grafomotricidad)
         
         # envia la senal de inicio 'i' al modulo arduino
         

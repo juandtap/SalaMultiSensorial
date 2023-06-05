@@ -36,7 +36,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.label_logo1.setText("")
         self.label_logo1.setObjectName("label_logo1")
         self.label_logo2 = QtWidgets.QLabel(Form_modulo_grafomotricidad)
-        self.label_logo2.setGeometry(QtCore.QRect(1150, 0, 130, 130))
+        self.label_logo2.setGeometry(QtCore.QRect(1140, 0, 140, 130))
         self.label_logo2.setText("")
         self.label_logo2.setObjectName("label_logo2")
         self.label_2 = QtWidgets.QLabel(Form_modulo_grafomotricidad)

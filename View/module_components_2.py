@@ -27,6 +27,7 @@ from Controller.session_control import add_module_vumetro
 from Controller.module_codes import module_mac_address
 from Model.model import Sesion, ModuloVumetro
 from View.components import MessageDialog
+from View.instructions import instrucciones_vumetro
 from Controller.modules_control import TurnOnOffModule
 
 class ModuleVumeter(QWidget):
@@ -35,7 +36,10 @@ class ModuleVumeter(QWidget):
         self.ui_vum = Ui_Form_modulo_vumetro()
         self.ui_vum.setupUi(self)
         self.sesion = sesion
-       
+        
+        # instrucciones
+        self.ui_vum.textEdit_instructions.setText(instrucciones_vumetro)
+        
         self.set_module_images()
         self.ui_vum.label_text_status.setText('Conectado, Espere...')
         self.ui_vum.label_conn_status.setHidden(True)
