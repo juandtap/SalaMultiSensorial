@@ -184,6 +184,10 @@ class MainWindow(QMainWindow):
                     self.ui_main.listWidget_estudiantes.addItem(st.apellidos+" "+st.nombres+" - "+st.cedula)
             else:
                 self.ui_main.label_search_results.setText("Sin resultados")
+        else:
+            self.ui_main.listWidget_estudiantes.clear()
+            self.ui_main.scrollArea_info_estudiante.setHidden(True)
+            
     
     
     def get_selected_cedula(self, selected_student):
@@ -342,40 +346,48 @@ class AddStudent(QWidget):
     
     
     def add_student(self):
-        # pendiente validacion
+        # para agregar un estudiante como minimo se debe de llenar los campos
+        # cedula, apellido y nombre
         
-        flag = add_student_control(
-            student_data=[
-                self.ui_addstu.lineEdit_cedula.text(),
-                self.ui_addstu.lineEdit_apellido.text(),
-                self.ui_addstu.lineEdit_nombre.text(),
-                self.ui_addstu.lineEdit_cedula_representante.text(),
-                self.ui_addstu.lineEdit_representante.text(),
-                date(
-                    self.ui_addstu.dateEdit_estudiante.date().year(), 
-                    self.ui_addstu.dateEdit_estudiante.date().month(),
-                    self.ui_addstu.dateEdit_estudiante.date().day()
-                ),
-                self.ui_addstu.lineEdit_direccion_est.text(),
-                self.ui_addstu.lineEdit_telefono.text(),
-                self.ui_addstu.checkBox_discapacidad.isChecked(),
-                self.filename, # enviar  path imagen (str)
-                self.ui_addstu.comboBox_unidad_educativa.currentIndex(),
-                self.get_student_discapacidades()
-                
-                
-            ]
-        )
-        if flag:
-            self.student_message = MessageDialog("Estudiante Agregado/a!")
-            self.student_message.show()
-            self.clear_student_fields()
-            print('estudiante agregado')
+        if self.ui_addstu.lineEdit_cedula.text() != "" and self.ui_addstu.lineEdit_apellido.text() != "" and self.ui_addstu.lineEdit_nombre.text() != "" :
+            
+            flag = add_student_control(
+                student_data=[
+                    self.ui_addstu.lineEdit_cedula.text(),
+                    self.ui_addstu.lineEdit_apellido.text(),
+                    self.ui_addstu.lineEdit_nombre.text(),
+                    self.ui_addstu.lineEdit_cedula_representante.text(),
+                    self.ui_addstu.lineEdit_representante.text(),
+                    date(
+                        self.ui_addstu.dateEdit_estudiante.date().year(), 
+                        self.ui_addstu.dateEdit_estudiante.date().month(),
+                        self.ui_addstu.dateEdit_estudiante.date().day()
+                    ),
+                    self.ui_addstu.lineEdit_direccion_est.text(),
+                    self.ui_addstu.lineEdit_telefono.text(),
+                    self.ui_addstu.checkBox_discapacidad.isChecked(),
+                    self.filename, # enviar  path imagen (str)
+                    self.ui_addstu.comboBox_unidad_educativa.currentIndex(),
+                    self.get_student_discapacidades()
+                    
+                    
+                ]
+            )
+            if flag:
+                self.student_message = MessageDialog("Estudiante Agregado/a!")
+                self.student_message.show()
+                self.clear_student_fields()
+                print('estudiante agregado')
+            else:
+                self.student_message = MessageDialog("Estudiante ya existe!")
+                self.student_message.show()
+                self.clear_student_fields()
+                print("Estudiante ya existe!")
         else:
-            self.student_message = MessageDialog("Estudiante ya existe!")
+            self.student_message = MessageDialog("!Ingrese los datos")
             self.student_message.show()
             self.clear_student_fields()
-            print("Estudiante ya existe!")
+            print("Ingresar datos del estudante!")
     
     def clear_student_fields(self):
         self.ui_addstu.lineEdit_cedula.clear()

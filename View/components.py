@@ -11,7 +11,9 @@ from Controller.discapacidad_control import add_discapacidad_control
 from View.edit_student_view import Ui_Add_student
 from Controller.student_control import update_student
 from Controller.discapacidad_control import get_all_discapacidades
+
 from datetime import date
+
 
 class AddSchool(QWidget):
     def __init__(self):
@@ -22,18 +24,26 @@ class AddSchool(QWidget):
         self.ui_add_school.pushButton_save.clicked.connect(self.add_school)
     
     def add_school(self):
-        flag = False
         
-        flag = add_school_control(self.ui_add_school.lineEdit_name_unidad_educativa.text())
+        if self.ui_add_school.lineEdit_name_unidad_educativa.text() != "":
         
-        if flag:
-            self.new_message = MessageDialog("Unidad Educativa Agregada!")
-            self.new_message.show()
-            self.ui_add_school.lineEdit_name_unidad_educativa.clear()
+            flag = False
+            
+            flag = add_school_control(self.ui_add_school.lineEdit_name_unidad_educativa.text())
+            
+            if flag:
+                self.new_message = MessageDialog("Unidad Educativa Agregada!")
+                self.new_message.show()
+                self.ui_add_school.lineEdit_name_unidad_educativa.clear()
+            else:
+                self.new_message = MessageDialog("Unidad Educativa ya existe!")
+                self.new_message.show()
+                self.ui_add_school.lineEdit_name_unidad_educativa.clear()
         else:
-            self.new_message = MessageDialog("Unidad Educativa ya existe!")
+            self.new_message = MessageDialog("Ingrese una Unidad Educativa!")
             self.new_message.show()
             self.ui_add_school.lineEdit_name_unidad_educativa.clear()
+            
 
 class AddDiscapacidad(QWidget):
     def __init__(self):
@@ -44,15 +54,22 @@ class AddDiscapacidad(QWidget):
         self.ui_add_dis.pushButton_close.clicked.connect(self.close)
     
     def add_discapacidad(self):
-        flag = False
-       
-        flag = add_discapacidad_control(self.ui_add_dis.line_discapacidad.text())
-        if flag:
-            self.new_message = MessageDialog("Discapacidad Agregada!")
-            self.new_message.show()
-            self.ui_add_dis.line_discapacidad.clear()
+        
+        if self.ui_add_dis.line_discapacidad.text() != "":
+        
+            flag = False
+        
+            flag = add_discapacidad_control(self.ui_add_dis.line_discapacidad.text())
+            if flag:
+                self.new_message = MessageDialog("Discapacidad Agregada!")
+                self.new_message.show()
+                self.ui_add_dis.line_discapacidad.clear()
+            else:
+                self.new_message = MessageDialog("Discapacidad ya existe!")
+                self.new_message.show()
+                self.ui_add_dis.line_discapacidad.clear()
         else:
-            self.new_message = MessageDialog("Discapacidad ya existe!")
+            self.new_message = MessageDialog("Ingrese una Discapacidad!")
             self.new_message.show()
             self.ui_add_dis.line_discapacidad.clear()
             
@@ -277,4 +294,10 @@ class EditStudent(QWidget):
             # cerrar ventana edicion estudiante
             self.close()
             
+
+class StudentList(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.ui_list = None
         
+    
