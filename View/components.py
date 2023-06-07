@@ -4,9 +4,9 @@
 
 import sys
 sys.path.append(".")
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QFileDialog
+from PyQt5.QtWidgets import  QVBoxLayout, QWidget, QComboBox, QFileDialog, QTableWidget, QTableWidgetItem, QAbstractItemView, QHeaderView
 from PyQt5.QtCore import Qt, QDate
-from PyQt5.QtGui import QIntValidator, QPixmap
+from PyQt5.QtGui import QIntValidator, QPixmap, QFont
 from View.message_dialog_view import Ui_Message_dialog
 from View.add_discapacidad_view import Ui_Agregar_Discapacidades
 from View.add_school_view import Ui_add_Unidad_Educativa
@@ -18,6 +18,7 @@ from Controller.discapacidad_control import get_all_discapacidades
 from View.student_list_view import Ui_Form_student_list
 from datetime import date
 from screeninfo import get_monitors
+from Controller.report_control import StudentListReport
 
 
 class AddSchool(QWidget):
@@ -305,27 +306,39 @@ class StudentList(QWidget):
         super().__init__()
         self.ui_list = Ui_Form_student_list()
         self.ui_list.setupUi(self)
-        # self.set_size()
+       
         self.set_logos()
-        # width, height = self.set_size()
-        # self.setGeometry(0, 0, width, height)
+        # Fuente label 
+        self.font_over = QFont('Arial',10,1,True)
+        self.font_over.setBold(True)
+        self.font_over.setUnderline(True)
+        self.font_out = QFont('Arial',10,1,True)
+        self.font_out.setBold(False)
+        self.font_out.setUnderline(True)
         
         # guardo todos los estudiantes en la lista
         self.student_list = get_all_students()
+        
+        # cargo la tabla de estudiante
+        self.set_table()
+        self.load_table()
+        
+        
         # y muestro los datos en la tabla
         print("recuperado la lista de estudiantes")
-    
-    # def set_size(self):
-    #     pantallas = get_monitors()
-    #     if len(pantallas) > 0:
-    #         # Obtener la resolución de la primera pantalla
-    #         pantalla = pantallas[0]
-    #         return pantalla.width, pantalla.height
-    #     else:
-    #         return 1280, 720
         
-    def load_table(self):
-        pass
+        self.ui_list.label_list.mousePressEvent =  self.download_list
+        self.ui_list.label_list.enterEvent = self.mouse_over
+        self.ui_list.label_list.leaveEvent = self.mouse_out
+    
+    
+        
+    def download_list(self, event):
+        print("Descargando lista de estudiantes")
+        student_report_list = StudentListReport(self.student_list)
+        student_report_list.download_list()
+        self.message = MessageDialog("Reporte Guardado en Descargas")
+        self.message.show()
     
     def set_logos(self):
         pixmap1 = QPixmap("Assets/logo1.png")
@@ -344,8 +357,73 @@ class StudentList(QWidget):
             aspectRatioMode=False
             )
         )
+    
+    def mouse_over(self, event):
+        self.ui_list.label_list.setFont(self.font_over)
+    
+    def mouse_out(self, event):
+        self.ui_list.label_list.setFont(self.font_out)
+        
+    def set_table(self):
+        
+        self.table_reports = QTableWidget()
+        self.area_table = QWidget()
+        self.area_table_layout = QVBoxLayout()
+        self.area_table.setLayout(self.area_table_layout)
+        
+        self.area_table_layout.addWidget(self.table_reports)
         
         
+        self.ui_list.scrollArea.setWidgetResizable(True)
+        self.ui_list.scrollArea.setWidget(self.area_table)
         
+        self.table_reports.verticalHeader().setVisible(False)
+        # defino las columnas de la tabla
+        self.table_reports.setColumnCount(8)
+        self.table_reports.setHorizontalHeaderLabels(
+            [
+                'ID',
+                'Cedula',
+                'Apellido',
+                'Nombre',
+                'Fecha de nacimiento',
+                'Cedula Representante',
+                'Nombre Representante',
+                'Contacto'
+                      
+            ]
+        )
+        
+        self.table_reports.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.table_reports.setSelectionBehavior(QAbstractItemView.SelectRows)
+        
+        # hace que la ultima columna ocupe el espacio restante de la tabla
+        self.table_reports.horizontalHeader().setStretchLastSection(True)
+        
+        # este codigo hace que las columnas  no sean redimensionables
+        header = self.table_reports.horizontalHeader()
+        
+        for i in range(header.count()):
+            header.setSectionResizeMode(i,QHeaderView.ResizeToContents)
+            
+        
+    
+    def load_table(self):
+         # recuperar de la DB las sesiones del estudiante
+        if self.student_list:
+            # la lista contiene elementos
+            # Agregar las filas a la tabla
+            for i, est in enumerate(self.student_list):
+                self.table_reports.insertRow(i)
+                self.table_reports.setItem(i, 0, QTableWidgetItem(str(est.id)))
+                self.table_reports.setItem(i, 1, QTableWidgetItem(str(est.cedula)))
+                self.table_reports.setItem(i, 2, QTableWidgetItem(str(est.apellidos)))
+                self.table_reports.setItem(i, 3, QTableWidgetItem(str(est.nombres)))
+                self.table_reports.setItem(i, 4, QTableWidgetItem(est.fecha_nacimiento.strftime("%d/%m/%Y")))
+                self.table_reports.setItem(i, 5, QTableWidgetItem(str(est.cedula_representante)))
+                self.table_reports.setItem(i, 6, QTableWidgetItem(str(est.nombre_representante)))
+                self.table_reports.setItem(i, 7, QTableWidgetItem(str(est.telefonos)))
+                
+               
         
     

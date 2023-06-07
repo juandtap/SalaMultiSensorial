@@ -13,7 +13,7 @@
             /*width: 21cm;
             height: 29.7cm;*/
             margin: 0 auto;
-            font-size: 15px;
+            font-size: 14px;
             
         }
         
@@ -157,8 +157,8 @@
     <div class="header">
         <h2> <br/> <br/>  <br/> <br/> Sala Multisensorial</h2>
         <h2>El Tambo</h2>
-        <h3>Reporte General del Estudiante</h3>
-        <h3>Fecha: {{fecha_reporte}}</h3>
+        <h3>Lista de Estudiantes</h3>
+        <h3>Fecha: 07/06/2023 18:19</h3>
         <div class="container">
             <img src="logo1.png" alt="logo 1" class="top-left">
             <img src="logo2.png" alt="logo 2" class="top-right">
@@ -166,77 +166,144 @@
         
        
     </div>
-    <div class="student">
-        
-        <div class="student-more-info">
-            <div class="student-photo">
-                <img src="{{ estudiante['fotografia'] }}" alt="user_image">
-            </div>
-            <div class="student-discapacidad">
-                <p> <b>Cédula: </b> {{ estudiante['cedula'] }}</p>
-                <p> <b>Apellidos: </b> {{ estudiante['apellidos']}}</p>
-                <p> <b>Nombres: </b> {{ estudiante['nombres'] }} </p>
-                <p> <b>Edad: </b> {{estudiante['edad']}}</p>
-                
-            </div>
-        </div>
-        <div class="student-info">
-            
-            <p> <b>Fecha Nacimiento: </b>  {{estudiante['fecha_nacimiento']}} </p>
-            <p> <b>Cédula Representante: </b> {{estudiante['cedula_representante']}} </p>
-            <p> <b>Representante: </b> {{estudiante['representante']}}</p>
-            <p> <b>Dirección: </b> {{estudiante['direccion']}}</p>
-            <p> <b>Teléfonos Contacto: </b> {{estudiante['telefonos']}}</p>
-            <p> <b>Tiene Discapacidad: </b> {{estudiante['discapacidad']}}</p>
-            <p> <b>Discapacidad/es: </b> </p>
-            <ul>
-                {% for discapacidad in estudiante['discapacidades'] %}
-                    <li>{{ discapacidad.nombre_discapacidad}}</li>
-                {% endfor %}
-            </ul>
-                
-
-        </div>
-        
-    </div>
+   
 
     <div class="sesion">
-        <h3>Sesiones</h3>
+        <h3>Estudiantes</h3>
         <p> 
-            <b>Número de sesiones: </b>  {{estudiante['numero_sesiones']}} 
+            <b>N�mero de Estudiantes: </b>  11 
             <br><br>
-            <b>Ultima sesión:</b> {{ estudiante['ultima_sesion'] }} 
-            <br><br>
-            <b>Historial Sesiones:</b>
+            
         </p>
 
-        {% if sesiones %}
+        
         <table>
             <tr>
                 
-                <th>id</th>
-                <th>Fecha</th>
-                <th>Hora inicio</th>
-                <th>Hora fin</th>
+                
+                <th>Cedula</th>
+                <th>Apellido</th>
+                <th>Nombre</th>
+                <th>Nombre Representante</th>
+                <th>Contacto</th>
             </tr>
 
 
-            {% for sesion in sesiones %}
+            
             <tr>
                 
-                <td>{{ sesion.id }}</td>
-                <td>{{ sesion.fecha.strftime("%d/%m/%Y") }}</td>
-                <td>{{ sesion.hora_inicio.strftime("%H:%M") }}</td>
-                <td>{{ sesion.hora_fin.strftime("%H:%M") }}</td>
+                <td>0000000000</td>
+                <td>USUARIO</td>
+                <td>INVITADO</td>
+                <td>USUARIO DE PRUEBAS</td>
+                <td>00000000</td>
             </tr>
 
-            {% endfor %}
+            
+            <tr>
+                
+                <td>0105922447</td>
+                <td>TAPIA VASQUEZ</td>
+                <td>PABLO ARIEL</td>
+                <td>JAIME TAPIA</td>
+                <td>0956231522, 1800-899-965</td>
+            </tr>
+
+            
+            <tr>
+                
+                <td>0123456789</td>
+                <td>Ramos Vasquez</td>
+                <td>Mateo David</td>
+                <td>Cecilia Vasquez</td>
+                <td>098756328, 2058964</td>
+            </tr>
+
+            
+            <tr>
+                
+                <td>0321654987</td>
+                <td>Tapia Vasquez </td>
+                <td>Franklin Santiago</td>
+                <td>Lizandro Vasquez</td>
+                <td>180089654</td>
+            </tr>
+
+            
+            <tr>
+                
+                <td>0101010101</td>
+                <td>Sin Apellido</td>
+                <td>Sin Nombre</td>
+                <td>Sin Nombre</td>
+                <td></td>
+            </tr>
+
+            
+            <tr>
+                
+                <td>0105649785</td>
+                <td>BACULIMA PAUCAR</td>
+                <td>DIANA CAROLINA</td>
+                <td></td>
+                <td>456789123</td>
+            </tr>
+
+            
+            <tr>
+                
+                <td>0109522857</td>
+                <td>CHACON</td>
+                <td>NATHALIA</td>
+                <td>JUAN DIEGO JARA</td>
+                <td>467825623, 03265985</td>
+            </tr>
+
+            
+            <tr>
+                
+                <td>0102233445</td>
+                <td>VASQUEZ TAPIA</td>
+                <td>DIEGO JUAN</td>
+                <td>RODRIGO VASQUEZ</td>
+                <td>098456239</td>
+            </tr>
+
+            
+            <tr>
+                
+                <td>0103366333</td>
+                <td>CAMPOVERDE</td>
+                <td>KARLA</td>
+                <td>MAMA DE KARLA</td>
+                <td>48566565, 56565656</td>
+            </tr>
+
+            
+            <tr>
+                
+                <td>0302226345</td>
+                <td>TAPIA PARAMO</td>
+                <td>CRISTIAN EDUARDO</td>
+                <td>EDUARDO TAPIA</td>
+                <td>095685622</td>
+            </tr>
+
+            
+            <tr>
+                
+                <td>0100759815</td>
+                <td>RIVERA</td>
+                <td>LIZANDRO</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            
 
 
         </table>
-        {% else %}
-        <p>No hay datos disponibles.</p>
-        {% endif %}
+        
 
 
        

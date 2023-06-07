@@ -13,7 +13,7 @@
             /*width: 21cm;
             height: 29.7cm;*/
             margin: 0 auto;
-            font-size: 15px;
+            font-size: 14px;
             
         }
         
@@ -157,7 +157,7 @@
     <div class="header">
         <h2> <br/> <br/>  <br/> <br/> Sala Multisensorial</h2>
         <h2>El Tambo</h2>
-        <h3>Reporte General del Estudiante</h3>
+        <h3>Lista de Estudiantes</h3>
         <h3>Fecha: {{fecha_reporte}}</h3>
         <div class="container">
             <img src="logo1.png" alt="logo 1" class="top-left">
@@ -166,68 +166,37 @@
         
        
     </div>
-    <div class="student">
-        
-        <div class="student-more-info">
-            <div class="student-photo">
-                <img src="{{ estudiante['fotografia'] }}" alt="user_image">
-            </div>
-            <div class="student-discapacidad">
-                <p> <b>Cédula: </b> {{ estudiante['cedula'] }}</p>
-                <p> <b>Apellidos: </b> {{ estudiante['apellidos']}}</p>
-                <p> <b>Nombres: </b> {{ estudiante['nombres'] }} </p>
-                <p> <b>Edad: </b> {{estudiante['edad']}}</p>
-                
-            </div>
-        </div>
-        <div class="student-info">
-            
-            <p> <b>Fecha Nacimiento: </b>  {{estudiante['fecha_nacimiento']}} </p>
-            <p> <b>Cédula Representante: </b> {{estudiante['cedula_representante']}} </p>
-            <p> <b>Representante: </b> {{estudiante['representante']}}</p>
-            <p> <b>Dirección: </b> {{estudiante['direccion']}}</p>
-            <p> <b>Teléfonos Contacto: </b> {{estudiante['telefonos']}}</p>
-            <p> <b>Tiene Discapacidad: </b> {{estudiante['discapacidad']}}</p>
-            <p> <b>Discapacidad/es: </b> </p>
-            <ul>
-                {% for discapacidad in estudiante['discapacidades'] %}
-                    <li>{{ discapacidad.nombre_discapacidad}}</li>
-                {% endfor %}
-            </ul>
-                
-
-        </div>
-        
-    </div>
+   
 
     <div class="sesion">
-        <h3>Sesiones</h3>
+        <h3>Estudiantes</h3>
         <p> 
-            <b>Número de sesiones: </b>  {{estudiante['numero_sesiones']}} 
+            <b>Número de Estudiantes: </b>  {{numero_estudiantes}} 
             <br><br>
-            <b>Ultima sesión:</b> {{ estudiante['ultima_sesion'] }} 
-            <br><br>
-            <b>Historial Sesiones:</b>
+            
         </p>
 
-        {% if sesiones %}
+        {% if estudiantes %}
         <table>
             <tr>
                 
-                <th>id</th>
-                <th>Fecha</th>
-                <th>Hora inicio</th>
-                <th>Hora fin</th>
+                
+                <th>Cedula</th>
+                <th>Apellido</th>
+                <th>Nombre</th>
+                <th>Nombre Representante</th>
+                <th>Contacto</th>
             </tr>
 
 
-            {% for sesion in sesiones %}
+            {% for estudiante in estudiantes %}
             <tr>
                 
-                <td>{{ sesion.id }}</td>
-                <td>{{ sesion.fecha.strftime("%d/%m/%Y") }}</td>
-                <td>{{ sesion.hora_inicio.strftime("%H:%M") }}</td>
-                <td>{{ sesion.hora_fin.strftime("%H:%M") }}</td>
+                <td>{{ estudiante.cedula }}</td>
+                <td>{{ estudiante.apellidos }}</td>
+                <td>{{ estudiante.nombres }}</td>
+                <td>{{ estudiante.nombre_representante }}</td>
+                <td>{{estudiante.telefonos}}</td>
             </tr>
 
             {% endfor %}

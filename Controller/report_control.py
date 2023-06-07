@@ -5,6 +5,7 @@
 # La clase GeneralReport envia los datos generales del estudiante y las sesiones trabajadas 
 # hasta el momento a la otra plantilla HTML y luego a PDF
 
+# La clase StudentListReport se usa para mostrar una lista de todos los estudiantes
 
 import sys
 import os, io
@@ -247,3 +248,56 @@ class GeneralReport:
             age -= 1
             
         return age  
+    
+
+class StudentListReport:
+    def __init__(self, student_list):
+        self.student_list = student_list
+        
+    def download_list(self):
+        
+       
+        # fecha y hora en la que se descarga la lista 
+        current_date = datetime.now()
+       
+        
+        # Cargar la plantilla 
+        env = Environment(loader=FileSystemLoader('Assets/plantilla_reportes'))
+        template = env.get_template('student_list_template.html')
+        
+        # Renderizar la plantilla html
+        output = template.render(
+            estudiantes = self.student_list,
+            fecha_reporte = current_date.strftime("%d/%m/%Y %H:%M"),
+            numero_estudiantes = len(self.student_list)
+        )
+        
+        # Guardar el resultado como archivo HTML
+        with open('Assets/SessionReports/lista_estudiantes.html', 'w') as file:
+            file.write(output)
+            
+         # Obtener la ruta por defecto de la carpeta "Descargas"
+        default_folder = QStandardPaths.writableLocation(QStandardPaths.DownloadLocation)
+        default_pdf_name = os.path.join(
+            default_folder,
+            "lista_estudiantes.pdf"
+        )
+
+        
+        docpdf = HTML(string=output, base_url='Assets/SessionReports/')
+        
+        options = QFileDialog.Options()
+        
+        # esta linea evita usar el dialogo nativo del SO
+        #options |= QFileDialog.DontUseNativeDialog
+        
+        file_path, _ = QFileDialog.getSaveFileName(None, "Guardar Lista Estudiantes PDF",default_pdf_name, "PDF (*.pdf)", options=options)
+        
+        if file_path:
+            # Guardar el archivo PDF resultante en la ruta seleccionada
+            if not file_path.lower().endswith(".pdf"):
+                file_path += ".pdf"
+            
+            docpdf.write_pdf(file_path)
+
+            print("lista de estudiantes PDF guardado en :"+file_path)
