@@ -3,7 +3,7 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QCompleter, QFileDialog
 from PyQt5 import QtGui, QtCore
-from PyQt5.QtGui import QPixmap, QIntValidator
+from PyQt5.QtGui import QPixmap, QIntValidator, QFont
 from PyQt5.QtCore import Qt
 
 from datetime import date
@@ -11,7 +11,7 @@ from datetime import date
 from View.main_window_view import Ui_MainWindow
 from View.add_student_view import Ui_Add_student
 
-from View.components import CheckableComboBox, MessageDialog, AddSchool, AddDiscapacidad, EditStudent
+from View.components import CheckableComboBox, MessageDialog, AddSchool, AddDiscapacidad, EditStudent, StudentList
 from View.module_components import ModuleSelection
 from View.components_2 import StudentReport
 from Controller.student_control import add_student_control, get_all_students, get_student_by_id, get_student_by_cedula, get_student_by_names
@@ -25,6 +25,15 @@ class MainWindow(QMainWindow):
         self.ui_main = Ui_MainWindow()
         self.ui_main.setupUi(self)
         self.ui_main.scrollArea_info_estudiante.setHidden(True)
+        # Fuente label 
+        self.font_in = QFont('Arial',10,1,True)
+        self.font_in.setBold(True)
+        self.font_in.setUnderline(True)
+        self.font_out = QFont('Arial',10,1,True)
+        self.font_out.setBold(False)
+        self.font_out.setUnderline(True)
+        
+        self.ui_main.label_list.setFont(self.font_out)
         
         self.set_logos()
         
@@ -58,6 +67,12 @@ class MainWindow(QMainWindow):
         # boton de selccion de usuario invitado
         self.ui_main.pushButton_reportes.clicked.connect(self.open_guest_user)
         
+        # eventos para la label Ver lista de estudiantes
+        self.ui_main.label_list.mousePressEvent = self.show_student_list
+        self.ui_main.label_list.enterEvent = self.mouse_over
+        self.ui_main.label_list.leaveEvent = self.mouse_out
+        
+        
     def open_add_student(self):
         self.add_stu = AddStudent()
         self.add_stu.show()
@@ -88,17 +103,18 @@ class MainWindow(QMainWindow):
             )
         )
     
-    # no se esta llamando, considerar eliminar este metodo
-    def show_student_list(self):
-        student_list = get_all_students()
-        new_list = []
-        if student_list is not None:
-            for st in student_list:
-                new_list.append(st.apellidos+' '+st.nombres+' - '+st.cedula)
+    # Eventos para la label para ver y descargar (PDF) la lista de todos los estudiantes registrados
+    
+   
+    def show_student_list(self, event):
+        self.list_window = StudentList()
+        self.list_window.show()
         
-        self.ui_main.listWidget_estudiantes.addItems(new_list)
-        return new_list
-        # self.ui_main.listWidget_estudiantes.setModel(list_model)
+    def mouse_over(self, event):
+        self.ui_main.label_list.setFont(self.font_in)
+    
+    def mouse_out(self, event):
+        self.ui_main.label_list.setFont(self.font_out)
 
     def show_info_student(self):
         selected_student = self.ui_main.listWidget_estudiantes.selectedItems()[0].text()

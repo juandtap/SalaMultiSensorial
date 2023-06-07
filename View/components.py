@@ -1,18 +1,23 @@
+# En este modulo se encuentran las clases para :
+# agregar Unidades Educatuvias, Discapacidades, Editar Estudiante, Mostrar la lista de estudiantes
+# el combobox con chekitems  y la ventana de dialogo
+
 import sys
 sys.path.append(".")
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QFileDialog
 from PyQt5.QtCore import Qt, QDate
-from PyQt5.QtGui import QIntValidator
+from PyQt5.QtGui import QIntValidator, QPixmap
 from View.message_dialog_view import Ui_Message_dialog
 from View.add_discapacidad_view import Ui_Agregar_Discapacidades
 from View.add_school_view import Ui_add_Unidad_Educativa
 from Controller.school_control import add_school_control, get_all_schools
 from Controller.discapacidad_control import add_discapacidad_control
 from View.edit_student_view import Ui_Add_student
-from Controller.student_control import update_student
+from Controller.student_control import update_student, get_all_students
 from Controller.discapacidad_control import get_all_discapacidades
-
+from View.student_list_view import Ui_Form_student_list
 from datetime import date
+from screeninfo import get_monitors
 
 
 class AddSchool(QWidget):
@@ -298,6 +303,49 @@ class EditStudent(QWidget):
 class StudentList(QWidget):
     def __init__(self):
         super().__init__()
-        self.ui_list = None
+        self.ui_list = Ui_Form_student_list()
+        self.ui_list.setupUi(self)
+        # self.set_size()
+        self.set_logos()
+        # width, height = self.set_size()
+        # self.setGeometry(0, 0, width, height)
+        
+        # guardo todos los estudiantes en la lista
+        self.student_list = get_all_students()
+        # y muestro los datos en la tabla
+        print("recuperado la lista de estudiantes")
+    
+    # def set_size(self):
+    #     pantallas = get_monitors()
+    #     if len(pantallas) > 0:
+    #         # Obtener la resolución de la primera pantalla
+    #         pantalla = pantallas[0]
+    #         return pantalla.width, pantalla.height
+    #     else:
+    #         return 1280, 720
+        
+    def load_table(self):
+        pass
+    
+    def set_logos(self):
+        pixmap1 = QPixmap("Assets/logo1.png")
+        self.ui_list.label_logo1.setPixmap(
+            pixmap1.scaled(
+            self.ui_list.label_logo1.width(),
+            self.ui_list.label_logo1.height(),
+            aspectRatioMode=False
+            )
+        )
+        pixmap2 = QPixmap("Assets/logo2.png")
+        self.ui_list.label_logo2.setPixmap(
+            pixmap2.scaled(
+            self.ui_list.label_logo2.width(),
+            self.ui_list.label_logo2.height(),
+            aspectRatioMode=False
+            )
+        )
+        
+        
+        
         
     

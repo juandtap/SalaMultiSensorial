@@ -47,6 +47,16 @@ class Ui_MainWindow(object):
         self.label_logo2.setGeometry(QtCore.QRect(1010,0,270,140))
         self.label_logo2.setObjectName("label_logo2")
         
+        # label para mostrar la lista de estudiantes
+        self.label_list = QtWidgets.QLabel(self.centralwidget)
+        self.label_list.setGeometry(QtCore.QRect(20,645,200,20))
+        self.label_list.setObjectName("label_list")
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        self.label_list.setFont(font)
+        
+        
         self.pushButton_add_estudiante.setObjectName("pushButton_add_estudiante")
         self.listWidget_estudiantes = QtWidgets.QListWidget(self.centralwidget)
         self.listWidget_estudiantes.setGeometry(QtCore.QRect(20, 180, 441, 461))
@@ -383,3 +393,4 @@ class Ui_MainWindow(object):
         self.pushButton_edit_estudiante.setText(_translate("MainWindow", "Editar"))
         self.label.setText(_translate("MainWindow", "Sala Multisensorial"))
         self.pushButton_reportes.setText(_translate("MainWindow", "Invitado"))
+        self.label_list.setText(_translate("MainWindow","Ver Lista de estudiantes"))
