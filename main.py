@@ -4,7 +4,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QCompleter, QFileDialog
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtGui import QPixmap, QIntValidator, QFont
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QStandardPaths
 
 from datetime import date
 
@@ -345,7 +345,10 @@ class AddStudent(QWidget):
         self.add_discapacidad.show()
         
     def load_image(self):
-        self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
+        folder_path = QStandardPaths.writableLocation(QStandardPaths.DownloadLocation)
+        file_dialog = QFileDialog()
+        file_dialog.setDirectory(folder_path)
+        self.filename = file_dialog.getOpenFileName(filter="Image (*.*)")[0]
         print(self.filename)
         self.ui_addstu.label_file_name.setText(self.filename)
        

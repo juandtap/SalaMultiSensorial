@@ -5,7 +5,7 @@
 import sys
 sys.path.append(".")
 from PyQt5.QtWidgets import  QVBoxLayout, QWidget, QComboBox, QFileDialog, QTableWidget, QTableWidgetItem, QAbstractItemView, QHeaderView
-from PyQt5.QtCore import Qt, QDate
+from PyQt5.QtCore import Qt, QDate, QStandardPaths
 from PyQt5.QtGui import QIntValidator, QPixmap, QFont
 from View.message_dialog_view import Ui_Message_dialog
 from View.add_discapacidad_view import Ui_Agregar_Discapacidades
@@ -260,7 +260,10 @@ class EditStudent(QWidget):
             self.ui_edit.lineEdit_cedula_representante.setCursorPosition(10)
             
     def load_image(self):
-        self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
+        folder_path = QStandardPaths.writableLocation(QStandardPaths.DownloadLocation)
+        file_dialog = QFileDialog()
+        file_dialog.setDirectory(folder_path)
+        self.filename = file_dialog.getOpenFileName(filter="Image (*.*)")[0]
         print(self.filename)
         self.ui_edit.label_file_name.setText(self.filename)
     
