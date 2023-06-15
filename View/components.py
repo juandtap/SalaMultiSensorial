@@ -339,9 +339,9 @@ class StudentList(QWidget):
     def download_list(self, event):
         print("Descargando lista de estudiantes")
         student_report_list = StudentListReport(self.student_list)
-        student_report_list.download_list()
-        self.message = MessageDialog("Reporte Guardado en Descargas")
-        self.message.show()
+        if student_report_list.download_list():
+            self.message = MessageDialog("Reporte Guardado en Descargas")
+            self.message.show()
     
     def set_logos(self):
         pixmap1 = QPixmap("Assets/logo1.png")

@@ -87,20 +87,26 @@ class StudentReport(QWidget):
     
     # Si self.flag = True se descarga el reporte general
     # caso contrario se descarga el reporte de sesion
+    
     def get_report(self, event):
         if self.flag_download:
             print("Se descarga reporte General")
             general_report = GeneralReport(self.student)
-            general_report.download_general_report()
+            # se se guarda el reporte en la PC se muestra el mensaje
+            if general_report.download_general_report():
+                self.message = MessageDialog("Reporte Guardado en Descargas")
+                self.message.show()
+            
             
         else:
             print("Se descarga reporte de Sesion")
             print("sesion seleccionada: "+str(self.sesion_selected.id))
             sesion_report = Report(self.student, self.sesion_selected.id)
-            sesion_report.download_report()
+            if sesion_report.download_report():
+                self.message = MessageDialog("Reporte Guardado en Descargas")
+                self.message.show()
         
-        self.message = MessageDialog("Reporte Guardado en Descargas")
-        self.message.show()
+        
             
         
     def set_logos(self):

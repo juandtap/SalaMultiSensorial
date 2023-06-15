@@ -129,6 +129,10 @@ class Report:
             docpdf.write_pdf(file_path)
 
             print("reporte PDF guardado en :"+file_path)
+            # retorna True si se presiono el boton de guardar de la ventana de dialogo del explorador de archivos
+            return True
+        else:
+            return False
             
         
         
@@ -234,6 +238,10 @@ class GeneralReport:
             docpdf.write_pdf(file_path)
 
             print("reporte general PDF guardado en :"+file_path)
+            # retorna True si se presiono el boton de guardar de la ventana de dialogo del explorador de archivos
+            return True
+        else:
+            return False
         
         
     def calculate_age(self, date):
@@ -288,9 +296,6 @@ class StudentListReport:
         
         options = QFileDialog.Options()
         
-        # esta linea evita usar el dialogo nativo del SO
-        #options |= QFileDialog.DontUseNativeDialog
-        
         file_path, _ = QFileDialog.getSaveFileName(None, "Guardar Lista Estudiantes PDF",default_pdf_name, "PDF (*.pdf)", options=options)
         
         if file_path:
@@ -301,3 +306,7 @@ class StudentListReport:
             docpdf.write_pdf(file_path)
 
             print("lista de estudiantes PDF guardado en :"+file_path)
+            # retorna True si se selecciona un lugar donde guardar, False si no
+            return True
+        else:
+            return False
