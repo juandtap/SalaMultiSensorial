@@ -27,7 +27,7 @@ class Ui_Add_student(object):
         self.label.setGeometry(QtCore.QRect(510, 40, 241, 51))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(16)
+        font.setPointSize(18)
         self.label.setFont(font)
         self.label.setStyleSheet("color: rgb(56, 71, 151);")
         self.label.setObjectName("label")
