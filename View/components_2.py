@@ -227,9 +227,9 @@ class StudentReport(QWidget):
         elif column == download_pos:
             print("Se descarga reporte de la sesion "+id_ses)
             report = Report(self.student, id_ses)
-            report.download_report()
-            self.message = MessageDialog("Reporte guardado en Descargas")
-            self.message.show()
+            if report.download_report():
+                self.message = MessageDialog("Reporte guardado en Descargas")
+                self.message.show()
             
        
 
