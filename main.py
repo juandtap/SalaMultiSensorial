@@ -37,6 +37,8 @@ class MainWindow(QMainWindow):
         
         self.set_logos()
         
+        # revisa si hay un usuario de prueba, si no lo crea, el usuario de prueba es siempre el id=1
+        self.check_guest_user()
         # campo de discapacidades del estudiante no son editables
         self.ui_main.textEdit_discapacidad_est.setReadOnly(True)
         
@@ -209,11 +211,41 @@ class MainWindow(QMainWindow):
     def get_selected_cedula(self, selected_student):
         return selected_student.split('-')[-1].strip()
     
+    
+    def check_guest_user(self):
+        guest = get_student_by_id(1)
+        if guest is None:
+            print("No existe usuario Invitado, creando ...")
+            #crea el usuario invitado siempre que la DB sea reiniciada
+            guest_estudent = [
+                "000000000",
+                "ESTUDIANTE",
+                "INVITADO",
+                "000000001",
+                "ESTUDIANTE DE PRUEBA",
+                date(2015,1,1),
+                "",
+                "",
+                False,
+                None,
+                0,
+                [],
+                
+            ]
+            if add_student_control(guest_estudent):
+                print("USUARIO INVITADO CREADO!")
+        else:
+            print("Usuario invitado encontrado")
+    
     def open_guest_user(self):
         # el usario invitado es el que tiene el id=1
+        
         guest = get_student_by_id(1)
+        
         self.load_info_student(guest)
         self.ui_main.scrollArea_info_estudiante.setHidden(False)
+        
+            
     
     def open_modules(self):
         self.modules = ModuleSelection(get_student_by_cedula(self.ui_main.label_cedula.text()))
@@ -228,10 +260,7 @@ class AddStudent(QWidget):
         self.filename = None
         self.ui_addstu.pushButton_cancel.clicked.connect(self.close)
         self.ui_addstu.pushButton_add_unidad_educativa.clicked.connect(self.open_add_school)
-        self.setFocus()
-        # flags para recargar datos de los ComboBox
-        self.reload_flag = False
-        app.focusChanged.connect(self.on_focus_change)
+        
         
         # placeholder Telefono
         self.ui_addstu.lineEdit_telefono.setPlaceholderText("numero 1, numero 2, ...")
@@ -274,19 +303,21 @@ class AddStudent(QWidget):
         # guardar estudiante
         self.ui_addstu.pushButton_save.clicked.connect(self.add_student)
         
-    def on_focus_change(self):
-       
-        if not self.isActiveWindow():
-            self.reload_flag = True
-    
-        if self.isActiveWindow() and self.reload_flag:
+    def reload_combo_schools(self, flag):
+        if flag:
             self.load_schools()
+            print("combo unidades educativas recargado")
+            
+    def reload_combo_discapacidades(self, flag):
+        if flag:
             self.load_discapacidades()
-            print("combos recargados")
-            self.reload_flag = False
+            print("combo discapacidades recargado")
+    
+    
     
     def open_add_school(self):
         self.add_shool = AddSchool()
+        self.add_shool.reload_flag.connect(self.reload_combo_schools)
         self.add_shool.show()
         
     def load_schools(self):
@@ -342,6 +373,7 @@ class AddStudent(QWidget):
     
     def open_add_discapacidad(self):
         self.add_discapacidad = AddDiscapacidad()
+        self.add_discapacidad.reload_flag.connect(self.reload_combo_discapacidades)
         self.add_discapacidad.show()
         
     def load_image(self):

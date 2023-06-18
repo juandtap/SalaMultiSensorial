@@ -5,7 +5,7 @@
 import sys
 sys.path.append(".")
 from PyQt5.QtWidgets import  QVBoxLayout, QWidget, QComboBox, QFileDialog, QTableWidget, QTableWidgetItem, QAbstractItemView, QHeaderView
-from PyQt5.QtCore import Qt, QDate, QStandardPaths
+from PyQt5.QtCore import Qt, QDate, QStandardPaths, pyqtSignal
 from PyQt5.QtGui import QIntValidator, QPixmap, QFont
 from View.message_dialog_view import Ui_Message_dialog
 from View.add_discapacidad_view import Ui_Agregar_Discapacidades
@@ -22,6 +22,10 @@ from Controller.report_control import StudentListReport
 
 
 class AddSchool(QWidget):
+    
+    # envia True a la ventana para recargar el combo de Unidades Educativas
+    reload_flag = pyqtSignal(bool)
+    
     def __init__(self):
         super().__init__()
         self.ui_add_school = Ui_add_Unidad_Educativa()
@@ -41,6 +45,7 @@ class AddSchool(QWidget):
                 self.new_message = MessageDialog("Unidad Educativa Agregada!")
                 self.new_message.show()
                 self.ui_add_school.lineEdit_name_unidad_educativa.clear()
+                self.reload_flag.emit(True)
             else:
                 self.new_message = MessageDialog("Unidad Educativa ya existe!")
                 self.new_message.show()
@@ -52,6 +57,7 @@ class AddSchool(QWidget):
             
 
 class AddDiscapacidad(QWidget):
+    reload_flag = pyqtSignal(bool)
     def __init__(self):
         super().__init__()
         self.ui_add_dis = Ui_Agregar_Discapacidades()
@@ -70,6 +76,7 @@ class AddDiscapacidad(QWidget):
                 self.new_message = MessageDialog("Discapacidad Agregada!")
                 self.new_message.show()
                 self.ui_add_dis.line_discapacidad.clear()
+                self.reload_flag.emit(True)
             else:
                 self.new_message = MessageDialog("Discapacidad ya existe!")
                 self.new_message.show()
