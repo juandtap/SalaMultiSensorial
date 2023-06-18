@@ -29,9 +29,9 @@ class Estudiante(Base):
     fotografia = Column(LargeBinary)
     id_unidad_educativa = Column(Integer, ForeignKey('unidad_educativa.id'))
     
-    discapacidades = relationship('Discapacidad',secondary='estudiante_discapacidad', back_populates='estudiantes')
+    discapacidades = relationship('Discapacidad',secondary='estudiante_discapacidad', back_populates='estudiantes', passive_deletes=True)
     
-    sesiones = relationship('Sesion', backref='estudiante')
+    sesiones = relationship('Sesion', backref='estudiante',  cascade="all, delete")
    
     # extend_existing=True
     
@@ -52,8 +52,8 @@ class Discapacidad(Base):
 
 
 estudiante_discapacidad = Table('estudiante_discapacidad', Base.metadata,
-    Column('estudiante_id', Integer, ForeignKey('estudiante.id')),
-    Column('discapacidad_id', Integer, ForeignKey('discapacidad.id'))
+    Column('estudiante_id', Integer, ForeignKey('estudiante.id', ondelete="CASCADE")),
+    Column('discapacidad_id', Integer, ForeignKey('discapacidad.id', ondelete="CASCADE"))
 )
 
 class Sesion(Base):

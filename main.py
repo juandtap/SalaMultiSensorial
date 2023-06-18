@@ -216,7 +216,7 @@ class MainWindow(QMainWindow):
         guest = get_student_by_id(1)
         if guest is None:
             print("No existe usuario Invitado, creando ...")
-            #crea el usuario invitado siempre que la DB sea reiniciada
+            #crea el usuario invitado siempre que la base de datos sea  eliminada
             guest_estudent = [
                 "000000000",
                 "ESTUDIANTE",

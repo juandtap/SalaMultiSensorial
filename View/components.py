@@ -13,9 +13,10 @@ from View.add_school_view import Ui_add_Unidad_Educativa
 from Controller.school_control import add_school_control, get_all_schools
 from Controller.discapacidad_control import add_discapacidad_control
 from View.edit_student_view import Ui_Add_student
-from Controller.student_control import update_student, get_all_students
+from Controller.student_control import update_student, get_all_students, delete_student_by_id
 from Controller.discapacidad_control import get_all_discapacidades
 from View.student_list_view import Ui_Form_student_list
+from View.confirm_dialog_view import Ui_confirm_dialog
 from datetime import date
 from screeninfo import get_monitors
 from Controller.report_control import StudentListReport
@@ -96,6 +97,27 @@ class MessageDialog(QWidget):
         self.ui_message.label_message.setText(self.message)
         self.ui_message.pushButton_accept_dialog.clicked.connect(self.close)
 
+class ConfirmDialog(QWidget):
+    # envia true si SI, false si NO
+    user_response = pyqtSignal(bool)
+    
+    def __init__(self, message):
+        super().__init__()
+        self.uiconf = Ui_confirm_dialog()
+        self.uiconf.setupUi(self)
+        self.message = message
+        self.uiconf.label_message.setText(self.message)
+        self.uiconf.pushButton_yes.clicked.connect(self.yes_option)
+        self.uiconf.pushButton_no.clicked.connect(self.no_option)
+        
+    def yes_option(self):
+        self.user_response.emit(True)
+        self.close()
+    
+    def no_option(self):
+        self.user_response.emit(False)
+        self.close()
+
 class CheckableComboBox(QComboBox):
 	def __init__(self):
 		super().__init__()
@@ -164,8 +186,51 @@ class EditStudent(QWidget):
         self.ui_edit.pushButton_cancel.clicked.connect(self.close)
         self.ui_edit.pushButton_save.clicked.connect(self.edit_student)
         self.ui_edit.pushButton_load_picture.clicked.connect(self.load_image)
+        self.ui_edit.pushButton_delete.clicked.connect(self.delete_student)
+        
+        self.check_guest_user()
         
         self.load_info_student()
+        
+    def check_guest_user(self):
+        if self.student.id == 1:
+            self.ui_edit.lineEdit_cedula.setReadOnly(True)
+            self.ui_edit.lineEdit_apellido.setReadOnly(True)
+            self.ui_edit.lineEdit_nombre.setReadOnly(True)
+            self.ui_edit.lineEdit_cedula_representante.setReadOnly(True)
+            self.ui_edit.lineEdit_representante.setReadOnly(True)
+            
+    
+    def delete_student(self):
+        print("Confirmar eliminacion de estudiante: ")
+        self.confirm_dialog = ConfirmDialog("Seguro que desea eliminar ?")
+        self.confirm_dialog.user_response.connect(self.confirm_delete_action)
+        self.confirm_dialog.show()
+        
+    def confirm_delete_action(self, reponse):
+        if reponse:
+            print("Si, se eliminar el usuario")
+            if self.student.id == 1:
+                print("Usuario Invitado no puede eliminarse")
+                self.message_dialog = MessageDialog("Invitado no puede eliminarse!")
+                self.message_dialog.show()
+                self.close()
+            else:
+                print("eliminando estudiante...")
+                if delete_student_by_id(self.student.id):
+                    print("estudiante eliminado")
+                    self.message_dialog = MessageDialog("Estudiante Eliminado!")
+                    self.message_dialog.show()
+                    self.close()
+                else:
+                    self.message_dialog = MessageDialog("Error al eliminar!")
+                    self.message_dialog.show()
+                    self.close()
+                    
+                    
+        else:
+            print("No, se cancela")
+            
     
     def load_schools(self):
         self.ui_edit.comboBox_unidad_educativa.clear()
@@ -277,7 +342,7 @@ class EditStudent(QWidget):
     def edit_student(self):
         
         flag = False
-        
+              
         new_student_data = [
             self.ui_edit.lineEdit_cedula.text(),
             self.ui_edit.lineEdit_apellido.text(),
@@ -296,9 +361,9 @@ class EditStudent(QWidget):
             self.ui_edit.comboBox_unidad_educativa.currentIndex(),
             self.get_student_discapacidades(),
         ]
-        
+     
         flag = update_student(self.student.id,new_student_data)
-        
+           
         if flag:
             self.edit_message = MessageDialog("Datos Estudiante Actualizados")
             self.edit_message.show()

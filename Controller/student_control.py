@@ -107,3 +107,15 @@ def update_student(student_id, new_student_data):
     session.commit()
     session.close()
     return True
+
+# DELETE
+
+def delete_student_by_id(student_id):
+    student_to_delete = session.query(Estudiante).filter_by(id=student_id).first()
+    if student_to_delete:
+        session.delete(student_to_delete)
+        session.commit()
+        session.close()
+        return True
+    else:
+        return False
