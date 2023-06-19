@@ -41,16 +41,21 @@ class Report:
         
         # Recuperar la foto de la base de datos
         fotografia = self.student.fotografia
-        photo_name = 'fotografia_estudiante'
-        # extrae la extencion de la foto alamacenada (png, jpg, ...)
-        imagen = Image.open(io.BytesIO(fotografia))
-        extention = imagen.format.lower()
         
-        photo_path = os.path.join('Assets/SessionReports/', photo_name + '.' + extention)
-        with open(photo_path, 'wb') as photo_file:
-            photo_file.write(fotografia)
-        
-        print("Fotografia estudiante recuperada en : "+photo_path)
+        if fotografia is not None:
+            imagen = Image.open(io.BytesIO(fotografia))
+             # extrae la extencion de la foto alamacenada (png, jpg, ...)
+            extention = imagen.format.lower()
+            photo_name = 'fotografia_estudiante'
+            photo_path = os.path.join('Assets/SessionReports/', photo_name + '.' + extention)
+            with open(photo_path, 'wb') as photo_file:
+                photo_file.write(fotografia)
+            
+            print("Fotografia estudiante recuperada en : "+photo_path)
+        else:
+            print("estudiante sin fotografia")
+            photo_name = "Sin Imagen"
+            extention = ""
         
         student_info = {
             'cedula' : self.student.cedula,
@@ -168,17 +173,23 @@ class GeneralReport:
         
         # Recuperar la foto de la base de datos
         fotografia = self.student.fotografia
-        photo_name = 'fotografia_estudiante'
-        # extrae la extencion de la foto alamacenada (png, jpg, ...)
-        imagen = Image.open(io.BytesIO(fotografia))
-        extention = imagen.format.lower()
+        if fotografia is not None:
+            photo_name = 'fotografia_estudiante'
+            # extrae la extencion de la foto alamacenada (png, jpg, ...)
+            imagen = Image.open(io.BytesIO(fotografia))
+            extention = imagen.format.lower()
         
-        photo_path = os.path.join('Assets/SessionReports/', photo_name + '.' + extention)
-        with open(photo_path, 'wb') as photo_file:
-            photo_file.write(fotografia)
-        
-        print("Fotografia estudiante recuperada en : "+photo_path)
-        
+            photo_path = os.path.join('Assets/SessionReports/', photo_name + '.' + extention)
+            with open(photo_path, 'wb') as photo_file:
+                photo_file.write(fotografia)
+            
+            print("Fotografia estudiante recuperada en : "+photo_path)
+            
+        else:
+            print("estudiante sin fotografia")
+            photo_name= "Sin imagen"
+            extention = ""
+            
         student_info = {
             'cedula' : self.student.cedula,
             'apellidos': self.student.apellidos,
