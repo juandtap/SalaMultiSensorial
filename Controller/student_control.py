@@ -13,7 +13,7 @@ def add_student_control(student_data):
         
         # convertir imagen a bytes
         # el string con el path de la imagen esta en la posicion 9 student_data[9]
-        if student_data[9] is not None:
+        if student_data[9] is not None and student_data[9] != "":
             with open(student_data[9], "rb") as image_file:
                 image_bytes = image_file.read()
         else: image_bytes = None
@@ -77,7 +77,7 @@ def get_student_by_names(search_text):
 def update_student(student_id, new_student_data):
     student_to_update = session.query(Estudiante).filter_by(id=student_id).first()
     
-    if new_student_data[9] is not None:
+    if new_student_data[9] is not None and new_student_data[9] != "":
         with open(new_student_data[9], "rb") as image_file:
             image_bytes = image_file.read()
     else: image_bytes = None

@@ -189,25 +189,46 @@ class GeneralReport:
             print("estudiante sin fotografia")
             photo_name= "Sin imagen"
             extention = ""
+        
+        if len(self.student.sesiones) > 0:
+         
+            student_info = {
+                'cedula' : self.student.cedula,
+                'apellidos': self.student.apellidos,
+                'nombres' : self.student.nombres,
+                'cedula_representante': self.student.cedula_representante,
+                'representante': self.student.nombre_representante,
+                'telefonos': self.student.telefonos,
+                'direccion': self.student.direccion,
+                'discapacidad': flag_discapacidad,
+                'discapacidades': self.student.discapacidades,
+                'edad': self.calculate_age(self.student.fecha_nacimiento),
+                'fecha_nacimiento': self.student.fecha_nacimiento.strftime("%d/%m/%Y"),
+                'fotografia': (photo_name + '.' + extention),
+                'numero_sesiones': len(self.student.sesiones),
+                'ultima_sesion': self.student.sesiones[-1].fecha.strftime("%d/%m/%Y") + "  "+
+                                self.student.sesiones[-1].hora_inicio.strftime("%H:%M")+ " - "+
+                                self.student.sesiones[-1].hora_fin.strftime("%H:%M")
+            }
             
-        student_info = {
-            'cedula' : self.student.cedula,
-            'apellidos': self.student.apellidos,
-            'nombres' : self.student.nombres,
-            'cedula_representante': self.student.cedula_representante,
-            'representante': self.student.nombre_representante,
-            'telefonos': self.student.telefonos,
-            'direccion': self.student.direccion,
-            'discapacidad': flag_discapacidad,
-            'discapacidades': self.student.discapacidades,
-            'edad': self.calculate_age(self.student.fecha_nacimiento),
-            'fecha_nacimiento': self.student.fecha_nacimiento.strftime("%d/%m/%Y"),
-            'fotografia': (photo_name + '.' + extention),
-            'numero_sesiones': len(self.student.sesiones),
-            'ultima_sesion': self.student.sesiones[-1].fecha.strftime("%d/%m/%Y") + "  "+
-                            self.student.sesiones[-1].hora_inicio.strftime("%H:%M")+ " - "+
-                            self.student.sesiones[-1].hora_fin.strftime("%H:%M")
-        }
+        else:
+            student_info = {
+                'cedula' : self.student.cedula,
+                'apellidos': self.student.apellidos,
+                'nombres' : self.student.nombres,
+                'cedula_representante': self.student.cedula_representante,
+                'representante': self.student.nombre_representante,
+                'telefonos': self.student.telefonos,
+                'direccion': self.student.direccion,
+                'discapacidad': flag_discapacidad,
+                'discapacidades': self.student.discapacidades,
+                'edad': self.calculate_age(self.student.fecha_nacimiento),
+                'fecha_nacimiento': self.student.fecha_nacimiento.strftime("%d/%m/%Y"),
+                'fotografia': (photo_name + '.' + extention),
+                'numero_sesiones': len(self.student.sesiones),
+                'ultima_sesion': "Sin datos"
+            }
+            
         
         # fecha y hora en la que se descarga el reporte general
         current_date = datetime.now()

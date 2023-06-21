@@ -153,7 +153,16 @@ class CheckableComboBox(QComboBox):
 		return item.checkState() == Qt.Checked
 
 class EditStudent(QWidget):
+    
+    #Envia signasl a la ventana principal en caso de actualizar o eliminar estudiante 
+    # Editar estudiante: se envia True, actualiza los datos del estudiante
+    # Eliminar : se envia False limpia la ventana
+    editFlag = pyqtSignal(bool)
+    
     def __init__(self, student):
+        
+        
+        
         super().__init__()
         self.ui_edit = Ui_Add_student()
         self.ui_edit.setupUi(self)
@@ -221,6 +230,7 @@ class EditStudent(QWidget):
                     print("estudiante eliminado")
                     self.message_dialog = MessageDialog("Estudiante Eliminado!")
                     self.message_dialog.show()
+                    self.editFlag.emit(False)
                     self.close()
                 else:
                     self.message_dialog = MessageDialog("Error al eliminar!")
@@ -367,6 +377,8 @@ class EditStudent(QWidget):
         if flag:
             self.edit_message = MessageDialog("Datos Estudiante Actualizados")
             self.edit_message.show()
+            # envia signal a la ventana principal para que actualize los datos
+            self.editFlag.emit(True)
             # cerrar ventana edicion estudiante
             self.close()
         else:
