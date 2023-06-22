@@ -81,12 +81,26 @@ class MainWindow(QMainWindow):
         
     def open_edit_student(self):
         self.edit_stu = EditStudent(get_student_by_cedula(self.ui_main.label_cedula.text()))
+        self.edit_stu.editFlag.connect(self.update_student_info)
         self.edit_stu.show()
         
     def open_student_reports(self):
         self.stu_report = StudentReport(get_student_by_cedula(self.ui_main.label_cedula.text()))
         self.stu_report.show()
         
+    # metodos que se llaman despues de editar o eliminar un estudiante
+    def update_student_info(self, flag):
+        # flag = true, estudiante actualizado
+        # falg = false, estudiante eliminado
+        if flag:
+            self.show_info_student()
+            print("Info estudiante actualizada")
+        else:
+            self.ui_main.lineEdit_search_bar.clear()
+            self.ui_main.listWidget_estudiantes.clear()
+            self.ui_main.scrollArea_info_estudiante.setHidden(True)
+            print("!!estudiante eliminado")
+      
     def set_logos(self):
         pixmap1 = QPixmap("Assets/logo2.png")
         self.ui_main.label_logo1.setPixmap(
