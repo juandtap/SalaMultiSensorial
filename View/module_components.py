@@ -47,7 +47,7 @@ class ModuleSelection(QWidget):
         # comentar para que no se cree sesione innecesarias, 
         # no olvidar tambien descomentar en el metodo closeEvent()
         
-        self.create_sesion()
+        # self.create_sesion()
         
         self.ui_modules.pushButton_module_grafomotricidad.clicked.connect(self.open_module_grafomotricidad)
         self.ui_modules.pushButton_module_vumetro.clicked.connect(self.open_module_vumeter)
@@ -123,8 +123,8 @@ class ModuleSelection(QWidget):
     def closeEvent(self, event):
         
         print("finalizo la sesion")
-        set_final_time(self.sesion, datetime.now().time())
-        print("se agrego la hora fin a la sesion "+str(self.sesion))
+        #set_final_time(self.sesion, datetime.now().time())
+        #print("se agrego la hora fin a la sesion "+str(self.sesion))
         event.accept()
 
 # En el texrfield lineEdit_time_taken se coloca el tiempo tomado hasta que se 
@@ -254,7 +254,7 @@ class ModuleGrafomotricidad(QWidget):
     def start_listening_data(self):
         
         # recibir datos por bluetooth-serial
-        # puerto com, parametro junto con la sesion
+        
         self.ui_mod_grafo.timeEdit_limit_time.setStyleSheet("color: black;")
         self.ui_mod_grafo.pushButton_stop.setEnabled(True)
         self.ui_mod_grafo.pushButton_save.setEnabled(False)

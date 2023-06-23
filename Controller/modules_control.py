@@ -8,7 +8,7 @@ import bluetooth
 sys.path.append(".")
 
 
-from PyQt5.QtCore import Qt, QDate, QTimer, QTime, QThread, pyqtSignal
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from Controller.module_codes import module_mac_address
 
 class TurnOnOffModule(QThread):

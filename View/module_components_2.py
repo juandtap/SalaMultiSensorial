@@ -4,7 +4,7 @@
 
 import sys
 from PyQt5 import QtGui
-import serial,  threading, random, bluetooth, json
+import bluetooth, json
 
 
 import matplotlib.pyplot as plt
