@@ -91,7 +91,19 @@ class ModuloIluminacion(Base):
     color = Column(String(50))
     reconoce_color = Column(String(20))
     tiempo = Column(String(50))
-    
+
+# class ModuloPictogramas(Base):
+#     __tablename__ = 'modulo_pictogramas'
+#     id = Column(Integer, primary_key=True)
+#     id_sesion = Column(Integer, ForeignKey('sesion.id'))
+#     categoria_seleccionada = Column(String(50))
+#     numero_pictogramas_disponibles = Column(Integer)
+#     numero_pictogramas_seleccionados = Column(Integer)
+#     tamanio_tabla = Column(Integer)
+#     categorias_mostradas = Column(String(300))
+#     selecciones_correctas = Column(Integer)
+#     selecciones_incorrectas = Column(Integer)
+
 # Crea las tablas en la base de datos
 Base.metadata.create_all(engine)
 

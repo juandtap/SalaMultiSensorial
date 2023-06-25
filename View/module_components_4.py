@@ -28,6 +28,7 @@ class ModulePictogram(QWidget):
         self.set_module_images()
         self.ui_pic.label_text_status.setHidden(True)
         self.ui_pic.label_conn_status.setHidden(True)
+        self.ui_pic.label_reading_status.setHidden(True)
         
         self.ui_pic.pushButton_start.clicked.connect(self.start_listening_data)
         self.ui_pic.pushButton_stop.clicked.connect(self.stop_listening_data)
@@ -74,12 +75,59 @@ class ModulePictogram(QWidget):
         self.thread_pictogram = PictogramDataThread()
         self.thread_pictogram.data_received.connect(self.show_received_data)
         self.thread_pictogram.start()
+        self.ui_pic.label_reading_status.setHidden(False)
+        self.ui_pic.label_reading_status.setText("Esperando Datos ...")
         
         
     def show_received_data(self, data):
         print("Datos recibidos: ")
+        self.ui_pic.label_reading_status.setText("Datos recibidos:")
         print(data)
-        self.ui_pic.lineEdit_list_images.setText(data)
+        data_values = data.split(",")
+        print("datos separados:")
+        for value in data_values:
+            print(value)
+        
+        try:
+            self.ui_pic.lineEdit_categoria_seleccionada.setText(data_values[0])
+        except IndexError:
+            self.ui_pic.lineEdit_categoria_seleccionada.setText("Valor no disponible")
+
+        try:
+            self.ui_pic.lineEdit_num_pictogramas_disponibles.setText(data_values[1])
+        except IndexError:
+            self.ui_pic.lineEdit_num_pictogramas_disponibles.setText("Valor no disponible")
+
+        try:
+            self.ui_pic.lineEdit_num_pistogramas_seleccionados.setText(data_values[2])
+        except IndexError:
+            self.ui_pic.lineEdit_num_pistogramas_seleccionados.setText("Valor no disponible")
+
+        try:
+            self.ui_pic.lineEdit_tamanio_tabla.setText(data_values[3])
+        except IndexError:
+            self.ui_pic.lineEdit_tamanio_tabla.setText("Valor no disponible")
+
+        try:
+            self.ui_pic.lineEdit_categorias_mostradas.setText(data_values[4])
+        except IndexError:
+            self.ui_pic.lineEdit_categorias_mostradas.setText("Valor no disponible")
+
+        try:
+            self.ui_pic.lineEdit_correctos.setText(data_values[5])
+        except IndexError:
+            self.ui_pic.lineEdit_correctos.setText("Valor no disponible")
+
+        try:
+            self.ui_pic.lineEdit_incorrectos.setText(data_values[6])
+        except IndexError:
+            self.ui_pic.lineEdit_incorrectos.setText("Valor no disponible")
+        
+    def save_data(self):
+        # guarda en la base de datos
+        print("guardando en DB")
+        
+    
     
     def stop_listening_data(self):
         self.thread_pictogram.stop()
