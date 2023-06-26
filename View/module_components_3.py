@@ -241,6 +241,8 @@ class ModuleIlumination(QWidget):
             
             selected_color_code += ','+str(self.light_level)
             
+            self.init_time = datetime.now()
+            
             self.send_data_thread = SendDataThread(selected_color_code)
             
             self.send_data_thread.start()

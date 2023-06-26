@@ -261,7 +261,8 @@ class StudentReport(QWidget):
         vumetro_list = self.sesion_selected.modulos_vumetro
         # data del modulo de iluminacion
         iluminacion_list = self.sesion_selected.modulos_iluminacion
-        
+        # datos del modulo de pictogramas
+        pictogramas_list = self.sesion_selected.modulos_pictogramas
         
         if grafomotricidad_list:
             
@@ -408,12 +409,28 @@ class StudentReport(QWidget):
                 self.table_iluminacion.setItem(i, 2, QTableWidgetItem(str(module.reconoce_color)))
                 self.table_iluminacion.setItem(i, 3, QTableWidgetItem(str(module.tiempo).split('.')[0]))
         
+        if pictogramas_list:
+            
+            label_pictograma = QLabel("Modulo Pictogramas")
+            label_pictograma.setFont(self.font)
+            layout.addWidget(label_pictograma)
+            
+            self.table_pictogramas = QTableWidget
+            layout.addWidget(self.table_pictogramas)
         
-        # label_pictograma = QLabel("Modulo Pictogramas")
-        # label_pictograma.setFont(self.font)
-        # layout.addWidget(label_pictograma)
-        
-           
+            self.table_pictogramas.verticalHeader().setVisible(False)
+            
+            # # defino las columnas de la tabla
+            self.table_pictogramas.setColumnCount(4)
+            self.table_pictogramas.setHorizontalHeaderLabels(
+                [
+                    'id',
+                    'Color',
+                    'Reconoce color',
+                    'Tiempo',
+                    
+                ]
+            )
 
         return container
        

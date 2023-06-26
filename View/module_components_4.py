@@ -3,6 +3,7 @@ from datetime import datetime
 from datetime import time 
 sys.path.append(".")
 import bluetooth, threading
+from datetime import datetime
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from Controller.module_codes import module_mac_address
@@ -43,6 +44,11 @@ class ModulePictogram(QWidget):
         self.ui_pic.pushButton_start.setEnabled(True)
         self.ui_pic.pushButton_save.setEnabled(False)
         self.ui_pic.pushButton_stop.setEnabled(False)
+        
+         # variables para tomar el tiempo desde que presiona el boton iniciar hasta que recibe los datos
+        self.start_time = None
+        self.end_time = None
+        self.total_time = None
         
     def socket_free(self, flag):
         if flag == "free":
@@ -92,6 +98,8 @@ class ModulePictogram(QWidget):
         self.ui_pic.pushButton_save.setEnabled(False)
         self.ui_pic.pushButton_stop.setEnabled(True)
         
+        self.start_time = datetime.now()
+        
     def show_received_data(self, data):
         print("Datos recibidos: ")
         self.ui_pic.label_reading_status.setText("Datos recibidos:")
@@ -140,9 +148,16 @@ class ModulePictogram(QWidget):
         self.ui_pic.pushButton_save.setEnabled(True)
         self.ui_pic.pushButton_stop.setEnabled(False)
         
+        self.end_time = datetime.now()
+        
     def save_data(self):
         # guarda en la base de datos
         print("guardando en DB")
+        self.total_time = self.end_time - self.start_time
+        
+        total_time_str = str(self.total_time).split('.')[0]
+        print("Tiempo : "+total_time_str)
+        
         
         self.ui_pic.pushButton_start.setEnabled(True)
         self.ui_pic.pushButton_save.setEnabled(False)
@@ -156,6 +171,7 @@ class ModulePictogram(QWidget):
         self.ui_pic.pushButton_save.setEnabled(False)
         self.ui_pic.pushButton_stop.setEnabled(False)
         self.thread_pictogram.stop()
+        self.end_time = datetime.now()
         
     def closeEvent(self, event):
         self.stop_listening_data()
@@ -187,6 +203,7 @@ class PictogramDataThread(QThread):
         
         print("Leyendo datos...")
         while not self.stopped:
+            # cambiar a 4096
             data = blue_socket.recv(1024)
             
             data_formated = data.decode('utf-8').strip()

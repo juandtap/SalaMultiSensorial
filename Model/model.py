@@ -66,7 +66,8 @@ class Sesion(Base):
     modulos_grafomotricidad = relationship('ModuloGrafomotricidad', backref='sesion', cascade="all, delete")
     modulos_vumetro = relationship('ModuloVumetro', backref='sesion', cascade="all, delete")
     modulos_iluminacion = relationship('ModuloIluminacion', backref='sesion', cascade="all, delete")
-
+    modulos_pictogramas = relationship('ModuloPictogramas', backref='sesion', cascade="all, delete")
+    
 class ModuloGrafomotricidad(Base):
     __tablename__ = 'modulo_grafomotricidad'
     id = Column(Integer, primary_key=True)
@@ -92,17 +93,21 @@ class ModuloIluminacion(Base):
     reconoce_color = Column(String(20))
     tiempo = Column(String(50))
 
-# class ModuloPictogramas(Base):
-#     __tablename__ = 'modulo_pictogramas'
-#     id = Column(Integer, primary_key=True)
-#     id_sesion = Column(Integer, ForeignKey('sesion.id'))
-#     categoria_seleccionada = Column(String(50))
-#     numero_pictogramas_disponibles = Column(Integer)
-#     numero_pictogramas_seleccionados = Column(Integer)
-#     tamanio_tabla = Column(Integer)
-#     categorias_mostradas = Column(String(300))
-#     selecciones_correctas = Column(Integer)
-#     selecciones_incorrectas = Column(Integer)
+class ModuloPictogramas(Base):
+    __tablename__ = 'modulo_pictogramas'
+    id = Column(Integer, primary_key=True)
+    id_sesion = Column(Integer, ForeignKey('sesion.id'))
+    categoria_seleccionada = Column(String(50))
+    numero_pictogramas_disponibles = Column(Integer)
+    nombres_pictogramas = Column(String(1500))
+    numero_pictogramas_seleccionados = Column(Integer)
+    tamanio_tablero = Column(Integer)
+    categorias_mostradas = Column(String(500))
+    numero_selecciones_correctas = Column(Integer)
+    selecciones_correctas = Column(String(1000))
+    numero_selecciones_incorrectas = Column(Integer)
+    selecciones_incorrectas = Column(String(1000))
+    tiempo = Column(String(20))
 
 # Crea las tablas en la base de datos
 Base.metadata.create_all(engine)
