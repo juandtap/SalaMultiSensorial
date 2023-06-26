@@ -6,6 +6,7 @@ import bluetooth, threading
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from Controller.module_codes import module_mac_address
+from View.instructions import instrucciones_pictogramas
 # Este modulo controla la ventana del modulo pictogramas
 
 from PyQt5.QtGui import QPixmap
@@ -26,12 +27,22 @@ class ModulePictogram(QWidget):
         # self.turn_on_off_thread.my_signal.connect(self.socket_free)
         # self.turn_on_off_thread.start()
         self.set_module_images()
+        
+        # instrucciones
+        self.ui_pic.textEdit_instructions.setText(instrucciones_pictogramas)
+        
+        
         self.ui_pic.label_text_status.setHidden(True)
         self.ui_pic.label_conn_status.setHidden(True)
         self.ui_pic.label_reading_status.setHidden(True)
         
         self.ui_pic.pushButton_start.clicked.connect(self.start_listening_data)
         self.ui_pic.pushButton_stop.clicked.connect(self.stop_listening_data)
+        self.ui_pic.pushButton_save.clicked.connect(self.save_data)
+        
+        self.ui_pic.pushButton_start.setEnabled(True)
+        self.ui_pic.pushButton_save.setEnabled(False)
+        self.ui_pic.pushButton_stop.setEnabled(False)
         
     def socket_free(self, flag):
         if flag == "free":
@@ -77,7 +88,9 @@ class ModulePictogram(QWidget):
         self.thread_pictogram.start()
         self.ui_pic.label_reading_status.setHidden(False)
         self.ui_pic.label_reading_status.setText("Esperando Datos ...")
-        
+        self.ui_pic.pushButton_start.setEnabled(False)
+        self.ui_pic.pushButton_save.setEnabled(False)
+        self.ui_pic.pushButton_stop.setEnabled(True)
         
     def show_received_data(self, data):
         print("Datos recibidos: ")
@@ -123,14 +136,30 @@ class ModulePictogram(QWidget):
         except IndexError:
             self.ui_pic.lineEdit_incorrectos.setText("Valor no disponible")
         
+        self.ui_pic.pushButton_start.setEnabled(True)
+        self.ui_pic.pushButton_save.setEnabled(True)
+        self.ui_pic.pushButton_stop.setEnabled(False)
+        
     def save_data(self):
         # guarda en la base de datos
         print("guardando en DB")
         
+        self.ui_pic.pushButton_start.setEnabled(True)
+        self.ui_pic.pushButton_save.setEnabled(False)
+        self.ui_pic.pushButton_stop.setEnabled(False)
+        
     
     
     def stop_listening_data(self):
+        self.ui_pic.label_reading_status.setText("")
+        self.ui_pic.pushButton_start.setEnabled(True)
+        self.ui_pic.pushButton_save.setEnabled(False)
+        self.ui_pic.pushButton_stop.setEnabled(False)
         self.thread_pictogram.stop()
+        
+    def closeEvent(self, event):
+        self.stop_listening_data()
+        event.accept()
                
 class PictogramDataThread(QThread):
     
