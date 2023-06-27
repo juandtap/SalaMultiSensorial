@@ -83,6 +83,8 @@ class Report:
             modulos += ' vumetro,'
         if len(student_sesion.modulos_iluminacion) > 0:
             modulos += ' iluminación,'
+        if len(student_sesion.modulos_pictogramas) > 0:
+            modulos += ' pictogramas'
 
         # agregar modulo de pictogramas
         

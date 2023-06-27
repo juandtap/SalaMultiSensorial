@@ -415,22 +415,47 @@ class StudentReport(QWidget):
             label_pictograma.setFont(self.font)
             layout.addWidget(label_pictograma)
             
-            self.table_pictogramas = QTableWidget
+            self.table_pictogramas = QTableWidget()
             layout.addWidget(self.table_pictogramas)
         
             self.table_pictogramas.verticalHeader().setVisible(False)
             
             # # defino las columnas de la tabla
-            self.table_pictogramas.setColumnCount(4)
+            self.table_pictogramas.setColumnCount(7)
             self.table_pictogramas.setHorizontalHeaderLabels(
                 [
                     'id',
-                    'Color',
-                    'Reconoce color',
-                    'Tiempo',
+                    'Categoria',
+                    'Número pictogramas seleccionados',
+                    'Tamaño tablero',
+                    'Número selecciones correctas',
+                    'Número selecciones incorrectas',
+                    'Tiempo'
                     
                 ]
             )
+            
+            self.table_pictogramas.setEditTriggers(QAbstractItemView.NoEditTriggers)
+            self.table_pictogramas.setSelectionBehavior(QAbstractItemView.SelectRows)
+            
+            self.table_pictogramas.horizontalHeader().setStretchLastSection(True)
+            self.table_pictogramas.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+            self.table_pictogramas.resize(self.ui_rep.scrollArea.width(),self.ui_rep.scrollArea.height())
+            
+            header = self.table_pictogramas.horizontalHeader()
+            for i in range(header.count()):
+                header.setSectionResizeMode(i,QHeaderView.ResizeToContents)
+                
+            for i, module in enumerate(pictogramas_list):
+                self.table_pictogramas.insertRow(i)
+                self.table_pictogramas.setItem(i, 0, QTableWidgetItem(str(module.id)))
+                self.table_pictogramas.setItem(i, 1, QTableWidgetItem(str(module.categoria_seleccionada)))
+                self.table_pictogramas.setItem(i, 2, QTableWidgetItem(str(module.numero_pictogramas_seleccionados)))
+                self.table_pictogramas.setItem(i, 3, QTableWidgetItem(str(module.tamanio_tablero)+"x"+str(module.tamanio_tablero)))
+                self.table_pictogramas.setItem(i, 4, QTableWidgetItem(str(module.numero_selecciones_correctas)))
+                self.table_pictogramas.setItem(i, 5, QTableWidgetItem(str(module.numero_selecciones_incorrectas)))
+                self.table_pictogramas.setItem(i, 6, QTableWidgetItem(str(module.tiempo)))
+            
 
         return container
        
