@@ -38,6 +38,8 @@ class ModuleIlumination(QWidget):
         self.turn_on_off_thread.start()
         
         self.ui_ilu.pushButton_start.clicked.connect(self.send_color_data)
+        self.ui_ilu.pushButton_save.clicked.connect(self.save_module_data)
+        self.ui_ilu.pushButton_stop.clicked.connet(self.turn_off_module)
         
         # se agregar los radiobutton a un buttonGroup
         self.button_group = QButtonGroup()
@@ -56,10 +58,6 @@ class ModuleIlumination(QWidget):
         self.ui_ilu.radioButton_yes.clicked.connect(lambda: self.does_recognize_color(self.ui_ilu.radioButton_yes))
         self.ui_ilu.radioButton_no.clicked.connect(lambda: self.does_recognize_color(self.ui_ilu.radioButton_no))
         
-        
-        
-        
-        self.ui_ilu.pushButton_save.clicked.connect(self.save_module_data)
         
         # radiobutton color definido seleccionado por default
         self.ui_ilu.radioButton_defined_color.setChecked(True)
@@ -108,6 +106,12 @@ class ModuleIlumination(QWidget):
         self.turn_on_off_thread.start()
        
         event.accept()
+        
+    def turn_off_module(self):
+        # envia senial de apagado al presionar el boton "guardar"
+        self.turn_off_signal_thread = TurnOnOffModule('f',3)
+        self.turn_off_signal_thread.start()
+        print("orden de apagado enviada")
     
     def socket_free(self, flag):
         if flag == 'free':

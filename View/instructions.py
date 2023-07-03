@@ -68,16 +68,18 @@ cierre la ventana y ábrala de nuevo.
 Paso 1: En el módulo de pictogramas presionar el botón <Nuevo Ejercicio>, luego seleccionar la categoría, después seleccionar 
 el número de pictogramas y el tamaño de la tabla a mostrar, y por último presionar <Iniciar>.
 
-Paso 2: En esta ventana presionar el botón Iniciar, y esperar a que termine el ejercicio en el panel de pictogramas, 
-cuando haya finalizado, en el módulo de pictogramas, presionar el botón <Finalizar>.
+Paso 2: En esta ventana presionar el botón Iniciar, y esperar a que termine el ejercicio en el panel de pictogramas.
+ 
+Paso 3: Cuando haya finalizado el ejercicio en el módulo de pictogramas, presionar el botón <Finalizar>.
 
-Paso 3: Al presionar el botón finalizar en el panel de pictogramas se enviarán y mostrarán los datos en esta ventana, las configuraciones y los resultados.
+Paso 4: Al presionar el botón finalizar en el panel de pictogramas se enviarán y mostrarán los datos en esta ventana, las configuraciones y los resultados.
 Presione el botón <Guardar> si desea guardar los datos.
 
-Paso 4: Si ya no se va a trabajar, cerrar la ventana, y en el módulo de pictogramas presionar el botón de <apagar>, 
+Paso 5: Si ya no se va a trabajar, cerrar la ventana, y en el módulo de pictogramas presionar el botón de <apagar>, 
 caso contrario repita desde el paso 1.
 
-Nota. Al presionar el botón <Iniciar> en esta ventana, se empezará a escuchar los datos que enviara el modulo de pictogramas, 
-si por algún motivo, no se trabajó en el módulo o cualquier otra situación, presionar el botón <Detener> para que la aplicación deje de esperar los datos y pueda cerrarse correctamente y así evitar posibles fallos.
+Nota. Al presionar el botón <Iniciar> en esta ventana, se empezará a escuchar los datos que enviara el modulo de pictogramas,si por algún motivo,
+no se trabajó en el módulo o cualquier otra situación, presionar el botón <Detener> para que la aplicación deje de esperar los datos y pueda cerrarse
+correctamente y así evitar posibles fallos.
 
 Consulte el manual de usuario para obtener más información."""

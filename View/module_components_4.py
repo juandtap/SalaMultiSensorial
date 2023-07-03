@@ -118,31 +118,46 @@ class ModulePictogram(QWidget):
             self.ui_pic.lineEdit_num_pictogramas_disponibles.setText(data_values[1])
         except IndexError:
             self.ui_pic.lineEdit_num_pictogramas_disponibles.setText("Valor no disponible")
+            
+        try:
+            self.ui_pic.lineEdit_pictogramas.setText(data_values[2])
+        except IndexError:
+            self.ui_pic.lineEdit_pictogramas.setText("Valor no disponible")   
 
         try:
-            self.ui_pic.lineEdit_num_pistogramas_seleccionados.setText(data_values[2])
+            self.ui_pic.lineEdit_num_pistogramas_seleccionados.setText(data_values[3])
         except IndexError:
             self.ui_pic.lineEdit_num_pistogramas_seleccionados.setText("Valor no disponible")
 
         try:
-            self.ui_pic.lineEdit_tamanio_tabla.setText(data_values[3])
+            self.ui_pic.lineEdit_tamanio_tablero.setText(data_values[4])
         except IndexError:
-            self.ui_pic.lineEdit_tamanio_tabla.setText("Valor no disponible")
+            self.ui_pic.lineEdit_tamanio_tablero.setText("Valor no disponible")
 
         try:
-            self.ui_pic.lineEdit_categorias_mostradas.setText(data_values[4])
+            self.ui_pic.lineEdit_categorias_mostradas.setText(data_values[5])
         except IndexError:
             self.ui_pic.lineEdit_categorias_mostradas.setText("Valor no disponible")
 
         try:
-            self.ui_pic.lineEdit_correctos.setText(data_values[5])
+            self.ui_pic.lineEdit_num_correctos.setText(data_values[6])
         except IndexError:
-            self.ui_pic.lineEdit_correctos.setText("Valor no disponible")
+            self.ui_pic.lineEdit_num_correctos.setText("Valor no disponible")
+            
+        try:
+            self.ui_pic.lineEdit_list_correctos.setText(data_values[7])
+        except IndexError:
+            self.ui_pic.lineEdit_list_correctos.setText("Valor no disponible")    
 
         try:
-            self.ui_pic.lineEdit_incorrectos.setText(data_values[6])
+            self.ui_pic.lineEdit_num_incorrectos.setText(data_values[8])
         except IndexError:
-            self.ui_pic.lineEdit_incorrectos.setText("Valor no disponible")
+            self.ui_pic.lineEdit_num_incorrectos.setText("Valor no disponible")
+            
+        try:
+            self.ui_pic.lineEdit_list_incorrectos.setText(data_values[9])
+        except IndexError:
+            self.ui_pic.lineEdit_list_incorrectos.setText("Valor no disponible")
         
         self.ui_pic.pushButton_start.setEnabled(True)
         self.ui_pic.pushButton_save.setEnabled(True)
@@ -204,7 +219,7 @@ class PictogramDataThread(QThread):
         print("Leyendo datos...")
         while not self.stopped:
             # cambiar a 4096
-            data = blue_socket.recv(1024)
+            data = blue_socket.recv(4096)
             
             data_formated = data.decode('utf-8').strip()
             self.data_received.emit(data_formated)
