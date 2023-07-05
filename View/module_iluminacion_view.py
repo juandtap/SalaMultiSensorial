@@ -27,7 +27,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.label_conn_status.setGeometry(QtCore.QRect(1150, 680, 131, 16))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.label_conn_status.setFont(font)
         self.label_conn_status.setStyleSheet("color: rgb(0, 0, 255);")
         self.label_conn_status.setObjectName("label_conn_status")
@@ -81,7 +81,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.pushButton_start.setGeometry(QtCore.QRect(710, 610, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.pushButton_start.setFont(font)
         self.pushButton_start.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -100,7 +100,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.pushButton_stop.setGeometry(QtCore.QRect(830, 610, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.pushButton_stop.setFont(font)
         self.pushButton_stop.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -119,7 +119,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.pushButton_save.setGeometry(QtCore.QRect(950, 610, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.pushButton_save.setFont(font)
         self.pushButton_save.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"

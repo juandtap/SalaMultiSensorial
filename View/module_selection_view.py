@@ -98,7 +98,7 @@ class Ui_Form_seleccion_modulos(object):
         self.pushButton_module_grafomotricidad.setGeometry(QtCore.QRect(280, 290, 251, 101))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(11)
+        font.setPointSize(12)
         self.pushButton_module_grafomotricidad.setFont(font)
         self.pushButton_module_grafomotricidad.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -114,7 +114,7 @@ class Ui_Form_seleccion_modulos(object):
         self.pushButton_module_pictograma.setGeometry(QtCore.QRect(740, 290, 261, 101))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(11)
+        font.setPointSize(12)
         self.pushButton_module_pictograma.setFont(font)
         self.pushButton_module_pictograma.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -130,7 +130,7 @@ class Ui_Form_seleccion_modulos(object):
         self.pushButton_module_vumetro.setGeometry(QtCore.QRect(280, 440, 251, 101))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(11)
+        font.setPointSize(12)
         self.pushButton_module_vumetro.setFont(font)
         self.pushButton_module_vumetro.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -146,7 +146,7 @@ class Ui_Form_seleccion_modulos(object):
         self.pushButton_module_iluminacion.setGeometry(QtCore.QRect(740, 440, 261, 101))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(11)
+        font.setPointSize(12)
         self.pushButton_module_iluminacion.setFont(font)
         self.pushButton_module_iluminacion.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -214,7 +214,7 @@ class Ui_Form_seleccion_modulos(object):
         self.label_cedula.setText(_translate("Form_seleccion_modulos", "TextLabel"))
         self.label_8.setText(_translate("Form_seleccion_modulos", "INFORMACION ESTUDIANTE"))
         self.pushButton_module_grafomotricidad.setText(_translate("Form_seleccion_modulos", "Modulo: Grafomotricidad"))
-        self.pushButton_module_pictograma.setText(_translate("Form_seleccion_modulos", "Modulo: Panel de Pictogramas"))
+        self.pushButton_module_pictograma.setText(_translate("Form_seleccion_modulos", "Modulo: Panel Pictogramas"))
         self.pushButton_module_vumetro.setText(_translate("Form_seleccion_modulos", "Modulo: Vumetro"))
         self.pushButton_module_iluminacion.setText(_translate("Form_seleccion_modulos", "Modulo: Iluminacion"))
         self.label_3.setText(_translate("Form_seleccion_modulos", "PUERTO :"))

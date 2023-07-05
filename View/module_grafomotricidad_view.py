@@ -64,7 +64,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.label_3.setGeometry(QtCore.QRect(580, 580, 111, 21))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.label_3.setFont(font)
         self.label_3.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_3.setObjectName("label_3")
@@ -92,7 +92,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.label_8 = QtWidgets.QLabel(self.formLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.label_8.setFont(font)
         self.label_8.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_8.setObjectName("label_8")
@@ -108,7 +108,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.label_5 = QtWidgets.QLabel(self.formLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.label_5.setFont(font)
         self.label_5.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_5.setObjectName("label_5")
@@ -125,7 +125,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.label_7 = QtWidgets.QLabel(self.formLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.label_7.setFont(font)
         self.label_7.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_7.setObjectName("label_7")
@@ -143,7 +143,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.pushButton_start.setGeometry(QtCore.QRect(540, 630, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.pushButton_start.setFont(font)
         self.pushButton_start.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -162,7 +162,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.pushButton_stop.setGeometry(QtCore.QRect(650, 630, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.pushButton_stop.setFont(font)
         self.pushButton_stop.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -181,7 +181,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.pushButton_save.setGeometry(QtCore.QRect(760, 630, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.pushButton_save.setFont(font)
         self.pushButton_save.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -207,7 +207,7 @@ class Ui_Form_modulo_grafomotricidad(object):
         self.label_conn_status.setGeometry(QtCore.QRect(1110, 690, 131, 16))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.label_conn_status.setFont(font)
         self.label_conn_status.setStyleSheet("color: rgb(0, 0, 255);")
         self.label_conn_status.setObjectName("label_conn_status")

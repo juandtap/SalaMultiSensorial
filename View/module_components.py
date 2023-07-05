@@ -96,19 +96,19 @@ class ModuleSelection(QWidget):
         
     def open_module_grafomotricidad(self):
         # cambiar None por self.sesion 
-        self.grafomotricidad = ModuleGrafomotricidad(self.sesion)
-        #self.grafomotricidad = ModuleGrafomotricidad(None)
+        #self.grafomotricidad = ModuleGrafomotricidad(self.sesion)
+        self.grafomotricidad = ModuleGrafomotricidad(None)
         self.grafomotricidad.show()
     
     def open_module_vumeter(self):
         
-        self.vumeter = ModuleVumeter(self.sesion)
-        # self.vumeter = ModuleVumeter(None)
+        #self.vumeter = ModuleVumeter(self.sesion)
+        self.vumeter = ModuleVumeter(None)
         self.vumeter.show()
         
     def open_module_ilumination(self):
-        self.ilumination = ModuleIlumination(self.sesion)
-       #self.ilumination = ModuleIlumination(None)
+        #self.ilumination = ModuleIlumination(self.sesion)
+        self.ilumination = ModuleIlumination(None)
         self.ilumination.show()
         
     def open_module_pictogram(self):
@@ -183,6 +183,9 @@ class ModuleGrafomotricidad(QWidget):
         
     def closeEvent(self, event):
         # envia la senial de finializacion 'f'
+        self.timer_thread.stop()
+        self.serial_thread.stop()
+        
         self.turn_on_off_thread = TurnOnOffModule('f',1)
         self.turn_on_off_thread.start()
        

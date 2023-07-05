@@ -39,7 +39,7 @@ class ModuleIlumination(QWidget):
         
         self.ui_ilu.pushButton_start.clicked.connect(self.send_color_data)
         self.ui_ilu.pushButton_save.clicked.connect(self.save_module_data)
-        self.ui_ilu.pushButton_stop.clicked.connet(self.turn_off_module)
+        self.ui_ilu.pushButton_stop.clicked.connect(self.turn_off_module)
         
         # se agregar los radiobutton a un buttonGroup
         self.button_group = QButtonGroup()

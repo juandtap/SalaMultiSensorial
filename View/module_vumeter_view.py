@@ -27,7 +27,7 @@ class Ui_Form_modulo_vumetro(object):
         self.label_conn_status.setGeometry(QtCore.QRect(1150, 680, 101, 16))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.label_conn_status.setFont(font)
         self.label_conn_status.setStyleSheet("color: rgb(0, 0, 255);")
         self.label_conn_status.setObjectName("label_conn_status")
