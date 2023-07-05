@@ -386,7 +386,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.label_9.setStyleSheet("color: rgb(56, 71, 151);")
         self.label_9.setObjectName("label_9")
         self.label_level1 = QtWidgets.QLabel(Form_modulo_iluminacion)
-        self.label_level1.setGeometry(QtCore.QRect(790, 440, 191, 20))
+        self.label_level1.setGeometry(QtCore.QRect(790, 440,200, 20))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(9)
@@ -424,7 +424,7 @@ class Ui_Form_modulo_iluminacion(object):
 
     def retranslateUi(self, Form_modulo_iluminacion):
         _translate = QtCore.QCoreApplication.translate
-        Form_modulo_iluminacion.setWindowTitle(_translate("Form_modulo_iluminacion", "Modulo Vumetro"))
+        Form_modulo_iluminacion.setWindowTitle(_translate("Form_modulo_iluminacion", "Modulo de Iluminacion"))
         self.label_conn_status.setText(_translate("Form_modulo_iluminacion", "Conectado"))
         self.label.setText(_translate("Form_modulo_iluminacion", "MODULO: ILUMINACION"))
         self.textEdit_instructions.setHtml(_translate("Form_modulo_iluminacion", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -453,7 +453,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.radioButton_defined_color.setText(_translate("Form_modulo_iluminacion", "Seleccionar Color:"))
         self.radioButton_custom_color.setText(_translate("Form_modulo_iluminacion", "Color Personalizado (RGB):"))
         self.label_9.setText(_translate("Form_modulo_iluminacion", "Nivel intensidad:"))
-        self.label_level1.setText(_translate("Form_modulo_iluminacion", "bajo           normal             alto"))
+        self.label_level1.setText(_translate("Form_modulo_iluminacion", "bajo             normal            alto"))
         self.label_11.setText(_translate("Form_modulo_iluminacion", "Reconoce el color seleccionado?:"))
         self.radioButton_yes.setText(_translate("Form_modulo_iluminacion", "SI"))
         self.radioButton_no.setText(_translate("Form_modulo_iluminacion", "NO"))
