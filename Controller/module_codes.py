@@ -1,49 +1,71 @@
 # diccionario con las direcciones MAC de los modulos HC05
 
-# module_mac_address = {
-#      0:'00:22:03:01:8A:12',  # HC05 de prueba
-#      1:'00:22:03:01:7D:DC',  # HC05 del modulo grafomotricidad
-#      2:'00:22:03:01:8D:B5', # HC05 del vumetro
-     
-#      3:'00:22:03:01:8A:12', # HC05 de prueba
-#      4:'00:22:03:01:8A:12' # HC05 de prueba
-# }
-
-# para pruebas, comentar a la hora de probar con los modulos
 module_mac_address = {
-     0:'00:22:03:01:8A:12',  
-     1:'00:22:03:01:8A:12', 
-     2:'00:22:03:01:8A:12', 
-     3:'00:22:03:01:8A:12', 
-     4:'B8:27:EB:94:95:C8',
-     #4:'00:22:03:01:8A:12'
+     0:'00:22:03:01:8A:12', # HC05 de prueba
+     1:'00:22:03:01:7D:DC', # HC05 del modulo grafomotricidad
+     2:'00:22:03:01:8D:B5', # HC05 del vumetro   
+     3:'00:22:03:01:8A:12', # HC05 de prueba
+     4:'E4:5F:01:40:62:EF'  #  raspberry
 }
+# para pruebas, comentar a la hora de probar con los modulos
+# module_mac_address = {
+#      0:'00:22:03:01:8A:12',  
+#      1:'00:22:03:01:8A:12', 
+#      2:'00:22:03:01:8A:12', 
+#      3:'00:22:03:01:8A:12', 
+#      #4:'B8:27:EB:94:95:C8',
+#      4:'E4:5F:01:40:62:EF'
+# }
 
 
 
 # diccionario figuras del modulo
+# se tiene 
+codigo_figuras_recibidos = {
+     1: 'Vaca',
+     2: 'Oveja',
+     3: 'Triángulo grande',
+     4: 'Cuadrado grande',
+     5: 'Cerdo',
+     6: 'Perro',
+     7: 'Triángulo mediano',
+     8: 'Círculo mediano',
+     9: 'Cuadrado mediano',
+     10: 'Caballo',
+     11: 'Triángulo pequeño',
+     12: 'Círculo pequeño',
+     13: 'Cuadrado pequeño',
+     14: 'Tortuga',
+     15: 'Círculo grande',
+     16: 'Gato',
+     17: 'Conejo',
+     18: 'Gallina',
+}
+
+
 codigo_figuras = {
      
-     1: 'cuadrado',
-     2: 'circulo',
-     3: 'triangulo',
-     4: 'tortuga',
-     5: 'oveja',
-     6: 'vaca',
-     7: 'cuadrado mediano',
-     8: 'circulo mediano',
-     9: 'triangulo mediano',
-     10: 'perro',
-     11: 'cerdo',
-     12: 'gato',
-     13: 'cuadrado pequeño',
-     14: 'circulo pequeño',
-     15: 'triangulo pequeño',
-     16: 'gallina',
-     17: 'caballo',
-     18: 'conejo',
+     1: 'Cuadrado grande',
+     2: 'Circulo grande',
+     3: 'Triángulo grande',
+     4: 'Tortuga',
+     5: 'Oveja',
+     6: 'Vaca',
+     7: 'Cuadrado mediano',
+     8: 'Círculo mediano',
+     9: 'Triángulo mediano',
+     10: 'Perro',
+     11: 'Cerdo',
+     12: 'Gato',
+     13: 'Cuadrado pequeño',
+     14: 'Círculo pequeño ',
+     15: 'Triángulo pequeño',
+     16: 'Gallina',
+     17: 'Caballo',
+     18: 'Conejo',
      
 }
+
    
 # lista con el path de las imagenes para el modulo de grafomotridad
 path_figuras = [

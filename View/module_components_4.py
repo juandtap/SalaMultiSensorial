@@ -218,20 +218,25 @@ class PictogramDataThread(QThread):
         
         print("Leyendo datos...")
         while not self.stopped:
-            # cambiar a 4096
-            data = blue_socket.recv(4096)
+            try:
+                data = blue_socket.recv(4096)
+                
+                # se detiene al recivir un dato
+                if data is not None:
+                    self.stopped = True
+                    data_formated = data.decode('utf-8').strip()
+                    self.data_received.emit(data_formated)
+
+                if self.stop_event.is_set():
+                    self.stopped = True
+                    self.stop_event.clear()
+                    
+            except bluetooth.btcommon.BluetoothError as e:
+                print("Error occurred:", str(e))
+                blue_socket.close()
+                self.finished.emit()
+                break
             
-            data_formated = data.decode('utf-8').strip()
-            self.data_received.emit(data_formated)
-            # se detiene al recivir un dato
-            if data is not None:
-                self.stopped = True
-
-
-            if self.stop_event.is_set():
-                self.stopped = True
-                self.stop_event.clear()
-        
         blue_socket.close()
         self.finished.emit()
         print("Hilo Escucha socket bluetooth terminado")
