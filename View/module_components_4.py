@@ -211,6 +211,7 @@ class PictogramDataThread(QThread):
            
             blue_socket = bluetooth.BluetoothSocket()
             blue_socket.connect((module_mac_address[4],1))
+            print("conectado")
         except Exception as e:
             print("Error al intentar la conexion con Raspberry:", e)
             self.finished.emit()

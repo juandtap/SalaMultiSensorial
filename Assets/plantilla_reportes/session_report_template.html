@@ -226,7 +226,11 @@
                 <tr>
                     
                     <td>{{modulo.figura}}</td>
-                    <td>{{modulo.resultado}}</td>
+                    {% if modulo.resultado is not none %}
+                        <td>{{ modulo.resultado }}</td>
+                    {% else %}
+                        <td>N/A</td>
+                    {% endif %}
                     <td>{{modulo.tiempo_tomado.strftime("%Hh:%Mm:%Ss")}}</td>
                 </tr>
     

@@ -108,7 +108,7 @@ class ModuleSelection(QWidget):
         
     def open_module_ilumination(self):
         self.ilumination = ModuleIlumination(self.sesion)
-       #self.ilumination = ModuleIlumination(None)
+        # self.ilumination = ModuleIlumination(None)
         self.ilumination.show()
         
     def open_module_pictogram(self):
@@ -277,8 +277,6 @@ class ModuleGrafomotricidad(QWidget):
         
         ## Inicio Thread lectura de datos serial_bluetooth desde arduino
 
-        
-       
         self.serial_thread = ArduinoSerialThread()
         self.serial_thread.data_received.connect(self.show_received_data)
         self.serial_thread.start()
@@ -344,6 +342,8 @@ class ModuleGrafomotricidad(QWidget):
         else:
             self.message_dialog = MessageDialog('Error!')
             self.message_dialog.show()
+            
+        self.ui_mod_grafo.pushButton_save.setEnabled(False)
         
         
     def timer_stopped(self):

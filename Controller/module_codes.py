@@ -20,7 +20,8 @@ module_mac_address = {
 
 
 # diccionario figuras del modulo
-# se tiene 
+# se tiene dos ya que el modulo de grafomotricidad se tiene un orden distinto
+
 codigo_figuras_recibidos = {
      1: 'Vaca',
      2: 'Oveja',
