@@ -60,7 +60,7 @@ class ModulePictogram(QWidget):
         
     
     def set_module_images(self):
-        pixmap1 = QPixmap("Assets/modulo_4_pictogramas.jpg")
+        pixmap1 = QPixmap("Assets/modulo_4_pictogramas.png")
         self.ui_pic.label_module_image.setPixmap(
             pixmap1.scaled(
             self.ui_pic.label_module_image.width(),
