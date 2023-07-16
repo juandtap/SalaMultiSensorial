@@ -61,4 +61,4 @@ class Ui_Form_student_list(object):
         _translate = QtCore.QCoreApplication.translate
         Form_student_list.setWindowTitle(_translate("Form_student_list", "Lista de Estudiantes"))
         self.label.setText(_translate("Form_student_list", "Lista de Estudiantes"))
-        self.label_list.setText(_translate("Form_student_list", "Descargar Lista de estudiantes"))
+        self.label_list.setText(_translate("Form_student_list", "Descargar lista de estudiantes"))

@@ -35,7 +35,7 @@ def add_student_control(student_data):
         for i in range(len(student_data[11])):
             disc_list_objects.append(get_discapacidad_by_name(student_data[11][i]))
         
-        ## mostrar elementos prueba
+        ## se agrega las discapacidades al estudiante
         print("lista de objetos recuperada con get_discapacidad_by_name:")
         for i in range(len(disc_list_objects)):
             print(disc_list_objects[i].nombre_discapacidad)

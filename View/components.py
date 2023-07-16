@@ -325,6 +325,7 @@ class EditStudent(QWidget):
         student_discapacidades = []
         for i in range(self.ui_edit.listDiscapacidades.count()):
             student_discapacidades.append(self.ui_edit.listDiscapacidades.item(i).text())
+            print("Lo que agrega el combo al seleccionar: "+self.ui_edit.listDiscapacidades.item(i).text())
         print("Discapacidade seleccionadas: ")
         print(student_discapacidades)
         return student_discapacidades

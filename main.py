@@ -310,7 +310,7 @@ class AddStudent(QWidget):
         self.ui_addstu.lineEdit_cedula.setValidator(validator)
         self.ui_addstu.lineEdit_cedula_representante.setValidator(validator)
         self.ui_addstu.lineEdit_cedula.textChanged.connect(self.check_cedula_fields)
-        self.ui_addstu.lineEdit_cedula_representante.textChanged.connect(self.check_cedula_representate_fields)
+        self.ui_addstu.lineEdit_cedula_representante.textChanged.connect(self.check_cedula_representate_fields)        
         # cargar fotografia del estudiante
         self.ui_addstu.pushButton_load_picture.clicked.connect(self.load_image)
         

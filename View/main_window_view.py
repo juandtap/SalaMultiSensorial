@@ -393,4 +393,4 @@ class Ui_MainWindow(object):
         self.pushButton_edit_estudiante.setText(_translate("MainWindow", "Editar"))
         self.label.setText(_translate("MainWindow", "Sala Multisensorial"))
         self.pushButton_reportes.setText(_translate("MainWindow", "Invitado"))
-        self.label_list.setText(_translate("MainWindow","Ver Lista de estudiantes"))
+        self.label_list.setText(_translate("MainWindow","Ver lista de estudiantes"))

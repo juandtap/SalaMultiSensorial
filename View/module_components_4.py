@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from Controller.module_codes import module_mac_address
 from View.instructions import instrucciones_pictogramas
+from View.components import MessageDialog
 # Este modulo controla la ventana del modulo pictogramas
 
 from PyQt5.QtGui import QPixmap
@@ -102,9 +103,12 @@ class ModulePictogram(QWidget):
         
     def show_received_data(self, data):
         print("Datos recibidos: ")
-        self.ui_pic.label_reading_status.setText("Datos recibidos:")
+        self.ui_pic.label_reading_status.setText("Datos recibidos")
         print(data)
-        data_values = data.split(",")
+        if data:
+            data_values = data.split(",")
+        else:
+            data_values = []
         print("datos separados:")
         for value in data_values:
             print(value)
@@ -125,9 +129,9 @@ class ModulePictogram(QWidget):
             self.ui_pic.lineEdit_pictogramas.setText("Valor no disponible")   
 
         try:
-            self.ui_pic.lineEdit_num_pistogramas_seleccionados.setText(data_values[3])
+            self.ui_pic.lineEdit_num_pictogramas_seleccionados.setText(data_values[3])
         except IndexError:
-            self.ui_pic.lineEdit_num_pistogramas_seleccionados.setText("Valor no disponible")
+            self.ui_pic.lineEdit_num_pictogramas_seleccionados.setText("Valor no disponible")
 
         try:
             self.ui_pic.lineEdit_tamanio_tablero.setText(data_values[4])
@@ -178,6 +182,8 @@ class ModulePictogram(QWidget):
         self.ui_pic.pushButton_save.setEnabled(False)
         self.ui_pic.pushButton_stop.setEnabled(False)
         
+        self.message_dialog = MessageDialog("!Datos Guardados")
+        self.message_dialog.show()
     
     
     def stop_listening_data(self):
@@ -187,7 +193,7 @@ class ModulePictogram(QWidget):
         self.ui_pic.pushButton_stop.setEnabled(False)
         self.thread_pictogram.stop()
         self.end_time = datetime.now()
-        
+     
     def closeEvent(self, event):
         self.stop_listening_data()
         event.accept()
