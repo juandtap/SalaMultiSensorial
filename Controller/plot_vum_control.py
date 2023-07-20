@@ -27,7 +27,7 @@ class PlotVumeter:
 
             # Crear el gráfico
             plt.plot(datos_x, datos_y)
-            plt.xlabel('Tiempo (50ms)')
+            plt.xlabel('Tiempo (ms)')
             plt.ylabel('Nivel')
 
             nombre_plot = f"plot_vumetro_{i+1}.png"

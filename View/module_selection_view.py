@@ -164,7 +164,7 @@ class Ui_Form_seleccion_modulos(object):
         self.label_logo_1.setText("")
         self.label_logo_1.setObjectName("label_logo_1")
         self.label_logo_2 = QtWidgets.QLabel(Form_seleccion_modulos)
-        self.label_logo_2.setGeometry(QtCore.QRect(1080, 0, 200,200))
+        self.label_logo_2.setGeometry(QtCore.QRect(960, 0, 320,120))
         self.label_logo_2.setText("")
         self.label_logo_2.setObjectName("label_logo_2")
         self.label_bluetooth_status = QtWidgets.QLabel(Form_seleccion_modulos)

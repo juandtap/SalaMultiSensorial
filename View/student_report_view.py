@@ -24,7 +24,7 @@ class Ui_Form_student_report(object):
         Form_student_report.setFont(font)
         Form_student_report.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.label_logo2 = QtWidgets.QLabel(Form_student_report)
-        self.label_logo2.setGeometry(QtCore.QRect(1120, 0, 161, 131))
+        self.label_logo2.setGeometry(QtCore.QRect(960, 0, 320, 120))
         self.label_logo2.setText("")
         self.label_logo2.setObjectName("label_logo2")
         self.label = QtWidgets.QLabel(Form_student_report)

@@ -40,7 +40,7 @@ class Ui_MainWindow(object):
 "")     
         #labels para los logos
         self.label_logo1 = QtWidgets.QLabel(self.centralwidget)
-        self.label_logo1.setGeometry(QtCore.QRect(0,0,110,110))
+        self.label_logo1.setGeometry(QtCore.QRect(0,0,320,120))
         self.label_logo1.setObjectName("label_logo1")
         
         self.label_logo2 = QtWidgets.QLabel(self.centralwidget)

@@ -32,7 +32,7 @@ class Ui_Form_modulo_iluminacion(object):
         self.label_conn_status.setStyleSheet("color: rgb(0, 0, 255);")
         self.label_conn_status.setObjectName("label_conn_status")
         self.label_logo2 = QtWidgets.QLabel(Form_modulo_iluminacion)
-        self.label_logo2.setGeometry(QtCore.QRect(1150, 0, 130, 130))
+        self.label_logo2.setGeometry(QtCore.QRect(960, 0, 320, 120))
         self.label_logo2.setText("")
         self.label_logo2.setObjectName("label_logo2")
         self.label = QtWidgets.QLabel(Form_modulo_iluminacion)
