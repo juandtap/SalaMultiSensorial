@@ -102,7 +102,7 @@ class MainWindow(QMainWindow):
             print("!!estudiante eliminado")
       
     def set_logos(self):
-        pixmap1 = QPixmap("Assets/logo2.png")
+        pixmap1 = QPixmap("Assets/logo2_main.png")
         self.ui_main.label_logo1.setPixmap(
             pixmap1.scaled(
             self.ui_main.label_logo1.width(),
@@ -110,7 +110,7 @@ class MainWindow(QMainWindow):
             aspectRatioMode=False
             )
         )
-        pixmap2 = QPixmap("Assets/logo1.png")
+        pixmap2 = QPixmap("Assets/logo1_main.png")
         self.ui_main.label_logo2.setPixmap(
             pixmap2.scaled(
             self.ui_main.label_logo2.width(),

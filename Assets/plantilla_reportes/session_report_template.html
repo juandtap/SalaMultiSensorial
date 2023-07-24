@@ -148,6 +148,10 @@
             height: 400px;
 
         }
+        /* estilo para visualizar la tabla de pictogramas */
+        .row1-picto{
+            border-top: 1px solid #ddd;
+        }
     </style>
 
     <title>Reporte</title>
@@ -306,6 +310,79 @@
     
     
             </table>
+            {% else %}
+            <p>No hay datos disponibles.</p>
+            {% endif %}
+        </div>
+
+        <div class="modulo-info">
+            <p>  <b>Módulo de Pictogramas</b> </p>
+            {% if sesion.modulos_pictogramas %}
+           
+                {% for modulo in sesion.modulos_pictogramas %}
+                <table>
+                    <tr>
+                        <th class="row1-picto"> Categoria: </th>
+                        <td class="row1-picto"> {{ modulo.categoria_seleccionada}} </td>
+                    </tr>
+
+                    <tr>
+                        <th> Numero pictogramas disponibles: </th>
+                        <td> {{ modulo.numero_pictogramas_disponibles}}</td>
+                    </tr>
+
+                    <tr>
+                        <th> Nombres de pictogramas: </th>
+                        <td> {{modulo.nombres_pictogramas}} </td>
+                    </tr>
+
+                    <tr>
+                        <th> Número pictogramas seleccionados: </th>
+                        <td> {{modulo.numero_pictogramas_seleccionados}} </td>
+                    </tr>
+
+                    <tr>
+                        <th>Tamaño tablero: </th>
+                        <td> {{modulo.tamanio_tablero}} x {{modulo.tamanio_tablero}}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Categorias mostradas: </th>
+                        <td> {{ modulo.categorias_mostradas }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Número selecciones correctas: </th>
+                        <td> {{ modulo.numero_selecciones_correctas }}</td>
+                    </tr>
+                
+                    <tr>
+                        <th> Selecciones Correctas</th>
+                        <td> {{ modulo.selecciones_correctas }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Número selecciones incorrectas: </th>
+                        <td> {{ modulo.numero_selecciones_incorrectas }}</td>
+                    </tr>
+                
+                    <tr>
+                        <th> Selecciones Incorrectas</th>
+                        <td> {{ modulo.selecciones_incorrectas }} </td>
+                    </tr>
+
+                    <tr>
+                        <th> Tiempo: </th>
+                        <td> {{ modulo.tiempo }}</td>
+                    </tr>
+                
+                </table>
+                <br>
+                <br>
+                {% endfor %}
+    
+    
+           
             {% else %}
             <p>No hay datos disponibles.</p>
             {% endif %}
