@@ -9,6 +9,8 @@ from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from Controller.module_codes import module_mac_address
 from View.instructions import instrucciones_pictogramas
 from View.components import MessageDialog
+from Controller.session_control import add_module_pictograma
+from Model.model import ModuloPictogramas
 # Este modulo controla la ventana del modulo pictogramas
 
 from PyQt5.QtGui import QPixmap
@@ -89,6 +91,7 @@ class ModulePictogram(QWidget):
         )
         
     def start_listening_data(self):
+        self.clear_data()
         print("Escuchando datos modulo pictogramas")
         self.thread_pictogram = PictogramDataThread()
         self.thread_pictogram.data_received.connect(self.show_received_data)
@@ -106,7 +109,7 @@ class ModulePictogram(QWidget):
         self.ui_pic.label_reading_status.setText("Datos recibidos")
         print(data)
         if data:
-            data_values = data.split(",")
+            data_values = data.split(";")
         else:
             data_values = []
         print("datos separados:")
@@ -134,7 +137,7 @@ class ModulePictogram(QWidget):
             self.ui_pic.lineEdit_num_pictogramas_seleccionados.setText("Valor no disponible")
 
         try:
-            self.ui_pic.lineEdit_tamanio_tablero.setText(data_values[4])
+            self.ui_pic.lineEdit_tamanio_tablero.setText(data_values[4]+"x"+data_values[4])
         except IndexError:
             self.ui_pic.lineEdit_tamanio_tablero.setText("Valor no disponible")
 
@@ -162,6 +165,11 @@ class ModulePictogram(QWidget):
             self.ui_pic.lineEdit_list_incorrectos.setText(data_values[9])
         except IndexError:
             self.ui_pic.lineEdit_list_incorrectos.setText("Valor no disponible")
+            
+        try:
+            self.ui_pic.lineEdit_tiempo.setText(data_values[10])
+        except IndexError:
+            self.ui_pic.lineEdit_tiempo.setText("Valor no disponible")
         
         self.ui_pic.pushButton_start.setEnabled(True)
         self.ui_pic.pushButton_save.setEnabled(True)
@@ -172,19 +180,45 @@ class ModulePictogram(QWidget):
     def save_data(self):
         # guarda en la base de datos
         print("guardando en DB")
-        self.total_time = self.end_time - self.start_time
         
-        total_time_str = str(self.total_time).split('.')[0]
-        print("Tiempo : "+total_time_str)
+        # ya no se calcula el tiempo
+        # el tiempo es enviado en segundos desde el modulo de pictigrama
+        # self.total_time = self.end_time - self.start_time
+        # total_time_str = str(self.total_time).split('.')[0]
+        # print("Tiempo : "+total_time_str)
+        
+        new_picto = ModuloPictogramas(
+            id_sesion = self.sesion,
+            categoria_seleccionada = self.ui_pic.lineEdit_categoria_seleccionada.text(),
+            numero_pictogramas_disponibles = self.ui_pic.lineEdit_num_pictogramas_disponibles.text(),
+            nombres_pictogramas = self.ui_pic.lineEdit_pictogramas.text(),
+            numero_pictogramas_seleccionados = self.ui_pic.lineEdit_num_pictogramas_seleccionados.text(),
+            tamanio_tablero = self.ui_pic.lineEdit_tamanio_tablero.text(),
+            categorias_mostradas = self.ui_pic.lineEdit_categorias_mostradas.text(),
+            numero_selecciones_correctas = self.ui_pic.lineEdit_num_correctos.text(),
+            selecciones_correctas = self.ui_pic.lineEdit_list_correctos.text(),
+            numero_selecciones_incorrectas = self.ui_pic.lineEdit_num_incorrectos.text(),
+            selecciones_incorrectas = self.ui_pic.lineEdit_list_incorrectos.text(),
+            tiempo = self.ui_pic.lineEdit_tiempo.text()
+            
+        )
+
+        if add_module_pictograma(new_picto):
+            print("Datos guardados")
+            self.message_dialog = MessageDialog("!Datos Guardados")
+            self.message_dialog.show()
+            self.ui_pic.pushButton_start.setEnabled(True)
+            self.ui_pic.pushButton_save.setEnabled(False)
+            self.ui_pic.pushButton_stop.setEnabled(False)
+        else:
+            print("Error al guardar")
+            self.message_dialog = MessageDialog("!Error al guardar")
+            self.message_dialog.show()
+            
+        
+       
         
         
-        self.ui_pic.pushButton_start.setEnabled(True)
-        self.ui_pic.pushButton_save.setEnabled(False)
-        self.ui_pic.pushButton_stop.setEnabled(False)
-        
-        self.message_dialog = MessageDialog("!Datos Guardados")
-        self.message_dialog.show()
-    
     
     def stop_listening_data(self):
         self.ui_pic.label_reading_status.setText("")
@@ -197,7 +231,20 @@ class ModulePictogram(QWidget):
     def closeEvent(self, event):
         self.stop_listening_data()
         event.accept()
-               
+
+    def clear_data(self):
+        self.ui_pic.lineEdit_categoria_seleccionada.setText("")
+        self.ui_pic.lineEdit_num_pictogramas_disponibles.setText("")
+        self.ui_pic.lineEdit_pictogramas.setText("")
+        self.ui_pic.lineEdit_num_pictogramas_seleccionados.setText("")
+        self.ui_pic.lineEdit_tamanio_tablero.setText("")
+        self.ui_pic.lineEdit_categorias_mostradas.setText("")
+        self.ui_pic.lineEdit_num_correctos.setText("")
+        self.ui_pic.lineEdit_list_correctos.setText("")
+        self.ui_pic.lineEdit_num_incorrectos.setText("")
+        self.ui_pic.lineEdit_list_incorrectos.setText("")
+        self.ui_pic.lineEdit_tiempo.setText("")
+    
 class PictogramDataThread(QThread):
     
     data_received = pyqtSignal(str)
@@ -224,15 +271,27 @@ class PictogramDataThread(QThread):
             return
         
         print("Leyendo datos...")
+        accumulated_data = ""
         while not self.stopped:
             try:
                 data = blue_socket.recv(4096)
                 
-                # se detiene al recivir un dato
-                if data is not None:
-                    self.stopped = True
-                    data_formated = data.decode('utf-8').strip()
-                    self.data_received.emit(data_formated)
+                
+                if data:
+                    # self.stopped = True
+                    data_formated = data.decode('utf-8')
+                    print("datos decodificados: ")
+                    print(data_formated)
+                    accumulated_data += data_formated
+                    
+                    # Verificar si se ha recibido el mensaje completo
+                    # cuando se encuentra un salto de linea '/n'
+                    
+                    delimiter = '\n'
+                    if delimiter in accumulated_data:
+                        "se detecto el salto de linea"
+                        self.data_received.emit(accumulated_data)
+                        self.stopped = True
 
                 if self.stop_event.is_set():
                     self.stopped = True
@@ -254,8 +313,3 @@ class PictogramDataThread(QThread):
         self.stopped = True
         print("Hilo Escucha socket bluetooth terminado por el usuario")
         
-## datos a recibir
-# MAC del raspberry: B8:27:EB:94:95:C8
-
-# {Numero de pictogramas, correctos, incorrectos, categoriaseleccionada}
-# 

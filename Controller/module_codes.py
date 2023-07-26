@@ -5,7 +5,7 @@ module_mac_address = {
      1:'00:22:03:01:7D:DC', # HC05 del modulo grafomotricidad
      2:'00:22:03:01:8D:B5', # HC05 del vumetro   
      3:'00:22:03:01:8A:12', # HC05 de prueba
-     4:'E4:5F:01:40:62:EF'  #  raspberry
+     4:'98:D3:31:F9:42:92',  #  raspberry
 }
 # para pruebas, comentar a la hora de probar con los modulos
 # module_mac_address = {

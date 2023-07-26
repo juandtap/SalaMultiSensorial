@@ -91,7 +91,7 @@ def add_module_vumetro(new_vum):
         flag = True
     except Exception as ex:
         session.rollback()
-        print("Error ", ex)
+        print("Error: ", ex)
     finally:
         session.close()
     
@@ -107,8 +107,19 @@ def add_module_iluminacion(new_ilu):
         flag = True
     except Exception as ex:
         session.rollback()
-        print("Error ", ex)
+        print("Error: ", ex)
     finally:
         session.close()
     return flag
-    
+
+def add_module_pictograma(new_picto):
+    flag = False
+    try:
+        session.add(new_picto)
+        session.commit()
+        flag = True
+    except Exception as ex:
+        session.rollback()
+        print("Error: ", ex)
+    finally:
+        session.close()
