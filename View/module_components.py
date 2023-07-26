@@ -112,7 +112,7 @@ class ModuleSelection(QWidget):
         self.ilumination.show()
         
     def open_module_pictogram(self):
-        self.pictogram = ModulePictogram(None)
+        self.pictogram = ModulePictogram(self.sesion)
         self.pictogram.show()
 
     def load_info_student(self):

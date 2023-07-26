@@ -150,7 +150,7 @@ class StudentReport(QWidget):
                 'Fecha',
                 'Hora Inicio',
                 'Hora Fin',
-                'Ver Modulos ',
+                'Ver Modulos',
                 'Descargar Reporte de la Sesion'              
             ]
         )
@@ -165,7 +165,7 @@ class StudentReport(QWidget):
         header = self.table_reports.horizontalHeader()
         
         for i in range(header.count()):
-            header.setSectionResizeMode(i,QHeaderView.Fixed)
+            header.setSectionResizeMode(i,QHeaderView.ResizeToContents)
             
         
     
@@ -451,7 +451,7 @@ class StudentReport(QWidget):
                 self.table_pictogramas.setItem(i, 0, QTableWidgetItem(str(module.id)))
                 self.table_pictogramas.setItem(i, 1, QTableWidgetItem(str(module.categoria_seleccionada)))
                 self.table_pictogramas.setItem(i, 2, QTableWidgetItem(str(module.numero_pictogramas_seleccionados)))
-                self.table_pictogramas.setItem(i, 3, QTableWidgetItem(str(module.tamanio_tablero)+"x"+str(module.tamanio_tablero)))
+                self.table_pictogramas.setItem(i, 3, QTableWidgetItem(str(module.tamanio_tablero)))
                 self.table_pictogramas.setItem(i, 4, QTableWidgetItem(str(module.numero_selecciones_correctas)))
                 self.table_pictogramas.setItem(i, 5, QTableWidgetItem(str(module.numero_selecciones_incorrectas)))
                 self.table_pictogramas.setItem(i, 6, QTableWidgetItem(str(module.tiempo)))

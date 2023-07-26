@@ -123,3 +123,4 @@ def add_module_pictograma(new_picto):
         print("Error: ", ex)
     finally:
         session.close()
+    return flag

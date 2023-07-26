@@ -32,8 +32,9 @@ class ModuleIlumination(QWidget):
         self.ui_ilu.label_text_status.setText("Conectado...")
         self.ui_ilu.label_conn_status.setHidden(True)
         
-        # envio de senal de inicio 'i'
-        self.turn_on_off_thread = TurnOnOffModule('i',3)
+        # envio de senal de inicio '255,255,255,60'
+        senial_inicio = '255,255,255,60'
+        self.turn_on_off_thread = TurnOnOffModule(senial_inicio,3)
         self.turn_on_off_thread.my_signal.connect(self.socket_free)
         self.turn_on_off_thread.start()
         
@@ -76,8 +77,8 @@ class ModuleIlumination(QWidget):
             color_button.clicked.connect(self.get_selected_color)
         
         # defino el valor por defecto del slider que controla la intencidad
-        # 0=bajo, 1=normal, 2=alto
-        self.light_level = 1
+        # 30=bajo, 60=normal, 90=alto
+        self.light_level = 60
         self.ui_ilu.slider_level.valueChanged.connect(self.get_selected_level)
         
         # defino el color rojo por defecto para evitar valores nullos al momento de enviar datos
@@ -101,15 +102,15 @@ class ModuleIlumination(QWidget):
         self.total_time = None
         
     def closeEvent(self, event):
-        # envia la senial de finializacion 'f'
-        self.turn_on_off_thread = TurnOnOffModule('f',3)
-        self.turn_on_off_thread.start()
+        
+        self.turn_off_module()
        
         event.accept()
         
     def turn_off_module(self):
-        # envia senial de apagado al presionar el boton "guardar"
-        self.turn_off_signal_thread = TurnOnOffModule('f',3)
+        # envia senial de apagado al presionar el boton "apagar"
+        senial_apagado = '000,000,000,0'
+        self.turn_off_signal_thread = TurnOnOffModule(senial_apagado,3)
         self.turn_off_signal_thread.start()
         print("orden de apagado enviada")
     
@@ -239,7 +240,7 @@ class ModuleIlumination(QWidget):
             if self.ui_ilu.lineEdit_B_code.text() != "":
                 b_code = self.ui_ilu.lineEdit_B_code.text().strip()
             
-            selected_color_code = r_code+','+g_code+','+b_code
+            selected_color_code = r_code.zfill(3)+','+g_code.zfill(3)+','+b_code.zfill(3)
             
             print('Color seleccionado: '+selected_color_code)
             

@@ -52,7 +52,7 @@ class Ui_Form_modulo_pictograma(object):
         self.textEdit_instructions.setFont(font)
         self.textEdit_instructions.setObjectName("textEdit_instructions")
         self.label_logo1 = QtWidgets.QLabel(Form_modulo_pictograma)
-        self.label_logo1.setGeometry(QtCore.QRect(0, 0, 161, 131))
+        self.label_logo1.setGeometry(QtCore.QRect(0, 0, 260, 150))
         self.label_logo1.setText("")
         self.label_logo1.setObjectName("label_logo1")
         self.label_module_image = QtWidgets.QLabel(Form_modulo_pictograma)

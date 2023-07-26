@@ -116,6 +116,9 @@ class ModulePictogram(QWidget):
         for value in data_values:
             print(value)
         
+        
+        
+        
         try:
             self.ui_pic.lineEdit_categoria_seleccionada.setText(data_values[0])
         except IndexError:
@@ -127,7 +130,8 @@ class ModulePictogram(QWidget):
             self.ui_pic.lineEdit_num_pictogramas_disponibles.setText("Valor no disponible")
             
         try:
-            self.ui_pic.lineEdit_pictogramas.setText(data_values[2])
+            nombres_pictogramas = data_values[2].replace("/","").replace(".png","").replace("pictogramas","").replace(data_values[0],"").replace("[","").replace("]","").replace("?","ñ")
+            self.ui_pic.lineEdit_pictogramas.setText(nombres_pictogramas)
         except IndexError:
             self.ui_pic.lineEdit_pictogramas.setText("Valor no disponible")   
 
@@ -142,7 +146,8 @@ class ModulePictogram(QWidget):
             self.ui_pic.lineEdit_tamanio_tablero.setText("Valor no disponible")
 
         try:
-            self.ui_pic.lineEdit_categorias_mostradas.setText(data_values[5])
+            categorias_mostradas = data_values[5].replace("[", "").replace("]", "").replace("?","ñ")
+            self.ui_pic.lineEdit_categorias_mostradas.setText(categorias_mostradas)
         except IndexError:
             self.ui_pic.lineEdit_categorias_mostradas.setText("Valor no disponible")
 
@@ -152,22 +157,25 @@ class ModulePictogram(QWidget):
             self.ui_pic.lineEdit_num_correctos.setText("Valor no disponible")
             
         try:
-            self.ui_pic.lineEdit_list_correctos.setText(data_values[7])
+            lista_correctos = data_values[7].replace(".png","").replace("[","").replace("]","").replace("?","ñ")
+            self.ui_pic.lineEdit_list_correctos.setText(lista_correctos)
         except IndexError:
             self.ui_pic.lineEdit_list_correctos.setText("Valor no disponible")    
 
-        try:
+        try:           
             self.ui_pic.lineEdit_num_incorrectos.setText(data_values[8])
         except IndexError:
             self.ui_pic.lineEdit_num_incorrectos.setText("Valor no disponible")
             
         try:
-            self.ui_pic.lineEdit_list_incorrectos.setText(data_values[9])
+            lista_incorrectos = data_values[9].replace(".png","").replace("[","").replace("]","").replace("?","ñ")
+            self.ui_pic.lineEdit_list_incorrectos.setText(lista_incorrectos)
         except IndexError:
             self.ui_pic.lineEdit_list_incorrectos.setText("Valor no disponible")
             
         try:
-            self.ui_pic.lineEdit_tiempo.setText(data_values[10])
+            tiempo_tomado = self.convertir_a_formato_minutos_segundos(data_values[10])
+            self.ui_pic.lineEdit_tiempo.setText(tiempo_tomado)
         except IndexError:
             self.ui_pic.lineEdit_tiempo.setText("Valor no disponible")
         
@@ -244,6 +252,14 @@ class ModulePictogram(QWidget):
         self.ui_pic.lineEdit_num_incorrectos.setText("")
         self.ui_pic.lineEdit_list_incorrectos.setText("")
         self.ui_pic.lineEdit_tiempo.setText("")
+        
+    # convertir el tiempo en segundoa a fomato mm:ss
+    def convertir_a_formato_minutos_segundos(self, segundos):
+        minutos = int(segundos) // 60
+        segundos_restantes = int(segundos) % 60
+
+        formato_tiempo = "{:02}m :{:02}s".format(minutos, segundos_restantes)
+        return formato_tiempo
     
 class PictogramDataThread(QThread):
     
@@ -278,7 +294,7 @@ class PictogramDataThread(QThread):
                 
                 
                 if data:
-                    # self.stopped = True
+                    
                     data_formated = data.decode('utf-8')
                     print("datos decodificados: ")
                     print(data_formated)
