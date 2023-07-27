@@ -2,7 +2,7 @@
 
 module_mac_address = {
      0:'00:22:03:01:8A:12', # HC05 de prueba
-     1:'00:22:03:01:7D:DC', # HC05 del modulo grafomotricidad
+     1:'00:22:03:01:7F:80', # HC05 del modulo grafomotricidad
      2:'00:22:03:01:8D:B5', # HC05 del vumetro   
      3:'00:22:03:01:7C:D5', # HC05 de iluminacion
      4:'98:D3:31:F9:42:92',  #  raspberry
