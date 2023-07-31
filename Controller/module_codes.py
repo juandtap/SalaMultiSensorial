@@ -47,7 +47,7 @@ codigo_figuras_recibidos = {
 codigo_figuras = {
      
      1: 'Cuadrado grande',
-     2: 'Circulo grande',
+     2: 'Círculo grande',
      3: 'Triángulo grande',
      4: 'Tortuga',
      5: 'Oveja',
