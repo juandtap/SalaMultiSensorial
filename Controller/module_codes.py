@@ -3,9 +3,9 @@
 module_mac_address = {
      0:'00:22:03:01:8A:12', # HC05 de prueba
      1:'00:22:03:01:7F:80', # HC05 del modulo grafomotricidad
-     2:'00:22:03:01:8D:B5', # HC05 del vumetro   
-     3:'00:22:03:01:7C:D5', # HC05 de iluminacion
-     4:'98:D3:31:F9:42:92',  #  raspberry
+     2:'00:22:03:01:8D:B5', # HC05 del modulo del vumetro   
+     3:'00:22:03:01:7C:D5', # HC05 del modulo de iluminacion
+     4:'98:D3:31:F9:42:92', # HC05 del modulo de pictogramas (raspberry)
 }
 # para pruebas, comentar a la hora de probar con los modulos
 # module_mac_address = {
@@ -21,7 +21,7 @@ module_mac_address = {
 
 # diccionario figuras del modulo
 # se tiene dos ya que el modulo de grafomotricidad se tiene un orden distinto
-
+# se compara el codigo que se tiene seleccionado en la app, con el que recibe
 codigo_figuras_recibidos = {
      1: 'Vaca',
      2: 'Oveja',

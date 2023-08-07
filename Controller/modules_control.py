@@ -1,7 +1,7 @@
 # Thread para enviar los caracteres de i (inicio) y f (finalizacion) 
 # para controlar el modulo
 # si se envia i prende el modulo, si se envia f lo apaga  
-
+# se usa en los modulos de grafomotricidad, vumetro, e iluminacion
 import sys
 import bluetooth
 
