@@ -409,12 +409,20 @@ class AddStudent(QWidget):
             self.ui_addstu.lineEdit_cedula_representante.setText(text_cedula[:10])
             self.ui_addstu.lineEdit_cedula_representante.setCursorPosition(10)
     
+    def check_student_fields(self):
+        # revisa que se haya rellenad los campos obligatorios
+        # nombre, apellido, cedula, cedula representante, representante, fecha nacimiento
+        if self.ui_addstu.lineEdit_cedula.text() != "" and self.ui_addstu.lineEdit_apellido.text() != "" and self.ui_addstu.lineEdit_nombre.text() != "" and self.ui_addstu.lineEdit_cedula_representante != "" and self.ui_addstu.lineEdit_representante != "":
+            return True
+        else:
+            return False
+        
     
     def add_student(self):
         # para agregar un estudiante como minimo se debe de llenar los campos
         # cedula, apellido y nombre
         
-        if self.ui_addstu.lineEdit_cedula.text() != "" and self.ui_addstu.lineEdit_apellido.text() != "" and self.ui_addstu.lineEdit_nombre.text() != "" :
+        if self.check_student_fields():
             
             flag = add_student_control(
                 student_data=[
@@ -449,10 +457,10 @@ class AddStudent(QWidget):
                 self.clear_student_fields()
                 print("Estudiante ya existe!")
         else:
-            self.student_message = MessageDialog("!Ingrese los datos")
+            self.student_message = MessageDialog("Ingrese todos los campos obligatorios*")
             self.student_message.show()
             self.clear_student_fields()
-            print("Ingresar datos del estudante!")
+            print("Ingresar todos los campos obligatorios*")
     
     def clear_student_fields(self):
         self.ui_addstu.lineEdit_cedula.clear()

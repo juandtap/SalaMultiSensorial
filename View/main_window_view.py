@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
         self.pushButton_add_estudiante.setGeometry(QtCore.QRect(480, 120, 211, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.pushButton_add_estudiante.setFont(font)
         self.pushButton_add_estudiante.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -265,7 +265,7 @@ class Ui_MainWindow(object):
         self.pushButton_goto_modules.setGeometry(QtCore.QRect(640, 10, 121, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.pushButton_goto_modules.setFont(font)
         self.pushButton_goto_modules.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -281,7 +281,7 @@ class Ui_MainWindow(object):
         self.pushButton_goto_reports.setGeometry(QtCore.QRect(640, 50, 121, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.pushButton_goto_reports.setFont(font)
         self.pushButton_goto_reports.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -297,7 +297,7 @@ class Ui_MainWindow(object):
         self.pushButton_edit_estudiante.setGeometry(QtCore.QRect(640, 90, 121, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.pushButton_edit_estudiante.setFont(font)
         self.pushButton_edit_estudiante.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
@@ -322,7 +322,7 @@ class Ui_MainWindow(object):
         self.pushButton_reportes.setGeometry(QtCore.QRect(700, 120, 211, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.pushButton_reportes.setFont(font)
         self.pushButton_reportes.setStyleSheet("QPushButton {\n"
 "   border-radius: 10px;\n"
