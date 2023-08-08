@@ -1,3 +1,11 @@
+
+
+# aqui se definene las tablas de la base de datos
+# Si se quiere agregar otro modulo
+# agregarlo de igual forma como se hizo con los otros
+# no hace falta dropear la base de datos al agregar un nuevo modulo
+# pero por precaucion hacer una copia de seguridad del archivo de base de datos (sqlite)
+
 import sys
 sys.path.append(".")
 from sqlalchemy import create_engine, Table, Column, Integer, String, Date, Boolean, LargeBinary, ForeignKey, Time, Float
@@ -10,8 +18,6 @@ Base = declarative_base()
 engine = create_engine('sqlite:///DB/database.sqlite')
 
 
-
-# aqui se definene las tablas de la base de datos
 
 # tabla estudiante
 class Estudiante(Base):

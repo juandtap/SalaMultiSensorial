@@ -1,4 +1,9 @@
 
+# Desde este archivo se controla la ventana principal y 
+# la ventana de agregar estudiante, tambien se abren las 
+# otras ventanas como editar estudiante, ir a modulos, reportes y listar estudiantes
+
+
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QCompleter, QFileDialog

@@ -1,6 +1,9 @@
-# En este modulo esta la clase que controla ventana del modulo vumetro
-# para que el Thread de escucha se detenga tiene que estar reciviendo datos, de lo contrario 
-# se queda en un estado de espera bloqueando el socket bluetooth
+# En este archivo esta la clase que controla ventana del modulo vumetro
+# Para que el Thread de escucha se detenga tiene que estar recibiendo datos, de lo contrario 
+# se queda en un estado de espera bloqueando el socket bluetooth, algo que no es problema ya que 
+# el vumetro siempre esta enviando datos, asi que si el vumetro llega a fallar el Thread no se detiene
+# guardara los datos pero no liberara el socket bluetooth por el que es necesario cerrar la ventana y volver 
+# a abrir, tener en cuenta esto si se quiere establecer algun criterio de parada
 
 import sys
 from PyQt5 import QtGui

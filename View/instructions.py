@@ -1,5 +1,5 @@
-# Es este modulo de definen los Strings con las intrucciones de cada
-# modulo, estas se cargan en los QTextArea del modulo respectivo
+# Es este archivo de definen los Strings con las intrucciones de cada
+# modulo de la sala multisensorial, estas se cargan en los QTextArea del modulo respectivo
 
 instrucciones_grafomotricidad = """Antes de usar el módulo, verifique que en la esquina inferior 
 derecha aparezca el texto "Conectado". 

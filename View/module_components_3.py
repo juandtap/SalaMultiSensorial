@@ -1,4 +1,6 @@
-# Este modulo controla la ventana del modulo Iluminacion
+# Este archivo contiene la clase que controla la ventana del modulo Iluminacion
+# con su respectiva clase tipo Thread para el envio de datos
+# este modulo solo requiere el envio de datos
 
 import sys
 

@@ -1,6 +1,6 @@
-# En este modulo esta la clase que controla ventana de seleccion de modulo
+# En este archivo esta la clase que controla ventana de seleccion de modulo
 # y la ventana del modulo de grafomotricidad
-# tambien estas las clases QThread para el envio y recepcion de datos arduino
+# tambien estas las clases QThread (Hilos) para el envio y recepcion de datos del arduino del modulo de grafomotricidad
 
 import sys
 import  threading, bluetooth

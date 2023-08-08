@@ -1,6 +1,6 @@
-# En este modulo se encuentran las clases para :
-# agregar Unidades Educatuvias, Discapacidades, Editar Estudiante, Mostrar la lista de estudiantes
-# el combobox con chekitems  y la ventana de dialogo
+# En este archivo se encuentran las clases para :
+# agregar Unidades Educativias, Discapacidades, Editar Estudiante, Mostrar la lista de estudiantes
+# el combobox con chekitems  y las ventana de dialogo y confirmacion
 
 import sys
 sys.path.append(".")

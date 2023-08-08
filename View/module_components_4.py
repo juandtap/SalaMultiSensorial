@@ -1,3 +1,10 @@
+# Este archivo tiene la clase para controlar la ventana del modulo de pictogramas
+# asi tambien como su Thread de escucha
+# aqui solo recibe datos del modulo de pictogramas, una vez se presione el boton iniciar.
+# No hace falta presionar el boton al iniciar el modulo, ya que desde el modulo se envia el tiempo
+# asi que se presiona el boton de Iniciar para recibir los datos no importa en que momento siempre 
+# y cuando se haga antes que presione guardar en el modulo de pictogramas ( raspberry)
+
 import sys
 from datetime import datetime
 from datetime import time 
@@ -11,7 +18,7 @@ from View.instructions import instrucciones_pictogramas
 from View.components import MessageDialog
 from Controller.session_control import add_module_pictograma
 from Model.model import ModuloPictogramas
-# Este modulo controla la ventana del modulo pictogramas
+
 
 from PyQt5.QtGui import QPixmap
 
